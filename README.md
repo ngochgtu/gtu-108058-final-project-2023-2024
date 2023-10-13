@@ -11,7 +11,7 @@ Ide:
     ...
 
 backend:
-    yarn yarn start:dev
+    yarn start:dev
 
 frontend:
     yarn start
