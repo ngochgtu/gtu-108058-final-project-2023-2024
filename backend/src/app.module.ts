@@ -4,6 +4,8 @@ import {AppService} from './service/app.service';
 import {MongooseModule} from '@nestjs/mongoose';
 import {SkillType, SkillTypeSchema} from "./schema/SkillType.schema";
 import {Skill, SkillSchema} from "./schema/Skill.schema";
+import {ScheduleModule} from "@nestjs/schedule";
+import {TasksService} from "./service/task.service";
 
 @Module({
     imports: [MongooseModule.forRoot(
@@ -12,10 +14,11 @@ import {Skill, SkillSchema} from "./schema/Skill.schema";
         MongooseModule.forFeature([
             {name: SkillType.name, schema: SkillTypeSchema},
             {name: Skill.name, schema: SkillSchema}
-        ])
+        ]),
+        ScheduleModule.forRoot()
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [AppService, TasksService],
 })
 export class AppModule {
 }
