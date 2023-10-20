@@ -16,4 +16,9 @@ export class AppController {
     getSkillTypes(): Promise<SkillType[]> {
         return this.appService.getAllSkillTypes()
     }
+
+    @Get("/skills")
+    getSkills(): Promise<SkillType[]> {
+        return this.appService.getSkills()
+    }
 }

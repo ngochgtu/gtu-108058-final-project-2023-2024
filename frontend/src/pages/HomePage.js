@@ -4,7 +4,7 @@ const HomePage = () => {
     const [skillTypes, setSkillTypes] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:3001/skill_types", {
+        fetch("http://localhost:3001/skills", {
             method: "GET"
         })
             .then((response) => response.json())
@@ -16,9 +16,14 @@ const HomePage = () => {
 
     return <div>
         <h1>Home Page</h1>
-        {skillTypes.map(skillType => {
-            return <div>{skillType.name}</div>
-        })}
+        <div>
+            <label htmlFor="skills">Choose a skill:</label>
+            <select name="skills">
+                <option value=""></option>
+                {skillTypes.map(skillType => <option value={skillType.name}>{skillType.name}</option>)}
+            </select>
+        </div>
+        <button>Start</button>
     </div>
 }
 
