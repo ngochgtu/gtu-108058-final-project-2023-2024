@@ -19,8 +19,7 @@ export class AppController {
     @Post("/skill")
     async createSkill(@Res() response, @Body() createSkillDto: CreateSkillDto) {
         try {
-            const newSkill =
-                await this.appService.createSkill(createSkillDto);
+            const newSkill = await this.appService.createSkill(createSkillDto);
             return response.status(HttpStatus.CREATED).json({
                 message: 'Skill has been created successfully',
                 newStudent: newSkill,

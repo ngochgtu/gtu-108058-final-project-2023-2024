@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import {Col, Container, Row} from "react-bootstrap";
 
 const SkillsCheckPage = () => {
-    const [questions, setQuestions] = useState(null)
+    const [question, setQuestion] = useState(null)
 
     const location = useLocation();
 
@@ -21,20 +21,14 @@ const SkillsCheckPage = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    handleQuestions(data)
+                    setQuestion(data)
                 })
                 .catch((error) => console.log(error));
         }
     }
 
-    const handleQuestions = (data) => {
-        if (data && Array.isArray(data)) {
-            setQuestions(data)
-        }
-    }
-
     const handleNextClick = () => {
-        setQuestions(null)
+        setQuestion(null)
         fetch_data();
     }
 
@@ -46,14 +40,15 @@ const SkillsCheckPage = () => {
             }) : ""}
             </Col>
         </Row>
-        {questions ? questions.map(e => {
-            return <Row>
+        {question ?
+            <Row>
                 <Col>
-                    <SkillCheck key={e.id} question={e.question}/>
+                    <SkillCheck key={question._id} question={question.question}/>
                     <Button variant="primary" onClick={handleNextClick}>Next</Button>
                 </Col>
-            </Row>
-        }) : <Col>Loading Question ...</Col>}
+            </Row> :
+            <Col>Loading Question ...</Col>
+        }
     </Container>
 }
 

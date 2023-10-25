@@ -30,24 +30,4 @@ export class OpenaiService {
             throw new Error('Failed to get completion from OpenAI');
         }
     }
-
-    async getSkills(): Promise<string> {
-        const headers = {
-            'Authorization': `Bearer ${this.API_KEY}`,
-            'Content-Type': 'application/json',
-        };
-
-        const body = {
-            prompt: "Write List of all available type of Skill.",
-            max_tokens: 150,
-        };
-
-        try {
-            const response = await axios.post(this.OPENAI_URL, body, {headers: headers});
-            return response.data.choices[0].text.trim();
-        } catch (error) {
-            console.error('Error calling OpenAI API:', error);
-            throw new Error('Failed to get completion from OpenAI');
-        }
-    }
 }
