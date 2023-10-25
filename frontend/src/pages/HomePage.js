@@ -11,29 +11,21 @@ const HomePage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:3001/api/skills", {
-            method: "GET"
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                handleData(data)
-            })
-            .catch((error) => console.log(error));
+        const fetchData = async () => {
+            const data = await fetch("http://localhost:3001/api/skills");
+            const json = await data.json();
+            if (json && Array.isArray(json)) {
+                setSkills(json.map(e => {
+                    return {value: e._id, label: e.name}
+                }))
+            } else {
+                setSkills([{value: "empty", label: data["message"]}])
+            }
+        }
+        fetchData().catch(console.error);
     }, []);
 
-    const handleData = (data) => {
-        let temp = data;
-        if (temp && Array.isArray(temp)) {
-            setSkills(temp.map(e => {
-                return {value: e._id, label: e.name}
-            }))
-        } else {
-            setSkills([{value: "empty", label: data["message"]}])
-        }
-    }
-
     const handleStartClick = (e) => {
-        console.log(selectedSkills)
         navigate("/check", {state: selectedSkills});
     }
 
@@ -44,7 +36,7 @@ const HomePage = () => {
     return <div>
         <Container className="p-3">
             <Row>
-                <h1 className="header">Welcome To Sills Verifier</h1>
+                <h2 className="header">Select Skills</h2>
             </Row>
             <Row style={{marginTop: 10, marginBottom: 10}}>
                 <Select options={skills}

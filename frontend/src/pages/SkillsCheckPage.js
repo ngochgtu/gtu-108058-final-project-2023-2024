@@ -3,7 +3,6 @@ import {useLocation} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import {Col, Container, Row} from "react-bootstrap";
-import Select from "react-select";
 
 const SkillsCheckPage = () => {
     const [questions, setQuestions] = useState(null)
@@ -40,14 +39,21 @@ const SkillsCheckPage = () => {
     }
 
     return <Container className="p-3">
+        <Row style={{marginBottom: 10}}>
+            <Col>
+                Skills: {location.state ? location.state.map(e => {
+                return e.label + ", "
+            }) : ""}
+            </Col>
+        </Row>
         {questions ? questions.map(e => {
-            return <Row style={{margin: 10}}>
+            return <Row>
                 <Col>
                     <SkillCheck key={e.id} question={e.question}/>
                     <Button variant="primary" onClick={handleNextClick}>Next</Button>
                 </Col>
             </Row>
-        }) : "Loading..."}
+        }) : <Col>Loading Question ...</Col>}
     </Container>
 }
 
