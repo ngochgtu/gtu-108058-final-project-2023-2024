@@ -1,14 +1,11 @@
 import {Card} from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 
 const SkillCheck = ({question}) => {
-    return <Card style={{margin: 10}}>
+    return <Card style={{marginBottom: 10}}>
         <Card.Body>
-            <Card.Title>Question</Card.Title>
             <Card.Text>
-                {question.question}
+                {question}
             </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
         </Card.Body>
     </Card>
 }

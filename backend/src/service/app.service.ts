@@ -44,7 +44,7 @@ export class AppService {
 
         return [{
             "id": 1,
-            "question": await this.openaiService.getCompletion(`Generate Question and answer for skill ${skillNames}`)
+            "question": await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames}`)
         }]
     }
 }
