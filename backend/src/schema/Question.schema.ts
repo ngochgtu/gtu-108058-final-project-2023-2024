@@ -15,6 +15,8 @@ export class Question {
     answer: string;
     @Prop()
     openai_question: string;
+    @Prop()
+    session_id: string;
 }
 
 export const QuestionSchema = SchemaFactory.createForClass(Question);

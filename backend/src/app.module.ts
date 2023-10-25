@@ -7,6 +7,7 @@ import {ScheduleModule} from "@nestjs/schedule";
 import {TasksService} from "./service/task.service";
 import {OpenaiService} from './service/openai.service';
 import {Question, QuestionSchema} from "./schema/Question.schema";
+import {SkillType, SkillTypeSchema} from "./schema/SkillType.schema";
 
 @Module({
     imports: [MongooseModule.forRoot(
@@ -14,6 +15,7 @@ import {Question, QuestionSchema} from "./schema/Question.schema";
     ),
         MongooseModule.forFeature([
             {name: Skill.name, schema: SkillSchema},
+            {name: SkillType.name, schema: SkillTypeSchema},
             {name: Question.name, schema: QuestionSchema}
         ]),
         ScheduleModule.forRoot()

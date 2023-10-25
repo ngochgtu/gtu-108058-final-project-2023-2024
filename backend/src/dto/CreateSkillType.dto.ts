@@ -1,13 +1,13 @@
 import {IsNotEmpty, IsNumber, IsString, MaxLength} from 'class-validator';
 
-export class CreateSkillDto {
+export class CreateSkillTypeDto {
     @IsString()
     @MaxLength(500)
     @IsNotEmpty()
     readonly name: string;
 
     @IsString()
-    @MaxLength(2000)
+    @MaxLength(50)
     @IsNotEmpty()
-    readonly type: string;
+    readonly status: string;
 }

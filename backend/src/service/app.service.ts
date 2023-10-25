@@ -6,12 +6,16 @@ import {CreateSkillDto} from "../dto/CreateSkill.dto";
 import {OpenaiService} from "./openai.service";
 import {CreateQuestionDto} from "../dto/CreateQuestion.dto";
 import {Question} from "../schema/Question.schema";
+import {CreateSkillTypeDto} from "../dto/CreateSkillType.dto";
+import {SkillType} from "../schema/SkillType.schema";
+import {UpdateSkillTypeDto} from "../dto/UpdateSkillType.dto";
 
 @Injectable()
 export class AppService {
 
     constructor(
         @InjectModel(Skill.name) private skillModel: Model<Skill>,
+        @InjectModel(SkillType.name) private skillTypeModel: Model<SkillType>,
         @InjectModel(Question.name) private questionModel: Model<Question>,
         private readonly openaiService: OpenaiService
     ) {
@@ -19,6 +23,26 @@ export class AppService {
 
     getHello(): string {
         return 'Hello World!';
+    }
+
+    async createSkillType(createSkillTypeDto: CreateSkillTypeDto): Promise<SkillType> {
+        const [newSkillType] = await Promise.all([new this.skillTypeModel(createSkillTypeDto)]);
+        return newSkillType.save();
+    }
+
+    async updateSkillType(
+        skillTypeId: string,
+        updateSkillTypeDto: UpdateSkillTypeDto,
+    ): Promise<SkillType> {
+        const existingStudent = await this.skillTypeModel.findByIdAndUpdate(
+            skillTypeId,
+            updateSkillTypeDto,
+            {new: true},
+        );
+        if (!existingStudent) {
+            throw new NotFoundException(`Skill type #${skillTypeId} not found`);
+        }
+        return existingStudent;
     }
 
     async createSkill(createSkillDto: CreateSkillDto): Promise<Skill> {
@@ -37,6 +61,14 @@ export class AppService {
             throw new NotFoundException('Skills data not found!');
         }
         return skills;
+    }
+
+    async getSkillTypes(status: string): Promise<SkillType[]> {
+        const skillTypes = await this.skillTypeModel.find({status: status});
+        if (!skillTypes || skillTypes.length == 0) {
+            throw new NotFoundException('Skill types data not found!');
+        }
+        return skillTypes;
     }
 
     async getQuestionsBySkills(skills: string[]) {
@@ -112,6 +144,7 @@ export class AppService {
         }
         createQuestionDto.answer = answer
         createQuestionDto.fake_answers = fake_answers
+        createQuestionDto.session_id = "NoUser"
 
         console.log(createQuestionDto)
         return createQuestionDto;

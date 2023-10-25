@@ -24,4 +24,9 @@ export class CreateQuestionDto {
     @MaxLength(500)
     @IsNotEmpty()
     openai_question: string;
+
+    @IsString()
+    @MaxLength(500)
+    @IsNotEmpty()
+    session_id: string;
 }
