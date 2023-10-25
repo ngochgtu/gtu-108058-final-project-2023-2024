@@ -19,4 +19,9 @@ export class CreateQuestionDto {
     @MaxLength(500)
     @IsNotEmpty()
     answer: string;
+
+    @IsString()
+    @MaxLength(500)
+    @IsNotEmpty()
+    openai_question: string;
 }

@@ -51,13 +51,81 @@ export class AppService {
             skillNames.push(dbSkill.name)
         }
 
-        const question = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames}`)
+        const openaiQuestion = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames}`)
+
+        const createQuestionDto = this.openai_question_to_dto(openaiQuestion)
+        createQuestionDto.skill_names = skillNames
+        createQuestionDto.openai_question = openaiQuestion
+
+        const dbQuestion = await this.createQuestion(createQuestionDto)
+
+        return {
+            _id: dbQuestion["_id"],
+            question: dbQuestion.question,
+            fake_answers: dbQuestion.fake_answers
+        }
+    }
+
+
+    openai_question_to_dto = (openaiQuestion: string): CreateQuestionDto => {
+        console.log("Row Question:", openaiQuestion)
 
         const createQuestionDto = new CreateQuestionDto();
-        createQuestionDto.skill_names = skillNames
-        createQuestionDto.question = question
-        createQuestionDto.answer = question.substring(question.indexOf("True Answer:"))
 
-        return await this.createQuestion(createQuestionDto)
+        const questionParts = openaiQuestion.split(/\r?\n/);
+
+        createQuestionDto.question = questionParts[0]
+
+        const fake_answers = []
+        let answer = "";
+
+        for (let i = 1; i < questionParts.length; i++) {
+            const questionPart = questionParts[i].trim()
+            if (questionPart && !questionPart.includes("Fake Answer:") && !questionPart.includes("Fake Answers:")) {
+
+                // Check "True Answer"
+                const trueAnswer = "True Answer:"
+                const trueAnswer2 = "True answer:"
+                const correctAnswer = "Correct Answer"
+                const correctAnswer2 = "Correct answer:"
+
+                let temp = this.getCorrectAnswer(i, questionPart, trueAnswer, questionParts)
+                if (!temp) {
+                    temp = this.getCorrectAnswer(i, questionPart, trueAnswer2, questionParts)
+                }
+                if (!temp) {
+                    temp = this.getCorrectAnswer(i, questionPart, correctAnswer, questionParts)
+                }
+                if (!temp) {
+                    temp = this.getCorrectAnswer(i, questionPart, correctAnswer2, questionParts)
+                }
+
+                if (temp) {
+                    answer = temp
+                } else {
+                    fake_answers.push(questionPart)
+                }
+            }
+        }
+        if (!fake_answers.includes(answer)) {
+            fake_answers.push(answer)
+        }
+        createQuestionDto.answer = answer
+        createQuestionDto.fake_answers = fake_answers
+
+        console.log(createQuestionDto)
+        return createQuestionDto;
+    }
+
+    getCorrectAnswer = (i: number, questionPart: string, keyWord: string, questionParts: string[]) => {
+        let answer = null
+        if (questionPart.startsWith(keyWord) || questionPart.includes(keyWord)) {
+            if (i + 1 < questionParts.length) {
+                answer = questionParts[i + 1]
+            } else {
+                answer = questionPart.substring(questionPart.indexOf(keyWord) + keyWord.length)
+            }
+        }
+        return answer
     }
 }

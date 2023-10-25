@@ -13,6 +13,8 @@ export class Question {
     fake_answers: string[];
     @Prop()
     answer: string;
+    @Prop()
+    openai_question: string;
 }
 
 export const QuestionSchema = SchemaFactory.createForClass(Question);

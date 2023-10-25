@@ -43,7 +43,7 @@ const SkillsCheckPage = () => {
         {question ?
             <Row>
                 <Col>
-                    <SkillCheck key={question._id} question={question.question}/>
+                    <SkillCheck key={question._id} question={question}/>
                     <Button variant="primary" onClick={handleNextClick}>Next</Button>
                 </Col>
             </Row> :
