@@ -2,9 +2,13 @@ import {useEffect, useState} from "react";
 import Select from 'react-select'
 import Button from 'react-bootstrap/Button';
 import {Col, Container, Row} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 
 const HomePage = () => {
     const [skills, setSkills] = useState([])
+    const [selectedSkills, setSelectedSkills] = useState([])
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://localhost:3001/api/skills", {
@@ -28,6 +32,15 @@ const HomePage = () => {
         }
     }
 
+    const handleStartClick = (e) => {
+        console.log(selectedSkills)
+        navigate("/check", {state: selectedSkills});
+    }
+
+    const handleSkillChange = (e) => {
+        setSelectedSkills(e)
+    }
+
     return <div>
         <Container className="p-3">
             <Row>
@@ -38,10 +51,14 @@ const HomePage = () => {
                         isMulti
                         name="colors"
                         className="basic-multi-select"
-                        classNamePrefix="select"/>
+                        classNamePrefix="select"
+                        onChange={handleSkillChange}
+                />
             </Row>
             <Row>
-                <Col><Button variant="primary">Start</Button></Col>
+                <Col>
+                    <Button variant="primary" onClick={handleStartClick}>Start</Button>
+                </Col>
             </Row>
         </Container>
     </div>

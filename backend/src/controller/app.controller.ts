@@ -43,4 +43,9 @@ export class AppController {
     async getCompletion(@Query('prompt') prompt: string): Promise<string> {
         return this.openaiService.getCompletion(prompt);
     }
+
+    @Get("/questions")
+    async getQuestionsBySkills(@Query('skills') skills: string) {
+        return this.appService.getQuestionsBySkills(skills.split(","));
+    }
 }

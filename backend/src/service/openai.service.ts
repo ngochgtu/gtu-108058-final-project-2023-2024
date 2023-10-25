@@ -3,7 +3,7 @@ import axios from 'axios';
 
 @Injectable()
 export class OpenaiService {
-    private readonly OPENAI_URL = 'https://api.openai.com/v1/engines/davinci/completions';
+    private readonly OPENAI_URL = 'https://api.openai.com/v1/chat/completions';
     private readonly API_KEY = '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'; // Use environment variables for production
 
     async getCompletion(prompt: string): Promise<string> {
@@ -12,14 +12,36 @@ export class OpenaiService {
             'Content-Type': 'application/json',
         };
 
+        // curl https://api.openai.com/v1/chat/completions \
+        //   -H "Content-Type: application/json" \
+        //   -H "Authorization: Bearer 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" \
+        //   -d '{
+        //     "model": "gpt-4",
+        //     "messages": [
+        //       {
+        //         "role": "system",
+        //         "content": "You are a helpful assistant."
+        //       },
+        //       {
+        //         "role": "user",
+        //         "content": "Hello!"
+        //       }
+        //     ]
+        //   }'
+
         const body = {
-            prompt: prompt,
-            max_tokens: 150,
+            model: "gpt-4",
+            messages: [
+                {
+                    "role": "system",
+                    "content": prompt
+                },
+            ]
         };
 
         try {
             const response = await axios.post(this.OPENAI_URL, body, {headers: headers});
-            return response.data.choices[0].text.trim();
+            return response.data.choices[0].message.content;
         } catch (error) {
             console.error('Error calling OpenAI API:', error);
             throw new Error('Failed to get completion from OpenAI');
