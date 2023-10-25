@@ -1,29 +1,49 @@
 import {useEffect, useState} from "react";
+import Select from 'react-select'
+import Button from 'react-bootstrap/Button';
+import {Col, Container, Row} from "react-bootstrap";
 
 const HomePage = () => {
-    const [skillTypes, setSkillTypes] = useState([])
+    const [skills, setSkills] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:3001/skills", {
+        fetch("http://localhost:3001/api/skills", {
             method: "GET"
         })
             .then((response) => response.json())
             .then((data) => {
-                setSkillTypes(data);
+                handleData(data)
             })
             .catch((error) => console.log(error));
     }, []);
 
+    const handleData = (data) => {
+        let temp = data;
+        if (temp && Array.isArray(temp)) {
+            setSkills(temp.map(e => {
+                return {value: e._id, label: e.name}
+            }))
+        } else {
+            setSkills([{value: "empty", label: data["message"]}])
+        }
+    }
+
     return <div>
-        <h1>Home Page</h1>
-        <div>
-            <label htmlFor="skills">Choose a skill:</label>
-            <select name="skills">
-                <option value=""></option>
-                {skillTypes.map(skillType => <option value={skillType.name}>{skillType.name}</option>)}
-            </select>
-        </div>
-        <button>Start</button>
+        <Container className="p-3">
+            <Row>
+                <h1 className="header">Welcome To Sills Verifier</h1>
+            </Row>
+            <Row style={{marginTop: 10, marginBottom: 10}}>
+                <Select options={skills}
+                        isMulti
+                        name="colors"
+                        className="basic-multi-select"
+                        classNamePrefix="select"/>
+            </Row>
+            <Row>
+                <Col><Button variant="primary">Start</Button></Col>
+            </Row>
+        </Container>
     </div>
 }
 
