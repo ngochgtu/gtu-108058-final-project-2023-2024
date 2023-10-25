@@ -6,6 +6,7 @@ import {SkillType, SkillTypeSchema} from "./schema/SkillType.schema";
 import {Skill, SkillSchema} from "./schema/Skill.schema";
 import {ScheduleModule} from "@nestjs/schedule";
 import {TasksService} from "./service/task.service";
+import { OpenaiService } from './service/openai.service';
 
 @Module({
     imports: [MongooseModule.forRoot(
@@ -18,7 +19,7 @@ import {TasksService} from "./service/task.service";
         ScheduleModule.forRoot()
     ],
     controllers: [AppController],
-    providers: [AppService, TasksService],
+    providers: [AppService, TasksService, OpenaiService],
 })
 export class AppModule {
 }

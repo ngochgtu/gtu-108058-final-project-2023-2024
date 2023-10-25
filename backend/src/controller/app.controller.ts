@@ -1,10 +1,13 @@
-import {Controller, Get} from '@nestjs/common';
+import {Controller, Get, Query} from '@nestjs/common';
 import {AppService} from '../service/app.service';
 import {SkillType} from "../schema/SkillType.schema";
+import {OpenaiService} from "../service/openai.service";
 
 @Controller()
 export class AppController {
-    constructor(private readonly appService: AppService) {
+    constructor(
+        private readonly appService: AppService,
+        private readonly openaiService: OpenaiService) {
     }
 
     @Get()
@@ -20,5 +23,10 @@ export class AppController {
     @Get("/skills")
     getSkills(): Promise<SkillType[]> {
         return this.appService.getSkills()
+    }
+
+    @Get("/ask")
+    async getCompletion(@Query('prompt') prompt: string): Promise<string> {
+        return this.openaiService.getCompletion(prompt);
     }
 }
