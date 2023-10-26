@@ -1,10 +1,16 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppController } from './controller/app.controller';
+import { AppService } from './service/app.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UserSchema } from './schema/User.Schema';
+import { UsersService } from './service/users.service';
 
 @Module({
-  imports: [],
+  imports: [
+    MongooseModule.forRoot('mongodb+srv://skills_verifier:ZyUSGsUUp7tTZ4d6@cluster0.7xtlism.mongodb.net/?retryWrites=true&w=majority'),
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, UsersService],
 })
 export class AppModule {}
