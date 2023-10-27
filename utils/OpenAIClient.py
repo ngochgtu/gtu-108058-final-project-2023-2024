@@ -7,7 +7,7 @@ class OpenAIClient:
 
     def __init__(self):
         openai.organization = "org-IwKZC84HB4FE4sLGePCet08w"
-        openai.api_key = "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"
+        openai.api_key = "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"
 
     def get_skill_types(self) -> list:
         print("Getting Skill Types")
@@ -34,26 +34,49 @@ class OpenAIClient:
         return lines
 
 
-if __name__ == '__main__':
-
-    # The API endpoint to communicate with
-    url_post = "http://localhost:3001/api/skill"
-
-    # A POST request to tthe API
-
-    print("Starting")
+def save_skill_types():
+    url_post_type = "http://localhost:3001/api/skill_type"
     client = OpenAIClient()
     for skill_type in client.get_skill_types():
-        msg = f"{skill_type} Skills"
+        new_data = {
+            "name": skill_type,
+            "status": "created"
+        }
+        post_response = requests.post(url_post_type, json=new_data)
+        post_response_json = post_response.json()
+        print(post_response_json)
+
+
+def save_skills():
+    client = OpenAIClient()
+
+    response = requests.get("http://localhost:3001/api/skill_types/created")
+    skill_types = response.json()
+    print(skill_types)
+
+    for skill_type in skill_types:
+        print(skill_type)
+        msg = f"{skill_type['name']} Skills"
         print(msg)
-        for skill in client.get_skills(f"{skill_type}"):
-            skill_name = skill
+        for skill in client.get_skills(f'{skill_type["name"]}'):
             if skill:
                 skill_name = skill[3:].strip()
                 new_data = {
                     "name": skill_name,
-                    "type": skill_type
+                    "type": skill_type["name"]
                 }
-                post_response = requests.post(url_post, json=new_data)
+                post_response = requests.post("http://localhost:3001/api/skill", json=new_data)
                 post_response_json = post_response.json()
                 print(post_response_json)
+
+        update_data = {
+            "status": "done"
+        }
+        post_response = requests.put(f"http://localhost:3001/api/skill_type/{skill_type['_id']}", json=update_data)
+        post_response_json = post_response.json()
+        print(post_response_json)
+
+
+if __name__ == '__main__':
+    # save_skill_types()
+    save_skills()

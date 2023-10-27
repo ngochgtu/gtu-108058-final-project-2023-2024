@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import Select from 'react-select'
 import Button from 'react-bootstrap/Button';
 import {Col, Container, Row} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const HomePage = () => {
     const [skills, setSkills] = useState([])
@@ -33,27 +33,28 @@ const HomePage = () => {
         setSelectedSkills(e)
     }
 
-    return <div>
-        <Container className="p-3">
-            <Row>
-                <h2 className="header">Select Skills</h2>
-            </Row>
-            <Row style={{marginTop: 10, marginBottom: 10}}>
-                <Select options={skills}
-                        isMulti
-                        name="colors"
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                        onChange={handleSkillChange}
-                />
-            </Row>
-            <Row>
-                <Col>
-                    <Button variant="primary" onClick={handleStartClick}>Start</Button>
-                </Col>
-            </Row>
-        </Container>
-    </div>
+    return <Container className="p-3">
+        <Row>
+            <h2>User Name {localStorage.getItem("username")}</h2>
+        </Row>
+        <Row>
+            <h2 className="header">Select Skills</h2>
+        </Row>
+        <Row style={{marginTop: 10, marginBottom: 10}}>
+            <Select options={skills}
+                    isMulti
+                    name="colors"
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                    onChange={handleSkillChange}
+            />
+        </Row>
+        <Row>
+            <Col>
+                <Button variant="primary" onClick={handleStartClick}>Start</Button>
+            </Col>
+        </Row>
+    </Container>
 }
 
 export default HomePage

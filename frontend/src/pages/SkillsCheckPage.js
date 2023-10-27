@@ -1,10 +1,11 @@
 import SkillCheck from "../components/SkillCheck";
 import {useLocation} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import {Col, Container, Row} from "react-bootstrap";
 
 const SkillsCheckPage = () => {
+    const [answer, setAnswer] = useState("Demo")
     const [question, setQuestion] = useState(null)
 
     const location = useLocation();
@@ -27,10 +28,30 @@ const SkillsCheckPage = () => {
         }
     }
 
-    const handleNextClick = () => {
+    const handleNextClick = async () => {
+        const data = await fetch("http://localhost:3001/api/user_question", {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            method: "POST",
+            body: JSON.stringify({
+                    username: localStorage.getItem("username"),
+                    question_id: question._id,
+                    answer: answer
+                }
+            )
+        });
+        const json = await data.json();
+        console.log(json)
+
         setQuestion(null)
+
         fetch_data();
     }
+
+    const changeAnswer = useCallback((e) => {
+        setAnswer(e.target.value);
+    }, []);
 
     return <Container className="p-3">
         <Row style={{marginBottom: 10}}>
@@ -43,7 +64,7 @@ const SkillsCheckPage = () => {
         {question ?
             <Row>
                 <Col>
-                    <SkillCheck key={question._id} question={question}/>
+                    <SkillCheck key={question._id} question={question} selectAnswer={changeAnswer}/>
                     <Button variant="primary" onClick={handleNextClick}>Next</Button>
                 </Col>
             </Row> :

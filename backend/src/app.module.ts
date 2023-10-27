@@ -8,6 +8,8 @@ import {TasksService} from "./service/task.service";
 import {OpenaiService} from './service/openai.service';
 import {Question, QuestionSchema} from "./schema/Question.schema";
 import {SkillType, SkillTypeSchema} from "./schema/SkillType.schema";
+import {User, UserSchema} from "./schema/User.schema";
+import {UserQuestion, UserQuestionSchema} from "./schema/UserQuestion.schema";
 
 @Module({
     imports: [MongooseModule.forRoot(
@@ -16,7 +18,9 @@ import {SkillType, SkillTypeSchema} from "./schema/SkillType.schema";
         MongooseModule.forFeature([
             {name: Skill.name, schema: SkillSchema},
             {name: SkillType.name, schema: SkillTypeSchema},
-            {name: Question.name, schema: QuestionSchema}
+            {name: Question.name, schema: QuestionSchema},
+            {name: User.name, schema: UserSchema},
+            {name: UserQuestion.name, schema: UserQuestionSchema}
         ]),
         ScheduleModule.forRoot()
     ],

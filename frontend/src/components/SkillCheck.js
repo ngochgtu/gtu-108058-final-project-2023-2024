@@ -1,6 +1,7 @@
 import {Card, Form} from "react-bootstrap";
 
-const SkillCheck = ({question}) => {
+const SkillCheck = ({question, selectAnswer}) => {
+
     return <Card style={{marginBottom: 10}}>
         <Card.Body>
             <Card.Text>
@@ -12,6 +13,8 @@ const SkillCheck = ({question}) => {
                             type='radio'
                             label={fa}
                             name="group1"
+                            value={fa}
+                            onChange={selectAnswer}
                         />
                     })}
                 </Form>

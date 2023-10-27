@@ -9,6 +9,10 @@ import {Question} from "../schema/Question.schema";
 import {CreateSkillTypeDto} from "../dto/CreateSkillType.dto";
 import {SkillType} from "../schema/SkillType.schema";
 import {UpdateSkillTypeDto} from "../dto/UpdateSkillType.dto";
+import {CreateUserDto} from "../dto/CreateUser.dto";
+import {User} from "../schema/User.schema";
+import {CreateUserQuestionDto} from "../dto/CreateUserQuestion.dto";
+import {UserQuestion} from "../schema/UserQuestion.schema";
 
 @Injectable()
 export class AppService {
@@ -17,6 +21,8 @@ export class AppService {
         @InjectModel(Skill.name) private skillModel: Model<Skill>,
         @InjectModel(SkillType.name) private skillTypeModel: Model<SkillType>,
         @InjectModel(Question.name) private questionModel: Model<Question>,
+        @InjectModel(User.name) private userModel: Model<User>,
+        @InjectModel(UserQuestion.name) private userQuestionModel: Model<UserQuestion>,
         private readonly openaiService: OpenaiService
     ) {
     }
@@ -116,6 +122,7 @@ export class AppService {
             if (questionPart && !questionPart.includes("Fake Answer:") && !questionPart.includes("Fake Answers:")) {
 
                 // Check "True Answer"
+                const answerKeyword = "Answer:"
                 const trueAnswer = "True Answer:"
                 const trueAnswer2 = "True answer:"
                 const correctAnswer = "Correct Answer"
@@ -130,6 +137,9 @@ export class AppService {
                 }
                 if (!temp) {
                     temp = this.getCorrectAnswer(i, questionPart, correctAnswer2, questionParts)
+                }
+                if (!temp) {
+                    temp = this.getCorrectAnswer(i, questionPart, answerKeyword, questionParts)
                 }
 
                 if (temp) {
@@ -161,4 +171,15 @@ export class AppService {
         }
         return answer
     }
+
+    async createUser(createUserDto: CreateUserDto): Promise<User> {
+        const [newUser] = await Promise.all([new this.userModel(createUserDto)]);
+        return newUser.save();
+    }
+
+    async createUserQuestion(createUserQuestionDto: CreateUserQuestionDto): Promise<User> {
+        const [newUser] = await Promise.all([new this.userQuestionModel(createUserQuestionDto)]);
+        return newUser.save();
+    }
+
 }
