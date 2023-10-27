@@ -89,7 +89,7 @@ export class AppService {
             skillNames.push(dbSkill.name)
         }
 
-        const openaiQuestion = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames}`)
+        const openaiQuestion = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames}, DONT NUMBER FAKE ANSWERS`)
 
         const createQuestionDto = this.openai_question_to_dto(openaiQuestion)
         createQuestionDto.skill_names = skillNames
@@ -150,14 +150,18 @@ export class AppService {
             }
         }
         if (!fake_answers.includes(answer)) {
-            fake_answers.push(answer)
+            this.insterAtRandom(fake_answers, answer)
         }
         createQuestionDto.answer = answer
         createQuestionDto.fake_answers = fake_answers
         createQuestionDto.session_id = "NoUser"
 
-        console.log(createQuestionDto)
+        console.log(questionParts)
         return createQuestionDto;
+    }
+    insterAtRandom = (array, element) => {
+        const randomIndex = Math.floor(Math.random() * (array.length + 1));
+        array.splice(randomIndex, 0, element);
     }
 
     getCorrectAnswer = (i: number, questionPart: string, keyWord: string, questionParts: string[]) => {

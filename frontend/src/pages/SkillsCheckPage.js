@@ -52,6 +52,7 @@ const SkillsCheckPage = () => {
     const changeAnswer = useCallback((e) => {
         setAnswer(e.target.value);
     }, []);
+    
 
     return <Container className="p-3">
         <Row style={{marginBottom: 10}}>
