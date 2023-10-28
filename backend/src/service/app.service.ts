@@ -89,7 +89,7 @@ export class AppService {
             skillNames.push(dbSkill.name)
         }
 
-        const openaiQuestion = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames}, DONT NUMBER FAKE ANSWERS`)
+        const openaiQuestion = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames}`)
 
         const createQuestionDto = this.openai_question_to_dto(openaiQuestion)
         createQuestionDto.skill_names = skillNames
@@ -104,6 +104,37 @@ export class AppService {
         }
     }
 
+    escapeRegExp(pattern) {
+        return pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }
+       shuffleArray(array) {
+        const shuffledArray = [...array];
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; // Swap elements
+        }
+        return shuffledArray;
+      }
+    removeWordsFromArray(inputArray, patternsToRemove) {
+        if (!Array.isArray(inputArray)) {
+          throw new Error('Input is not an array');
+        }
+        const resultArray = inputArray.map((inputString) => {
+          if (typeof inputString !== 'string') {
+            throw new Error('Input in the array is not a string');
+          }
+      
+          const pattern = new RegExp(patternsToRemove.map(this.escapeRegExp).join('|'), 'g');
+      
+          if (pattern.test(inputString)) {
+            return inputString.replace(pattern, '');
+          }
+          return inputString;
+        });
+      
+        return resultArray;
+      }
+      
 
     openai_question_to_dto = (openaiQuestion: string): CreateQuestionDto => {
         console.log("Row Question:", openaiQuestion)
@@ -114,6 +145,13 @@ export class AppService {
 
         createQuestionDto.question = questionParts[0]
 
+        const stringsToRemove = [
+            'A)', 'B)', 'C)', 'D)', 'E)',
+            'A.', 'B.', 'C.', 'D.', 'E.',
+            '1.', '2.', '3.', '4.', '5.',
+            '1)', '2)', '3)', '4)', '5)',
+            '1', '2', '3', '4', '5',
+          ];
         const fake_answers = []
         let answer = "";
 
@@ -152,13 +190,17 @@ export class AppService {
         if (!fake_answers.includes(answer)) {
             this.insterAtRandom(fake_answers, answer)
         }
+        const updated_fake_answers = this.removeWordsFromArray(fake_answers,stringsToRemove)
+        const ShaffledArray = this.shuffleArray(updated_fake_answers)
         createQuestionDto.answer = answer
-        createQuestionDto.fake_answers = fake_answers
+        createQuestionDto.fake_answers = ShaffledArray
         createQuestionDto.session_id = "NoUser"
 
-        console.log(questionParts)
+        console.log(updated_fake_answers)
         return createQuestionDto;
     }
+    
+
     insterAtRandom = (array, element) => {
         const randomIndex = Math.floor(Math.random() * (array.length + 1));
         array.splice(randomIndex, 0, element);
