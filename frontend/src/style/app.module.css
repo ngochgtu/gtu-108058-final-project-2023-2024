@@ -3,16 +3,23 @@
   flex-direction: row;
   align-content: space-between;
   align-items: center;
-  box-shadow: 1px 1px 2px 2px grey;
+  box-shadow: 1px 1px 3px 3px grey;
   border-radius: 0.5rem;
   background-color: #0d1117;
   /* color: darkorchid; */
   color: lightgreen;
+  height: 3.5rem;
+  /* outline: solid; */
 }
 
 .img_container {
   background-color: grey;
   width: fit-content;
+  border-radius: 2rem;
+}
+
+.img {
+  width: 2.3rem;
 }
 
 .content {
@@ -25,13 +32,17 @@
   cursor: pointer;
   border-radius: 0.3rem;
   border: none;
-  outline: solid rgb(202, 202, 202);
-  outline-width: 2px;
+  outline-width: 1px;
   background: #0d1117;
   color: lightgreen;
 }
 
 .button:hover {
-  background-color: lightgreen;
+  background-color: rgb(37, 37, 37);
   color: #0d1117;
+}
+
+.img_logout {
+  width: 1.5rem;
+  height: 1.7rem;
 }

@@ -2,6 +2,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import styles from "../style/app.module.css";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import logo from "../assets/zombie_icon.png";
+import logout from "../assets/logout.png";
 
 const Header = () => {
   return (
@@ -41,13 +43,17 @@ const Header = () => {
           <Col>
             <h1>Skills Verifier</h1>
           </Col>
-          <div className={styles.img_container}>image</div>
+
+          <div className={styles.img_container}>
+            <img src={logo} className={styles.img}></img>
+          </div>
           <div className={styles.content}>
-            <span>erekle</span>
-            <span>welcome</span>
+            <span>welcome {localStorage.getItem("username")}</span>
           </div>
           <div className={styles.button_container}>
-            <button className={styles.button}>log out</button>
+            <button className={styles.button}>
+              <img src={logout} className={styles.img_logout}></img>
+            </button>
           </div>
         </div>
       </Row>
