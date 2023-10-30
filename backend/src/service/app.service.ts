@@ -147,10 +147,12 @@ export class AppService {
 
         const stringsToRemove = [
             'A)', 'B)', 'C)', 'D)', 'E)',
+            'a)', 'b)', 'c)', 'd)', 'e)',
             'A.', 'B.', 'C.', 'D.', 'E.',
+            'a.', 'b.', 'c.', 'd.', 'e.',
             '1.', '2.', '3.', '4.', '5.',
             '1)', '2)', '3)', '4)', '5)',
-            '1', '2', '3', '4', '5',
+            '1', '2', '3', '4', '5','Fake Answer :'
           ];
         const fake_answers = []
         let answer = "";
@@ -187,6 +189,9 @@ export class AppService {
                 }
             }
         }
+        // if(answer === ''){
+        //     this.getQuestionsBySkills([])
+        // }
         if (!fake_answers.includes(answer)) {
             this.insterAtRandom(fake_answers, answer)
         }

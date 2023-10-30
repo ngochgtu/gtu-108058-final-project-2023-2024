@@ -7,6 +7,7 @@ import SkillsCheckPage from "./pages/SkillsCheckPage";
 import Header from "./components/Header";
 import ResultPage from "./pages/ResultPage";
 import AuthPage from "./pages/AuthPage";
+import ErrorPage from "./pages/ErrorPage";
 
 const router = createHashRouter([
     {
@@ -25,6 +26,10 @@ const router = createHashRouter([
         path: "/result",
         element: <ResultPage/>
     },
+    {
+        element: <ErrorPage/>,
+        path: '*',
+    }
 ]);
 
 const App = () => {

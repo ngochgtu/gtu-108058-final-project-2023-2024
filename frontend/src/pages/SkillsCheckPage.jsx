@@ -1,14 +1,18 @@
 import SkillCheck from "../components/SkillCheck";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import React, {useCallback, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import {Col, Container, Row} from "react-bootstrap";
+import {  Oval } from 'react-loader-spinner'
 
 const SkillsCheckPage = () => {
     const [answer, setAnswer] = useState("Demo")
     const [question, setQuestion] = useState(null)
+    const [counter, setCounter] = useState(0)
 
     const location = useLocation();
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch_data();
@@ -45,6 +49,7 @@ const SkillsCheckPage = () => {
         console.log(json)
 
         setQuestion(null)
+        setCounter(counter + 1)
 
         fetch_data();
     }
@@ -52,13 +57,17 @@ const SkillsCheckPage = () => {
     const changeAnswer = useCallback((e) => {
         setAnswer(e.target.value);
     }, []);
+
+    const handleFinishButton = () => {
+        navigate("/result")
+    }
     
 
     return <Container className="p-3">
-        <Row style={{marginBottom: 10}}>
+        <Row style={{marginBottom: 50}}>
             <Col>
                 Skills: {location.state ? location.state.map(e => {
-                return e.label + ", "
+                return e.label
             }) : ""}
             </Col>
         </Row>
@@ -66,10 +75,28 @@ const SkillsCheckPage = () => {
             <Row>
                 <Col>
                     <SkillCheck key={question._id} question={question} selectAnswer={changeAnswer}/>
-                    <Button variant="primary" onClick={handleNextClick}>Next</Button>
+                    <div style={{display: 'flex' , justifyContent: 'space-between'}}>
+                        <Button variant="primary" onClick={handleNextClick}>Next</Button>
+                        { counter >= 10 ? <Button variant="primary" onClick={handleFinishButton} >Finish</Button> : '' }
+                    </div>
+                    
                 </Col>
             </Row> :
-            <Col>Loading Question ...</Col>
+            <div style={{display:"flex", justifyContent:'center', alignItems:'center'}}>
+
+                <Oval
+                height={80}
+                width={80}
+                color="#4d4fa9"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                ariaLabel='oval-loading'
+                secondaryColor="#4fa94d"
+                strokeWidth={2}
+                strokeWidthSecondary={2}
+                />
+                </div>
         }
     </Container>
 }
