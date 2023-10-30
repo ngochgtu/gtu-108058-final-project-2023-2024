@@ -137,7 +137,7 @@ export class AppService {
       
 
     openai_question_to_dto = (openaiQuestion: string): CreateQuestionDto => {
-        console.log("Row Question:", openaiQuestion)
+        // console.log("Row Question:", openaiQuestion)
 
         const createQuestionDto = new CreateQuestionDto();
 
@@ -201,7 +201,7 @@ export class AppService {
         createQuestionDto.fake_answers = ShaffledArray
         createQuestionDto.session_id = "NoUser"
 
-        console.log(updated_fake_answers)
+        console.log(createQuestionDto)
         return createQuestionDto;
     }
     
