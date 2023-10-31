@@ -41,7 +41,7 @@ const Header = () => {
         </Col> */}
         <div className={styles.container}>
           <Col>
-            <h1>Skills Verifier</h1>
+            <h1 className={styles.title}>Skills Verifier</h1>
           </Col>
 
           <div className={styles.img_container}>
