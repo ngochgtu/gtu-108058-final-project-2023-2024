@@ -15,7 +15,7 @@ const SkillsCheckPage = () => {
         fetch_data();
     }, []);
 
-    const fetch_data = () => {
+    const fetch_data = useCallback(() => {
         if (location.state) {
             const sillIds = location.state.map(e => e.value)
             fetch(`${BASE_PATH}/api/questions?skills=${sillIds}`, {
@@ -27,7 +27,7 @@ const SkillsCheckPage = () => {
                 })
                 .catch((error) => console.log(error));
         }
-    }
+    }, [question])
 
     const handleNextClick = async () => {
         const data = await fetch(`${BASE_PATH}/api/user_question`, {
