@@ -11,13 +11,10 @@ const SkillsCheckPage = () => {
 
     const location = useLocation();
 
-    useEffect(() => {
-        fetch_data();
-    }, [location.state, fetch_data]);
-
     const fetch_data = useCallback(() => {
-        if (location.state) {
-            const sillIds = location.state.map(e => e.value)
+        const state = location.state
+        if (state) {
+            const sillIds = state.map(e => e.value)
             fetch(`${BASE_PATH}/api/questions?skills=${sillIds}`, {
                 method: "GET"
             })
@@ -27,7 +24,12 @@ const SkillsCheckPage = () => {
                 })
                 .catch((error) => console.log(error));
         }
-    }, [question])
+// eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
+        fetch_data();
+    }, [fetch_data]);
 
     const handleNextClick = async () => {
         const data = await fetch(`${BASE_PATH}/api/user_question`, {
