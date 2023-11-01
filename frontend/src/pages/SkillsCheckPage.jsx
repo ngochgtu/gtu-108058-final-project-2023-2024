@@ -9,6 +9,7 @@ const SkillsCheckPage = () => {
     const [answer, setAnswer] = useState("Demo")
     const [question, setQuestion] = useState(null)
     const [counter, setCounter] = useState(0)
+    const [points, setPoints] = useState(0)
 
     const location = useLocation();
 
@@ -59,10 +60,10 @@ const SkillsCheckPage = () => {
     }, []);
 
     const handleFinishButton = () => {
-        navigate("/result")
+        navigate("/result", {state: points})
     }
     
-
+    console.log(location.state)
     return <Container className="p-3">
         <Row style={{marginBottom: 50}}>
             <Col>
@@ -77,7 +78,7 @@ const SkillsCheckPage = () => {
                     <SkillCheck key={question._id} question={question} selectAnswer={changeAnswer}/>
                     <div style={{display: 'flex' , justifyContent: 'space-between'}}>
                         <Button variant="primary" onClick={handleNextClick}>Next</Button>
-                        { counter >= 10 ? <Button variant="primary" onClick={handleFinishButton} >Finish</Button> : '' }
+                        { counter  ? <Button variant="primary" onClick={handleFinishButton} >Finish</Button> : '' }
                     </div>
                     
                 </Col>
