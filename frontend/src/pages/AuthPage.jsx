@@ -2,6 +2,7 @@ import {Container, Row, Form, Col} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
+import {BASE_PATH} from "../api/ServerApi";
 
 const AuthPage = () => {
     const [username, setUsername] = useState("")
@@ -9,7 +10,7 @@ const AuthPage = () => {
     const navigate = useNavigate();
 
     const handleLogin = async () => {
-        const data = await fetch("http://localhost:3001/api/user", {
+        const data = await fetch(`${BASE_PATH}/api/user`, {
             headers: {
                 "Content-Type": "application/json",
             },
