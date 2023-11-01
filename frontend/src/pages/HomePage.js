@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import Select from 'react-select'
 import Button from 'react-bootstrap/Button';
 import {Col, Container, Row} from "react-bootstrap";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {BASE_PATH} from "../api/ServerApi";
 
 const HomePage = () => {
