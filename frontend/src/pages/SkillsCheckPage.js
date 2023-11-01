@@ -13,7 +13,7 @@ const SkillsCheckPage = () => {
 
     useEffect(() => {
         fetch_data();
-    }, [location.state,fetch_data]);
+    }, []);
 
     const fetch_data = () => {
         if (location.state) {
