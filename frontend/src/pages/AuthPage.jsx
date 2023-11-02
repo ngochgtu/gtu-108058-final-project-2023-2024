@@ -29,19 +29,21 @@ const AuthPage = () => {
 
     return <dev>
         <Container className="p-3">
-            <Form onSubmit={handleLogin}>
-                <Row>
-                    <Form.Group className="mb-3">
-                        <Form.Label>User Name</Form.Label>
-                        <Form.Control onChange={handleUsernameChange}/>
-                    </Form.Group>
-                </Row>
-                <Row>
-                    <Col>
-                        <Button variant="primary" type="submit">Login</Button>
-                    </Col>
-                </Row>
-            </Form>
+            <div style={{display: 'flex', justifyContent:'center', height: '65vh', alignItems:'center'}}>
+                <Form onSubmit={handleLogin}>
+                    <Row>
+                        <Form.Group className="mb-3">
+                            <Form.Label>User Name</Form.Label>
+                            <Form.Control onChange={handleUsernameChange}/>
+                        </Form.Group>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Button variant="primary" type="submit">Login</Button>
+                        </Col>
+                    </Row>
+                </Form>
+            </div>
         </Container>
     </dev>
 }
