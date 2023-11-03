@@ -1,9 +1,8 @@
 import {useEffect, useState} from "react";
 import Select from 'react-select'
 import Button from 'react-bootstrap/Button';
-import {Col, Container, Row} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
-import {BASE_PATH} from "../api/ServerApi";
+import {Col, Container,Form, Row} from "react-bootstrap";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const HomePage = () => {
     const [skills, setSkills] = useState([])
@@ -13,7 +12,7 @@ const HomePage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await fetch(`${BASE_PATH}/api/skills`);
+            const data = await fetch("http://localhost:3001/api/skills");
             const json = await data.json();
             if (json && Array.isArray(json)) {
                 setSkills(json.map(e => {

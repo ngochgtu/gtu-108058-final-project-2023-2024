@@ -3,7 +3,6 @@ import {useLocation} from "react-router-dom";
 import React, {useCallback, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import {Col, Container, Row} from "react-bootstrap";
-import {BASE_PATH} from "../api/ServerApi";
 
 const SkillsCheckPage = () => {
     const [answer, setAnswer] = useState("Demo")
@@ -11,11 +10,14 @@ const SkillsCheckPage = () => {
 
     const location = useLocation();
 
-    const fetch_data = useCallback(() => {
-        const state = location.state
-        if (state) {
-            const sillIds = state.map(e => e.value)
-            fetch(`${BASE_PATH}/api/questions?skills=${sillIds}`, {
+    useEffect(() => {
+        fetch_data();
+    }, [location.state]);
+
+    const fetch_data = () => {
+        if (location.state) {
+            const sillIds = location.state.map(e => e.value)
+            fetch(`http://localhost:3001/api/questions?skills=${sillIds}`, {
                 method: "GET"
             })
                 .then((response) => response.json())
@@ -24,15 +26,10 @@ const SkillsCheckPage = () => {
                 })
                 .catch((error) => console.log(error));
         }
-// eslint-disable-next-line
-    }, [])
-
-    useEffect(() => {
-        fetch_data();
-    }, [fetch_data]);
+    }
 
     const handleNextClick = async () => {
-        const data = await fetch(`${BASE_PATH}/api/user_question`, {
+        const data = await fetch("http://localhost:3001/api/user_question", {
             headers: {
                 "Content-Type": "application/json",
             },
