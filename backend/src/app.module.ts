@@ -10,6 +10,7 @@ import {Question, QuestionSchema} from "./schema/Question.schema";
 import {SkillType, SkillTypeSchema} from "./schema/SkillType.schema";
 import {User, UserSchema} from "./schema/User.schema";
 import {UserQuestion, UserQuestionSchema} from "./schema/UserQuestion.schema";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [MongooseModule.forRoot(
@@ -22,7 +23,8 @@ import {UserQuestion, UserQuestionSchema} from "./schema/UserQuestion.schema";
             {name: User.name, schema: UserSchema},
             {name: UserQuestion.name, schema: UserQuestionSchema}
         ]),
-        ScheduleModule.forRoot()
+        ScheduleModule.forRoot(),
+        AuthModule
     ],
     controllers: [AppController],
     providers: [AppService, TasksService, OpenaiService],

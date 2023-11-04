@@ -228,6 +228,10 @@ export class AppService {
         return newUser.save();
     }
 
+    async findUserByUsername(username: string){
+        return this.userModel.find([{username}]).exec()
+    }
+
     async createUserQuestion(createUserQuestionDto: CreateUserQuestionDto): Promise<User> {
         const [newUser] = await Promise.all([new this.userQuestionModel(createUserQuestionDto)]);
         return newUser.save();
