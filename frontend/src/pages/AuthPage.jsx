@@ -2,14 +2,16 @@ import {Container, Row, Form, Col} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {useNavigate} from "react-router-dom";
 import {useState} from "react";
+import {BASE_PATH} from "../api/ServerApi";
 
 const AuthPage = () => {
     const [username, setUsername] = useState("")
 
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
-        const data = await fetch("http://localhost:3001/api/user", {
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const data = await fetch(`${BASE_PATH}/api/user`, {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -28,17 +30,21 @@ const AuthPage = () => {
 
     return <dev>
         <Container className="p-3">
-            <Row>
-                <Form.Group className="mb-3">
-                    <Form.Label>User Name</Form.Label>
-                    <Form.Control onChange={handleUsernameChange}/>
-                </Form.Group>
-            </Row>
-            <Row>
-                <Col>
-                    <Button variant="primary" onClick={handleLogin}>Login</Button>
-                </Col>
-            </Row>
+            <div style={{display: 'flex', justifyContent:'center', height: '65vh', alignItems:'center'}}>
+                <Form onSubmit={handleLogin}>
+                    <Row>
+                        <Form.Group className="mb-3">
+                            <Form.Label>User Name</Form.Label>
+                            <Form.Control onChange={handleUsernameChange}/>
+                        </Form.Group>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Button variant="primary" type="submit">Login</Button>
+                        </Col>
+                    </Row>
+                </Form>
+            </div>
         </Container>
     </dev>
 }

@@ -1,10 +1,11 @@
 import {Injectable} from '@nestjs/common';
 import axios from 'axios';
+import * as process from "process";
 
 @Injectable()
 export class OpenaiService {
     private readonly OPENAI_URL = 'https://api.openai.com/v1/chat/completions';
-    private readonly API_KEY = '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'
+    private readonly API_KEY = process.env.OPENAI_API_KEY
 
     async getCompletion(prompt: string): Promise<string> {
         const headers = {
