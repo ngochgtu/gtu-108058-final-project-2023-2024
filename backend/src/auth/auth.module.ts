@@ -11,6 +11,7 @@ import { Question, QuestionSchema } from 'src/schema/Question.schema';
 import { User, UserSchema } from 'src/schema/User.schema';
 import { UserQuestion, UserQuestionSchema } from 'src/schema/UserQuestion.schema';
 import { OpenaiService } from 'src/service/openai.service';
+import { SessionSerializer } from './utils/SessionSerializer';
 
 @Module({
   imports: [MongooseModule.forFeature([
@@ -19,7 +20,7 @@ import { OpenaiService } from 'src/service/openai.service';
     {name: Question.name, schema: QuestionSchema},
     {name: User.name, schema: UserSchema},
     {name: UserQuestion.name, schema: UserQuestionSchema}
-]),PassportModule],
+]),PassportModule.register({session: true})],
   controllers: [AuthController],
   providers: [{
     provide: 'AUTH_SERVICE',
@@ -29,6 +30,7 @@ import { OpenaiService } from 'src/service/openai.service';
     useClass: AppService
     },
     OpenaiService,
+    SessionSerializer,
     LocalStrategy
 ]
 })

@@ -13,6 +13,7 @@ import {CreateUserDto} from "../dto/CreateUser.dto";
 import {User} from "../schema/User.schema";
 import {CreateUserQuestionDto} from "../dto/CreateUserQuestion.dto";
 import {UserQuestion} from "../schema/UserQuestion.schema";
+import { encodePassword } from 'src/utils/bcrypt';
 
 @Injectable()
 export class AppService {
@@ -224,12 +225,17 @@ export class AppService {
     }
 
     async createUser(createUserDto: CreateUserDto): Promise<User> {
-        const [newUser] = await Promise.all([new this.userModel(createUserDto)]);
+        const password = encodePassword(createUserDto.password)
+        const [newUser] = await Promise.all([new this.userModel({...createUserDto, password})]);
         return newUser.save();
     }
 
-    async findUserByUsername(username: string){
-        return this.userModel.find([{username}]).exec()
+    async findUserByUsername(email: string){
+        return this.userModel.findOne({email}).exec()
+    }
+
+    async findUserById(id: number){
+        return this.userModel.findOne({id})
     }
 
     async createUserQuestion(createUserQuestionDto: CreateUserQuestionDto): Promise<User> {
