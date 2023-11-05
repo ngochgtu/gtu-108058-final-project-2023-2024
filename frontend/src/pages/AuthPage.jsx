@@ -10,7 +10,7 @@ const AuthPage = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const data = await fetch(`${BASE_PATH}/api/user`, {
       headers: {
