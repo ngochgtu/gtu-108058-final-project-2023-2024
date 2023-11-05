@@ -2,7 +2,7 @@ import { Container, Row, Form, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import styles from "../style/app.module.css";
+import "../style/auth.styles.css";
 
 const AuthPage = () => {
   const [username, setUsername] = useState("");
@@ -29,10 +29,9 @@ const AuthPage = () => {
 
   return (
     <dev>
-      <div className={styles.auth_container}>
-        {/* <Container className="p-3"> */}
-        <div className={styles.register_container}>
-          <div className={styles.register_input}>
+      <div className="auth_container">
+        <div className="register_container">
+          <div className="register_input">
             <Form.Floating className="mb-3">
               <Form.Control
                 id="floatingInputCustom"
@@ -42,7 +41,7 @@ const AuthPage = () => {
               <label htmlFor="floatingInputCustom">Email address</label>
             </Form.Floating>
           </div>
-          <div className={styles.register_input}>
+          <div className="register_input">
             <Form.Floating>
               <Form.Control
                 id="floatingPasswordCustom"
@@ -52,8 +51,8 @@ const AuthPage = () => {
               <label htmlFor="floatingPasswordCustom">Password</label>
             </Form.Floating>
           </div>
-          <div className={styles.username_container}>
-            <div className={styles.username_input}>
+          <div className="username_container">
+            <div className="username_input">
               <Form.Floating className="mb-3">
                 <Form.Control
                   onChange={handleUsernameChange}
@@ -63,7 +62,7 @@ const AuthPage = () => {
               </Form.Floating>
             </div>
             <Col>
-              <div className={styles.button_container}>
+              <div className="button_container">
                 <Button variant="primary" onClick={handleLogin}>
                   Login
                 </Button>
@@ -71,7 +70,6 @@ const AuthPage = () => {
             </Col>
           </div>
         </div>
-        {/* </Container> */}
       </div>
     </dev>
   );

@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import logo from "../assets/zombie_icon.png";
 import logout from "../assets/logout.png";
+import { useEffect } from "react";
 
 const Header = () => {
   return (
