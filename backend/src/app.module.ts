@@ -11,6 +11,7 @@ import {SkillType, SkillTypeSchema} from "./schema/SkillType.schema";
 import {User, UserSchema} from "./schema/User.schema";
 import {UserQuestion, UserQuestionSchema} from "./schema/UserQuestion.schema";
 import { AuthModule } from './auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
     imports: [MongooseModule.forRoot(
@@ -23,6 +24,7 @@ import { AuthModule } from './auth/auth.module';
             {name: User.name, schema: UserSchema},
             {name: UserQuestion.name, schema: UserQuestionSchema}
         ]),
+        PassportModule.register({session: true}),
         ScheduleModule.forRoot(),
         AuthModule
     ],

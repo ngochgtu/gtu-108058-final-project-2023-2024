@@ -234,8 +234,8 @@ export class AppService {
         return this.userModel.findOne({email}).exec()
     }
 
-    async findUserById(id: number){
-        return this.userModel.findOne({id})
+    async findUserById(email: string){
+        return this.userModel.findById(new Types.ObjectId(email)).exec()
     }
 
     async createUserQuestion(createUserQuestionDto: CreateUserQuestionDto): Promise<User> {

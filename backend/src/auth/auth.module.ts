@@ -20,7 +20,7 @@ import { SessionSerializer } from './utils/SessionSerializer';
     {name: Question.name, schema: QuestionSchema},
     {name: User.name, schema: UserSchema},
     {name: UserQuestion.name, schema: UserQuestionSchema}
-]),PassportModule.register({session: true})],
+]),],
   controllers: [AuthController],
   providers: [{
     provide: 'AUTH_SERVICE',
