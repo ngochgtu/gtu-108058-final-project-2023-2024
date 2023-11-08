@@ -90,7 +90,7 @@ export class AppService {
             skillNames.push(dbSkill.name)
         }
 
-        const openaiQuestion = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames}, give back 5`)
+        const openaiQuestion = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames}`)
 
         const createQuestionDto = this.openai_question_to_dto(openaiQuestion)
         createQuestionDto.skill_names = skillNames
