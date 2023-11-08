@@ -1,60 +1,65 @@
-import {useEffect, useState} from "react";
-import Select from 'react-select'
-import Button from 'react-bootstrap/Button';
-import {Col, Container,Form, Row} from "react-bootstrap";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useEffect, useState } from "react";
+import Select from "react-select";
+import Button from "react-bootstrap/Button";
+import { Col, Container, Form, Row } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-    const [skills, setSkills] = useState([])
-    const [selectedSkills, setSelectedSkills] = useState([])
+  const [skills, setSkills] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await fetch("http://localhost:3001/api/skills");
-            const json = await data.json();
-            if (json && Array.isArray(json)) {
-                setSkills(json.map(e => {
-                    return {value: e._id, label: e.name}
-                }))
-            } else {
-                setSkills([{value: "empty", label: data["message"]}])
-            }
-        }
-        fetchData().catch(console.error);
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetch("http://localhost:3001/api/skills");
+      const json = await data.json();
+      if (json && Array.isArray(json)) {
+        setSkills(
+          json.map((e) => {
+            return { value: e._id, label: e.name };
+          })
+        );
+      } else {
+        setSkills([{ value: "empty", label: data["message"] }]);
+      }
+    };
+    fetchData().catch(console.error);
+  }, []);
 
-    const handleStartClick = (e) => {
-        navigate("/check", {state: selectedSkills});
-    }
+  const handleStartClick = (e) => {
+    navigate("/check", { state: selectedSkills });
+  };
 
-    const handleSkillChange = (e) => {
-        setSelectedSkills(e)
-    }
+  const handleSkillChange = (e) => {
+    setSelectedSkills(e);
+  };
 
-    return <Container className="p-3">
-        <Row>
-            <h2>User Name {localStorage.getItem("username")}</h2>
-        </Row>
-        <Row>
-            <h2 className="header">Select Skills</h2>
-        </Row>
-        <Row style={{marginTop: 10, marginBottom: 10}}>
-            <Select options={skills}
-                    isMulti
-                    name="colors"
-                    className="basic-multi-select"
-                    classNamePrefix="select"
-                    onChange={handleSkillChange}
-            />
-        </Row>
-        <Row>
-            <Col>
-                <Button variant="primary" onClick={handleStartClick}>Start</Button>
-            </Col>
-        </Row>
+  return (
+    <Container className="p-3">
+      <Row>{/* <h2>User Name {localStorage.getItem("username")}</h2> */}</Row>
+      <Row>
+        <h2 className="header">Select Skills</h2>
+      </Row>
+      <Row style={{ marginTop: 10, marginBottom: 10 }}>
+        <Select
+          options={skills}
+          isMulti
+          name="colors"
+          className="basic-multi-select"
+          classNamePrefix="select"
+          onChange={handleSkillChange}
+        />
+      </Row>
+      <Row>
+        <Col>
+          <Button variant="primary" onClick={handleStartClick}>
+            Start
+          </Button>
+        </Col>
+      </Row>
     </Container>
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
