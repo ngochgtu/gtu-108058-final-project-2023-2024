@@ -5,7 +5,7 @@ import * as process from "process";
 @Injectable()
 export class OpenaiService {
     private readonly OPENAI_URL = 'https://api.openai.com/v1/chat/completions';
-    private readonly API_KEY = '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'
+    private readonly API_KEY = process.env.OPENAI_API_KEY
 
     async getCompletion(prompt: string): Promise<string> {
         const headers = {
