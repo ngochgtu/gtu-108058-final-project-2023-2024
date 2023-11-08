@@ -3,6 +3,7 @@ import {useLocation} from "react-router-dom";
 import React, {useCallback, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import {Col, Container, Row} from "react-bootstrap";
+import {MagnifyingGlass} from 'react-loader-spinner'
 
 const SkillsCheckPage = () => {
     const [answer, setAnswer] = useState("Demo")
@@ -68,7 +69,18 @@ const SkillsCheckPage = () => {
                     <Button variant="primary" onClick={handleNextClick}>Next</Button>
                 </Col>
             </Row> :
-            <Col>Loading Question ...</Col>
+            <div style={{display: 'flex', justifyContent:"center", alignItems:'center'}}>
+                <MagnifyingGlass
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="MagnifyingGlass-loading"
+                wrapperStyle={{}}
+                wrapperClass="MagnifyingGlass-wrapper"
+                glassColor = '#c0efff'
+                color = '#e15b64'
+              />
+            </div>
         }
     </Container>
 }
