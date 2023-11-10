@@ -30,7 +30,7 @@ const SkillsCheckPage = () => {
     }
 
     const handleNextClick = async () => {
-        const data = await fetch("http://localhost:3001/api/user_question", {
+        const data = await fetch("http://localhost:3001/users/user_question", {
             headers: {
                 "Content-Type": "application/json",
             },

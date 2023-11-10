@@ -16,7 +16,7 @@ const AuthPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if(usernameRef.current.value && emailRef.current.value && passwordRef.current.value){
-        const data = await fetch(`${BASE_PATH}/api/user`, {
+        const data = await fetch(`${BASE_PATH}/users/user`, {
           headers: {
             "Content-Type": "application/json",
           },

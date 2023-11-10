@@ -1,18 +1,17 @@
 import { Injectable , Inject } from '@nestjs/common';
-import { AppService } from 'src/service/app.service';
+import { UsersService } from 'src/users/services/users/users.service';
 import { comparePasswords } from 'src/utils/bcrypt';
 
 @Injectable()
 export class AuthService {
     constructor(
-        @Inject('APP_SERVICE') private readonly appService:AppService,
+        @Inject('USERS_SERVICE') private readonly usersService:UsersService,
     ){}
 
     async validateUser(email:string , password:string){
         console.log('inside of authservice')
-        const UserDb = await this.appService.findUserByUsername(email)
+        const UserDb = await this.usersService.findUserByUsername(email)
         if (UserDb){
-            console.log(UserDb)
             const matched = comparePasswords(password, UserDb.password)
             if( matched){
             console.log('User Validation Success!')

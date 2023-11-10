@@ -9,11 +9,6 @@ import {Question} from "../schema/Question.schema";
 import {CreateSkillTypeDto} from "../dto/CreateSkillType.dto";
 import {SkillType} from "../schema/SkillType.schema";
 import {UpdateSkillTypeDto} from "../dto/UpdateSkillType.dto";
-import {CreateUserDto} from "../dto/CreateUser.dto";
-import {User} from "../schema/User.schema";
-import {CreateUserQuestionDto} from "../dto/CreateUserQuestion.dto";
-import {UserQuestion} from "../schema/UserQuestion.schema";
-import { encodePassword } from 'src/utils/bcrypt';
 
 @Injectable()
 export class AppService {
@@ -22,8 +17,6 @@ export class AppService {
         @InjectModel(Skill.name) private skillModel: Model<Skill>,
         @InjectModel(SkillType.name) private skillTypeModel: Model<SkillType>,
         @InjectModel(Question.name) private questionModel: Model<Question>,
-        @InjectModel(User.name) private userModel: Model<User>,
-        @InjectModel(UserQuestion.name) private userQuestionModel: Model<UserQuestion>,
         private readonly openaiService: OpenaiService
     ) {
     }
@@ -224,23 +217,5 @@ export class AppService {
         return answer
     }
 
-    async createUser(createUserDto: CreateUserDto): Promise<User> {
-        const password = encodePassword(createUserDto.password)
-        const [newUser] = await Promise.all([new this.userModel({...createUserDto, password})]);
-        return newUser.save();
-    }
-
-    async findUserByUsername(email: string){
-        return this.userModel.findOne({email}).exec()
-    }
-
-    async findUserById(email: string){
-        return this.userModel.findById(new Types.ObjectId(email)).exec()
-    }
-
-    async createUserQuestion(createUserQuestionDto: CreateUserQuestionDto): Promise<User> {
-        const [newUser] = await Promise.all([new this.userQuestionModel(createUserQuestionDto)]);
-        return newUser.save();
-    }
 
 }

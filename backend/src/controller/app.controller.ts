@@ -90,33 +90,5 @@ export class AppController {
     @Get("/questions")
     async getQuestionsBySkills(@Query('skills') skills: string) {
         return this.appService.getQuestionsBySkills(skills.split(","));
-    }
-
-    @Post("/user")
-    async createUser(@Res() response, @Body() createUserDto: CreateUserDto) {
-        try {
-            const newUser = await this.appService.createUser(createUserDto);
-            return response.status(HttpStatus.CREATED).json(newUser);
-        } catch (err) {
-            return response.status(HttpStatus.BAD_REQUEST).json({
-                statusCode: 400,
-                message: 'Error: User not created!',
-                error: 'Bad Request',
-            });
-        }
-    }
-
-    @Post("/user_question")
-    async createUserQuestion(@Res() response, @Body() createUserQuestionDto: CreateUserQuestionDto) {
-        try {
-            const newUser = await this.appService.createUserQuestion(createUserQuestionDto);
-            return response.status(HttpStatus.CREATED).json(newUser);
-        } catch (err) {
-            return response.status(HttpStatus.BAD_REQUEST).json({
-                statusCode: 400,
-                message: 'Error: User not created!',
-                error: 'Bad Request',
-            });
-        }
-    }
+    }    
 }

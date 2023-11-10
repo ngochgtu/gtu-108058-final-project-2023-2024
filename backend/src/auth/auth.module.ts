@@ -12,6 +12,7 @@ import { User, UserSchema } from 'src/schema/User.schema';
 import { UserQuestion, UserQuestionSchema } from 'src/schema/UserQuestion.schema';
 import { OpenaiService } from 'src/service/openai.service';
 import { SessionSerializer } from './utils/SessionSerializer';
+import { UsersService } from 'src/users/services/users/users.service';
 
 @Module({
   imports: [MongooseModule.forFeature([
@@ -26,8 +27,8 @@ import { SessionSerializer } from './utils/SessionSerializer';
     provide: 'AUTH_SERVICE',
     useClass: AuthService
   },{
-    provide: 'APP_SERVICE',
-    useClass: AppService
+    provide: 'USERS_SERVICE',
+    useClass: UsersService
     },
     OpenaiService,
     SessionSerializer,

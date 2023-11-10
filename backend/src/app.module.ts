@@ -12,6 +12,7 @@ import {User, UserSchema} from "./schema/User.schema";
 import {UserQuestion, UserQuestionSchema} from "./schema/UserQuestion.schema";
 import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
+import { UsersModule } from './users/users.module';
 
 @Module({
     imports: [MongooseModule.forRoot(
@@ -26,7 +27,8 @@ import { PassportModule } from '@nestjs/passport';
         ]),
         PassportModule.register({session: true}),
         ScheduleModule.forRoot(),
-        AuthModule
+        AuthModule,
+        UsersModule
     ],
     controllers: [AppController],
     providers: [AppService, TasksService, OpenaiService],
