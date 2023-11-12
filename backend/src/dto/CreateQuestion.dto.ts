@@ -1,4 +1,4 @@
-import {IsNotEmpty, IsString, MaxLength} from 'class-validator';
+import {IsArray, IsNotEmpty, IsString, MaxLength} from 'class-validator';
 
 export class CreateQuestionDto {
 
@@ -30,3 +30,9 @@ export class CreateQuestionDto {
     @IsNotEmpty()
     session_id: string;
 }
+
+export class QuestionsDto {
+    @IsArray()
+    @IsNotEmpty()
+    array: Array<{}>;
+  }

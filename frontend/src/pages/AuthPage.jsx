@@ -16,7 +16,7 @@ const AuthPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if(usernameRef.current.value && emailRef.current.value && passwordRef.current.value){
-        const data = await fetch(`${BASE_PATH}/users/user`, {
+        const data = await fetch(`${BASE_PATH}/auth/login`, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -28,6 +28,7 @@ const AuthPage = () => {
           }),
         });
         const json = await data.json();
+        console.log(json)
         localStorage.setItem("user_id", json._id);
         localStorage.setItem("username", json.username);
         navigate("/home");
@@ -39,7 +40,7 @@ const AuthPage = () => {
   
 
   return (
-    <dev>
+    <div>
       <form onSubmit={handleLogin}>
         <div className="auth_container">
           <div className="register_container">
@@ -87,7 +88,7 @@ const AuthPage = () => {
           </div>
         </div>
       </form>
-    </dev>
+    </div>
   );
 };
 

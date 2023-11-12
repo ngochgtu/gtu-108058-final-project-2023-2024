@@ -1,1 +1,1 @@
-export const BASE_PATH="https://gtu-skills-verifier-354dcfb3123c.herokuapp.com"
+export const BASE_PATH="http://localhost:3001"

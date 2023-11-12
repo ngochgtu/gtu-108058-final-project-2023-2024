@@ -1,14 +1,17 @@
 import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { AuthenticatedGuard } from 'src/auth/utils/LocalGuard';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { CreateUserQuestionDto } from 'src/dto/CreateUserQuestion.dto';
 import { UsersService } from 'src/users/services/users/users.service';
+import { UseGuards } from '@nestjs/common/decorators';
 
 @Controller('users')
 export class UsersController {
     constructor(
         private readonly usersService: UsersService,) {
     }
-
+    
+    @UseGuards(AuthenticatedGuard)
     @Post("/user_question")
     async createUserQuestion(@Res() response, @Body() createUserQuestionDto: CreateUserQuestionDto) {
         try {
@@ -31,7 +34,7 @@ export class UsersController {
         } catch (err) {
             return response.status(HttpStatus.BAD_REQUEST).json({
                 statusCode: 400,
-                message: 'Error: User not created!',
+                message: `${err}!`,
                 error: 'Bad Request',
             });
         }

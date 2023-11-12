@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { error } from 'console';
 import { Model } from 'mongoose';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { CreateUserQuestionDto } from 'src/dto/CreateUserQuestion.dto';
@@ -15,13 +16,16 @@ export class UsersService {
     ) {
     }
 
-    async createUser(createUserDto: CreateUserDto): Promise<User> {
-        const password = encodePassword(createUserDto.password)
-        const [newUser] = await Promise.all([new this.userModel({...createUserDto, password})]);
-        return newUser.save();
+   
+    async checkUsersExistence(ComingEmail){
+        const saved = await this.findUserByEmail(ComingEmail)
+        if(!saved) return false
+        if(saved.email == ComingEmail){
+            return true
+        }
     }
 
-    async findUserByUsername(email: string){
+    async findUserByEmail(email: string){
         return this.userModel.findOne({email}).exec()
     }
 
@@ -29,4 +33,15 @@ export class UsersService {
         const [newUser] = await Promise.all([new this.userQuestionModel(createUserQuestionDto)]);
         return newUser.save();
     }
+
+    async createUser(createUserDto: CreateUserDto): Promise<User> {
+        if(await this.checkUsersExistence(createUserDto.email)){
+            throw new Error('User already exists')
+        }else{
+            const password = encodePassword(createUserDto.password)
+            const [newUser] = await Promise.all([new this.userModel({...createUserDto, password})]);
+            return newUser.save();
+        }
+    }
+
 }
