@@ -6,10 +6,9 @@ const useRequest = ({ url, method }) => {
   const sendRequest = async (body) => {
     const res = await fetch(url, {
       method,
-      // headers: {
-      //   "Content-Type": "application/json",
-      //   "Authorization": `Bearer ${process.env.REACT_APP_API_KEY}`,
-      // },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: !!body && method !== 'GET' ? JSON.stringify(body) : undefined,
     });
 

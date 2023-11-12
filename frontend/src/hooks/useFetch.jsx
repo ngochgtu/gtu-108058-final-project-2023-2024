@@ -9,10 +9,9 @@ const useFetch = ({url, method}) => {
             setLoading(true)
             fetch(url, {
                 method,
-                // headers:{
-                //     "Content-Type": "application/json",
-                //     "Authorization": `Bearer`
-                // }
+                headers:{
+                    "Content-Type": "application/json",
+                }
             })
             .then(res => 
                 {
