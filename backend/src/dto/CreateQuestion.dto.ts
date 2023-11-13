@@ -23,6 +23,11 @@ export class CreateQuestionDto {
     @IsString()
     @MaxLength(500)
     @IsNotEmpty()
+    difficulty: string;
+
+    @IsString()
+    @MaxLength(500)
+    @IsNotEmpty()
     openai_question: string;
 
     @IsString()
@@ -31,8 +36,3 @@ export class CreateQuestionDto {
     session_id: string;
 }
 
-export class QuestionsDto {
-    @IsArray()
-    @IsNotEmpty()
-    array: Array<{}>;
-  }

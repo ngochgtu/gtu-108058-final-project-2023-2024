@@ -26,11 +26,12 @@ const AuthPage = () => {
             email: emailRef.current.value,
             password: passwordRef.current.value,
           }),
+          credentials: 'include'
         });
         const json = await data.json();
         console.log(json)
         localStorage.setItem("user_id", json._id);
-        localStorage.setItem("username", json.username);
+        localStorage.setItem("email", json.email);
         navigate("/home");
     }else{
         alert("Please fill out all fields")
