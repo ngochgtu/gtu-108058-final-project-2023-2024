@@ -16,7 +16,7 @@ const AuthPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if(usernameRef.current.value && emailRef.current.value && passwordRef.current.value){
-        const data = await fetch(`${BASE_PATH}/auth/login`, {
+        const data = await fetch(`${BASE_PATH}/users/user`, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -32,6 +32,7 @@ const AuthPage = () => {
         console.log(json)
         localStorage.setItem("user_id", json._id);
         localStorage.setItem("email", json.email);
+        localStorage.setItem("username", json.username);
         navigate("/home");
     }else{
         alert("Please fill out all fields")

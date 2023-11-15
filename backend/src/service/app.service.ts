@@ -71,11 +71,15 @@ export class AppService {
         return skillTypes;
     }
 
-    array = []
+    array:Array<{}> = []
+    counter: number = 0
+    skill: string[] = []
+    difficulty: string = ''
 
     async getQuestionsBySkills(skills: string[], difficulty: string) {
         const skillNames = []
-
+        this.skill = skills
+        this.difficulty = difficulty
         for (const skillId of skills) {
 
             const dbSkill = await this.skillModel.findById(new Types.ObjectId(skillId)).exec();
@@ -84,7 +88,6 @@ export class AppService {
             }
             skillNames.push(dbSkill.name)
         }
-
         const openaiQuestion = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames} 
         10 times, as array of objects, return as JSON , first should be questions and be named ("question"), then should be the options named ("options"), 
         then should be then correct answer named ("correctAnswer") , difficulty: ${difficulty}`)
@@ -107,22 +110,18 @@ export class AppService {
 
     openai_question_to_dto = (array): CreateQuestionDto => {
         const createQuestionDto = new CreateQuestionDto();
-
-        // const array = JSON.parse(openaiQuestion)
-        let counter = 0
-        if(counter < 10){
-            createQuestionDto.question = array[counter].question
-            createQuestionDto.fake_answers = array[counter].options
-            createQuestionDto.answer = array[counter].correctAnswer
-            counter++
+        
+        if(this.counter <= 10){
+            createQuestionDto.question = array[this.counter].question
+            createQuestionDto.fake_answers = array[this.counter].options
+            createQuestionDto.answer = array[this.counter].correctAnswer
+            createQuestionDto.session_id = "NoUser"
+            this.counter++
+            return createQuestionDto
         }else{
-            counter = 0
-            throw new Error('limit reached')
+            this.counter = 0
+            this.getQuestionsBySkills(this.skill, this.difficulty)
         }
-        createQuestionDto.session_id = "NoUser"
-
-        console.log(createQuestionDto)
-        return createQuestionDto;
     }
     
 

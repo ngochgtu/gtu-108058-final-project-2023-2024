@@ -4,7 +4,7 @@ export class CreateUserQuestionDto {
     @IsString()
     @MaxLength(500)
     @IsNotEmpty()
-    readonly username: string;
+    readonly email: string;
 
     @IsString()
     @MaxLength(500)

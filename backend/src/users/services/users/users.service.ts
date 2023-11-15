@@ -28,7 +28,7 @@ export class UsersService {
         return this.userModel.findOne({email}).exec()
     }
 
-    async createUserQuestion(createUserQuestionDto: CreateUserQuestionDto): Promise<User> {
+    async createUserQuestion(createUserQuestionDto: CreateUserQuestionDto): Promise<UserQuestion> {
         const [newUser] = await Promise.all([new this.userQuestionModel(createUserQuestionDto)]);
         return newUser.save();
     }
