@@ -5,15 +5,20 @@ import logout from "../assets/logout.png";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-
   const navigate = useNavigate();
 
   return (
     <Container className="p-3">
       <Row>
         <div className={styles.container}>
-          <Col >
-            <h1 className={styles.title} style={{cursor:'pointer'}} onClick={()=>navigate('/home')}>Skills Verifier</h1>
+          <Col>
+            <h1
+              className={styles.title}
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/home")}
+            >
+              Skills Verifier
+            </h1>
           </Col>
           <div className={styles.img_container}>
             <img src={logo} alt="img" className={styles.img}></img>
@@ -23,7 +28,12 @@ const Header = () => {
           </div>
           <div className={styles.button_container}>
             <button className={styles.button}>
-              <img src={logout} alt="img" className={styles.img_logout}></img>
+              <img
+                src={logout}
+                alt="img"
+                className={styles.img_logout}
+                onClick={() => navigate("/")}
+              ></img>
             </button>
           </div>
         </div>

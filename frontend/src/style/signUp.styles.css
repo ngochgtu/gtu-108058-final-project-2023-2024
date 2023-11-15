@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+@import url("https://fonts.googleapis.com/css2?family=Agbalumo&display=swap");
+
+.signUp-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 4rem;
+  width: 40%;
+  margin: auto;
+  margin-top: 5%;
+  background-color: #0d1117;
+  min-width: 300px;
+  border: solid lightgreen;
+  border-radius: 1rem;
+}
+
+.signUp-title {
+  color: lightgreen;
+  font-family: "Agbalumo", sans-serif;
+}
+
+.signUp-label {
+  color: lightgreen;
+  text-align: start;
+  font-family: "Fira Sans", sans-serif;
+}
+
+.signUp--input__container {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  width: 100%;
+}
+
+.signUp-input {
+  border-radius: 8px;
+  height: 40px;
+  width: 100%;
+  outline: none;
+  border: 2px solid rgba(109, 160, 109, 0.637);
+}
+
+.signUp-input:focus {
+  border: 2px solid lightgreen;
+}
+
+.signUp--button_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signUp-button {
+  font-family: "Fira Sans", sans-serif;
+  color: lightgreen;
+  background-color: #0d11175b;
+  border: 2px solid lightgreen;
+  border-radius: 5px;
+  width: 8rem;
+  height: 2rem;
+}
+
+.signUp-button:hover {
+  color: black;
+  background-color: lightgreen;
+  border: 2px solid white;
+}
+
+.forgot-password,
+.forgot-password a {
+  text-align: right;
+  font-size: 13px;
+  padding-top: 10px;
+  color: lightgreen;
+  margin: 0;
+}
+.forgot-password a {
+  color: rgba(144, 238, 144, 0.637);
+}

@@ -1,4 +1,4 @@
-import {Body, Controller, Get, HttpStatus, Param, Post, Put, Query, Res} from '@nestjs/common';
+import {Body, Controller, Get, HttpStatus, Param, Post, Put, Query, Res, UseGuards} from '@nestjs/common';
 import {AppService} from '../service/app.service';
 import {OpenaiService} from "../service/openai.service";
 import {Skill} from "../schema/Skill.schema";
@@ -8,6 +8,7 @@ import {UpdateSkillTypeDto} from "../dto/UpdateSkillType.dto";
 import {SkillType} from "../schema/SkillType.schema";
 import {CreateUserDto} from "../dto/CreateUser.dto";
 import {CreateUserQuestionDto} from "../dto/CreateUserQuestion.dto";
+import { AuthenticatedGuard } from 'src/auth/utils/LocalGuard';
 
 @Controller("/api")
 export class AppController {
@@ -21,6 +22,7 @@ export class AppController {
         return this.appService.getHello();
     }
 
+    @UseGuards(AuthenticatedGuard)
     @Post("/skill")
     async createSkill(@Res() response, @Body() createSkillDto: CreateSkillDto) {
         try {
@@ -38,6 +40,7 @@ export class AppController {
         }
     }
 
+    @UseGuards(AuthenticatedGuard)
     @Post("/skill_type")
     async createSkillType(@Res() response, @Body() createSkillTypeDto: CreateSkillTypeDto) {
         try {
@@ -55,6 +58,7 @@ export class AppController {
         }
     }
 
+    @UseGuards(AuthenticatedGuard)
     @Put('/skill_type/:id')
     async updateSkillType(@Res() response, @Param('id') id: string, @Body() updateStudentDto: UpdateSkillTypeDto,
     ) {
@@ -71,52 +75,27 @@ export class AppController {
             return response.status(err.status).json(err.response);
         }
     }
-
+    
+    @UseGuards(AuthenticatedGuard)
     @Get("/skills")
     getSkills(): Promise<Skill[]> {
         return this.appService.getSkills()
     }
 
+    @UseGuards(AuthenticatedGuard)
     @Get("/skill_types/:status")
     getSkillTypes(@Param('status') status: string): Promise<SkillType[]> {
         return this.appService.getSkillTypes(status)
     }
 
+    @UseGuards(AuthenticatedGuard)
     @Get("/ask")
     async getCompletion(@Query('prompt') prompt: string): Promise<string> {
         return this.openaiService.getCompletion(prompt);
     }
-
+    @UseGuards(AuthenticatedGuard)
     @Get("/questions")
     async getQuestionsBySkills(@Query('skills') skills: string) {
         return this.appService.getQuestionsBySkills(skills.split(","));
-    }
-
-    @Post("/user")
-    async createUser(@Res() response, @Body() createUserDto: CreateUserDto) {
-        try {
-            const newUser = await this.appService.createUser(createUserDto);
-            return response.status(HttpStatus.CREATED).json(newUser);
-        } catch (err) {
-            return response.status(HttpStatus.BAD_REQUEST).json({
-                statusCode: 400,
-                message: 'Error: User not created!',
-                error: 'Bad Request',
-            });
-        }
-    }
-
-    @Post("/user_question")
-    async createUserQuestion(@Res() response, @Body() createUserQuestionDto: CreateUserQuestionDto) {
-        try {
-            const newUser = await this.appService.createUserQuestion(createUserQuestionDto);
-            return response.status(HttpStatus.CREATED).json(newUser);
-        } catch (err) {
-            return response.status(HttpStatus.BAD_REQUEST).json({
-                statusCode: 400,
-                message: 'Error: User not created!',
-                error: 'Bad Request',
-            });
-        }
-    }
+    }    
 }

@@ -6,7 +6,8 @@
   flex-direction: row;
   align-content: space-between;
   align-items: center;
-  box-shadow: 1px 1px 3px 3px grey;
+  /* box-shadow: 1px 1px 3px 3px grey; */
+  border: 2px solid lightgreen;
   border-radius: 0.5rem;
   background-color: #0d1117;
   color: lightgreen;
