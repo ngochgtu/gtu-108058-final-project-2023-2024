@@ -10,7 +10,7 @@
   width: 40%;
   margin: auto;
   margin-top: 5%;
-  background-color: #0d1117d7;
+  background-color: #0d1117;
   min-width: 300px;
   border: solid lightgreen;
   border-radius: 1rem;
@@ -60,6 +60,12 @@
   border-radius: 5px;
   width: 8rem;
   height: 2rem;
+}
+
+.signUp-button:hover {
+  color: black;
+  background-color: lightgreen;
+  border: 2px solid white;
 }
 
 .forgot-password,

@@ -2,6 +2,7 @@ import SkillCheck from "../components/SkillCheck";
 import {useLocation} from "react-router-dom";
 import React, {useCallback, useState} from "react";
 import Button from "react-bootstrap/Button";
+import "../../src/style/pages.styles.css";
 import {Col, Container, Row} from "react-bootstrap";
 import {MagnifyingGlass} from 'react-loader-spinner'
 import useFetch from "../hooks/useFetch";

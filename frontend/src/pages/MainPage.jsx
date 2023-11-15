@@ -1,4 +1,5 @@
 import React from 'react'
+import "../../src/style/pages.styles.css";
 import useFetch from '../hooks/useFetch'
 
 const MainPage = () => {

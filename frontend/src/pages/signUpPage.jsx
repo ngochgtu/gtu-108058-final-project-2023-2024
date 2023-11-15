@@ -2,10 +2,13 @@ import { Form, Col } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 // import { useNavigate } from "react-router-dom";
 // import React,{ useRef } from "react";
+import "../../src/style/pages.styles.css";
 import "../style/signUp.styles.css";
 // import { BASE_PATH } from "../api/ServerApi";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <form
@@ -14,11 +17,11 @@ const SignUpPage = () => {
         <div className="signUp-container">
           <h3 className="signUp-title">Sign Up</h3>
           <div className="signUp--input__container">
-            <label className="signUp-label">First name</label>
+            <label className="signUp-label">User name</label>
             <input
               type="text"
               className="signUp-input"
-              placeholder="First name"
+              placeholder="Username"
             />
           </div>
           <div className="signUp--input__container">
@@ -46,7 +49,11 @@ const SignUpPage = () => {
             />
           </div>
           <div className="signUp--button_container">
-            <button type="submit" className="signUp-button">
+            <button
+              type="submit"
+              className="signUp-button"
+              onClick={navigate("/")}
+            >
               Sign Up
             </button>
           </div>

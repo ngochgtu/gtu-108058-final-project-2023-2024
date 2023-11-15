@@ -1,0 +1,12 @@
+body {
+  background-image: url(../assets/background.jpg);
+  background-position: left;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.error_text {
+  color: lightgreen;
+}

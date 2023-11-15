@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
 import Button from "react-bootstrap/Button";
+import "../../src/style/pages.styles.css";
 import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -29,10 +30,10 @@ const HomePage = () => {
 
   const handleStartClick = (e) => {
     e.preventDefault();
-    if(selectedSkills.length === 0){
-      alert('select skill first')
-    }else{
-    navigate("/check", { state: selectedSkills });
+    if (selectedSkills.length === 0) {
+      alert("select skill first");
+    } else {
+      navigate("/check", { state: selectedSkills });
     }
   };
 
@@ -55,7 +56,7 @@ const HomePage = () => {
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={handleSkillChange}
-            />
+          />
         </Row>
         <Row>
           <Col>
