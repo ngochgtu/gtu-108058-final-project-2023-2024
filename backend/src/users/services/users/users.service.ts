@@ -32,14 +32,10 @@ export class UsersService {
     return this.userModel.findOne({ email }).exec();
   }
 
-  async createUserQuestion(
-    createUserQuestionDto: CreateUserQuestionDto,
-  ): Promise<User> {
-    const [newUser] = await Promise.all([
-      new this.userQuestionModel(createUserQuestionDto),
-    ]);
-    return newUser.save();
-  }
+    async createUserQuestion(createUserQuestionDto: CreateUserQuestionDto): Promise<UserQuestion> {
+        const [newUser] = await Promise.all([new this.userQuestionModel(createUserQuestionDto)]);
+        return newUser.save();
+    }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     if (await this.checkUsersExistence(createUserDto.email)) {

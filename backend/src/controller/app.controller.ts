@@ -22,7 +22,7 @@ export class AppController {
         return this.appService.getHello();
     }
 
-    @UseGuards(AuthenticatedGuard)
+    // @UseGuards(AuthenticatedGuard)
     @Post("/skill")
     async createSkill(@Res() response, @Body() createSkillDto: CreateSkillDto) {
         try {
@@ -40,7 +40,7 @@ export class AppController {
         }
     }
 
-    @UseGuards(AuthenticatedGuard)
+    // @UseGuards(AuthenticatedGuard)
     @Post("/skill_type")
     async createSkillType(@Res() response, @Body() createSkillTypeDto: CreateSkillTypeDto) {
         try {
@@ -58,7 +58,7 @@ export class AppController {
         }
     }
 
-    @UseGuards(AuthenticatedGuard)
+    // @UseGuards(AuthenticatedGuard)
     @Put('/skill_type/:id')
     async updateSkillType(@Res() response, @Param('id') id: string, @Body() updateStudentDto: UpdateSkillTypeDto,
     ) {
@@ -76,26 +76,30 @@ export class AppController {
         }
     }
     
-    @UseGuards(AuthenticatedGuard)
+    // @UseGuards(AuthenticatedGuard)
     @Get("/skills")
     getSkills(): Promise<Skill[]> {
         return this.appService.getSkills()
     }
 
-    @UseGuards(AuthenticatedGuard)
+    // @UseGuards(AuthenticatedGuard)
     @Get("/skill_types/:status")
     getSkillTypes(@Param('status') status: string): Promise<SkillType[]> {
         return this.appService.getSkillTypes(status)
     }
 
-    @UseGuards(AuthenticatedGuard)
+    // @UseGuards(AuthenticatedGuard)
     @Get("/ask")
     async getCompletion(@Query('prompt') prompt: string): Promise<string> {
         return this.openaiService.getCompletion(prompt);
     }
-    @UseGuards(AuthenticatedGuard)
+    // @UseGuards(AuthenticatedGuard)
     @Get("/questions")
-    async getQuestionsBySkills(@Query('skills') skills: string) {
-        return this.appService.getQuestionsBySkills(skills.split(","));
+    async getQuestionsBySkills(@Query('skills') skills: string , @Query('difficulty') difficulty: string ) {
+        return this.appService.getQuestionsBySkills(skills.split(","), difficulty);
     }    
+    @Get('/result')
+    async getNextQuestion(){
+        return this.appService.openai_question_to_dto(this.appService.array)
+    }
 }

@@ -11,7 +11,7 @@ export class UsersController {
         private readonly usersService: UsersService,) {
     }
     
-    @UseGuards(AuthenticatedGuard)
+    // @UseGuards(AuthenticatedGuard)
     @Post("/user_question")
     async createUserQuestion(@Res() response, @Body() createUserQuestionDto: CreateUserQuestionDto) {
         try {

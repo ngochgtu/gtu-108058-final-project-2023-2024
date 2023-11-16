@@ -77,28 +77,33 @@ export class AppService {
     return skillTypes;
   }
 
-  async getQuestionsBySkills(skills: string[]) {
-    const skillNames = [];
+    array:Array<{}> = []
+    counter: number = 0
+    skill: string[] = []
+    difficulty: string = ''
 
-    for (const skillId of skills) {
-      const dbSkill = await this.skillModel
-        .findById(new Types.ObjectId(skillId))
-        .exec();
-      if (!dbSkill) {
-        throw new NotFoundException(`Skill #${skillId} not found`);
-      }
-      skillNames.push(dbSkill.name);
-    }
+    async getQuestionsBySkills(skills: string[], difficulty: string) {
+        const skillNames = []
+        this.skill = skills
+        this.difficulty = difficulty
+        for (const skillId of skills) {
 
-    const openaiQuestion = await this.openaiService.getCompletion(
-      `Generate Question, fake 4 answer and true one answer for skill ${skillNames}`,
-    );
+            const dbSkill = await this.skillModel.findById(new Types.ObjectId(skillId)).exec();
+            if (!dbSkill) {
+                throw new NotFoundException(`Skill #${skillId} not found`);
+            }
+            skillNames.push(dbSkill.name)
+        }
+        const openaiQuestion = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames} 
+        10 times, as array of objects, return as JSON , first should be questions and be named ("question"), then should be the options named ("options"), 
+        then should be then correct answer named ("correctAnswer") , difficulty: ${difficulty}`)
+        
+        this.array = JSON.parse(openaiQuestion)
+        const createQuestionDto = this.openai_question_to_dto(this.array)
+        createQuestionDto.skill_names = skillNames
+        createQuestionDto.openai_question = openaiQuestion
 
-    const createQuestionDto = this.openai_question_to_dto(openaiQuestion);
-    createQuestionDto.skill_names = skillNames;
-    createQuestionDto.openai_question = openaiQuestion;
-
-    const dbQuestion = await this.createQuestion(createQuestionDto);
+        const dbQuestion = await this.createQuestion(createQuestionDto)
 
     return {
       _id: dbQuestion['_id'],
@@ -107,193 +112,24 @@ export class AppService {
     };
   }
 
-  escapeRegExp(pattern) {
-    return pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-  shuffleArray(array) {
-    const shuffledArray = [...array];
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [
-        shuffledArray[j],
-        shuffledArray[i],
-      ]; // Swap elements
-    }
-    return shuffledArray;
-  }
-  removeWordsFromArray(inputArray, patternsToRemove) {
-    if (!Array.isArray(inputArray)) {
-      throw new Error('Input is not an array');
-    }
-    const resultArray = inputArray.map((inputString) => {
-      if (typeof inputString !== 'string') {
-        throw new Error('Input in the array is not a string');
-      }
+   
 
-      const pattern = new RegExp(
-        patternsToRemove.map(this.escapeRegExp).join('|'),
-        'g',
-      );
-
-      if (pattern.test(inputString)) {
-        return inputString.replace(pattern, '');
-      }
-      return inputString;
-    });
-
-    return resultArray;
-  }
-
-  openai_question_to_dto = (openaiQuestion: string): CreateQuestionDto => {
-    // console.log("Row Question:", openaiQuestion)
-
-    const createQuestionDto = new CreateQuestionDto();
-
-    const questionParts = openaiQuestion.split(/\r?\n/);
-
-    createQuestionDto.question = questionParts[0];
-
-    const stringsToRemove = [
-      'A)',
-      'B)',
-      'C)',
-      'D)',
-      'E)',
-      'a)',
-      'b)',
-      'c)',
-      'd)',
-      'e)',
-      'A.',
-      'B.',
-      'C.',
-      'D.',
-      'E.',
-      'a.',
-      'b.',
-      'c.',
-      'd.',
-      'e.',
-      '1.',
-      '2.',
-      '3.',
-      '4.',
-      '5.',
-      '1)',
-      '2)',
-      '3)',
-      '4)',
-      '5)',
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      'Fake Answer :',
-    ];
-    const fake_answers = [];
-    let answer = '';
-
-    for (let i = 1; i < questionParts.length; i++) {
-      const questionPart = questionParts[i].trim();
-      if (
-        questionPart &&
-        !questionPart.includes('Fake Answer:') &&
-        !questionPart.includes('Fake Answers:')
-      ) {
-        // Check "True Answer"
-        const answerKeyword = 'Answer:';
-        const trueAnswer = 'True Answer:';
-        const trueAnswer2 = 'True answer:';
-        const correctAnswer = 'Correct Answer';
-        const correctAnswer2 = 'Correct answer:';
-
-        let temp = this.getCorrectAnswer(
-          i,
-          questionPart,
-          trueAnswer,
-          questionParts,
-        );
-        if (!temp) {
-          temp = this.getCorrectAnswer(
-            i,
-            questionPart,
-            trueAnswer2,
-            questionParts,
-          );
+    openai_question_to_dto = (array): CreateQuestionDto => {
+        const createQuestionDto = new CreateQuestionDto();
+        
+        if(this.counter <= 10){
+            createQuestionDto.question = array[this.counter].question
+            createQuestionDto.fake_answers = array[this.counter].options
+            createQuestionDto.answer = array[this.counter].correctAnswer
+            createQuestionDto.session_id = "NoUser"
+            this.counter++
+            return createQuestionDto
+        }else{
+            this.counter = 0
+            this.getQuestionsBySkills(this.skill, this.difficulty)
         }
-        if (!temp) {
-          temp = this.getCorrectAnswer(
-            i,
-            questionPart,
-            correctAnswer,
-            questionParts,
-          );
-        }
-        if (!temp) {
-          temp = this.getCorrectAnswer(
-            i,
-            questionPart,
-            correctAnswer2,
-            questionParts,
-          );
-        }
-        if (!temp) {
-          temp = this.getCorrectAnswer(
-            i,
-            questionPart,
-            answerKeyword,
-            questionParts,
-          );
-        }
-
-        if (temp) {
-          answer = temp;
-        } else {
-          fake_answers.push(questionPart);
-        }
-      }
     }
-    // if(answer === ''){
-    //     this.getQuestionsBySkills([])
-    // }
-    if (!fake_answers.includes(answer)) {
-      this.insterAtRandom(fake_answers, answer);
-    }
-    const updated_fake_answers = this.removeWordsFromArray(
-      fake_answers,
-      stringsToRemove,
-    );
-    const ShaffledArray = this.shuffleArray(updated_fake_answers);
-    createQuestionDto.answer = answer;
-    createQuestionDto.fake_answers = ShaffledArray;
-    createQuestionDto.session_id = 'NoUser';
+    
 
-    console.log(createQuestionDto);
-    return createQuestionDto;
-  };
 
-  insterAtRandom = (array, element) => {
-    const randomIndex = Math.floor(Math.random() * (array.length + 1));
-    array.splice(randomIndex, 0, element);
-  };
-
-  getCorrectAnswer = (
-    i: number,
-    questionPart: string,
-    keyWord: string,
-    questionParts: string[],
-  ) => {
-    let answer = null;
-    if (questionPart.startsWith(keyWord) || questionPart.includes(keyWord)) {
-      if (i + 1 < questionParts.length) {
-        answer = questionParts[i + 1];
-      } else {
-        answer = questionPart.substring(
-          questionPart.indexOf(keyWord) + keyWord.length,
-        );
-      }
-    }
-    return answer;
-  };
 }
