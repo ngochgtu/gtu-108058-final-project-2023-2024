@@ -1,7 +1,7 @@
 
 import "../../src/style/pages.styles.css";
 import "../style/signUp.styles.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -48,13 +48,13 @@ const SignUpPage = () => {
             <button
               type="submit"
               className="signUp-button"
-              onClick={navigate("/")}
+              onClick={()=>navigate("/sign-in")}
             >
               Sign Up
             </button>
           </div>
           <p className="forgot-password text-right">
-            Already registered <a href="/sign-in">sign in?</a>
+            Already registered <Link to="/sign-in">sign in</Link>
           </p>
         </div>
       </form>

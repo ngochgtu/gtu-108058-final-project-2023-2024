@@ -6,6 +6,7 @@ import ResultPage from "../pages/ResultPage";
 import ErrorPage from "../pages/ErrorPage";
 import Header from "../components/Header";
 import SignUpPage from "../pages/signUpPage";
+import AboutPage from "../pages/AboutPage";
 
 export const router = createHashRouter([
   {
@@ -19,6 +20,10 @@ export const router = createHashRouter([
     children: [
       {
         index: true,
+        element: <AboutPage />,
+      },
+      {
+        path: "/sign-in",
         element: <AuthPage />,
       },
       {

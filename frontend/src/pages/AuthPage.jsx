@@ -1,5 +1,5 @@
 import { Form, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useRef } from "react";
 import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
@@ -74,7 +74,7 @@ const AuthPage = () => {
               </Col>
               <Col>
                 <p className="forgot-password text-right">
-                  Not registered <a href="/#/sign-up">sign up?</a>
+                  Not registered <Link to="/sign-up">sign up?</Link>
                 </p>
               </Col>
             </div>
