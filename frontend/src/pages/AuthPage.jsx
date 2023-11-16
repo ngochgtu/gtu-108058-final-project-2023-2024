@@ -13,25 +13,25 @@ const AuthPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if(emailRef.current.value && passwordRef.current.value){
-        const data = await fetch(`${BASE_PATH}/auth/login`, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify({
-            email: emailRef.current.value,
-            password: passwordRef.current.value,
-          }),
-          credentials: 'include'
-        });
-        const json = await data.json();
-        console.log(json)
-        localStorage.setItem("user_id", json._id);
-        localStorage.setItem("email", json.email);
-        navigate("/home");
-    }else{
-        alert("Please fill out all fields")
+    if (emailRef.current.value && passwordRef.current.value) {
+      const data = await fetch(`${BASE_PATH}/auth/login`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          email: emailRef.current.value,
+          password: passwordRef.current.value,
+        }),
+        credentials: "include",
+      });
+      const json = await data.json();
+      console.log(json);
+      localStorage.setItem("user_id", json._id);
+      localStorage.setItem("email", json.email);
+      navigate("/home");
+    } else {
+      alert("Please fill out all fields");
     }
   };
 
@@ -40,6 +40,7 @@ const AuthPage = () => {
       <form onSubmit={handleLogin}>
         <div className="auth_container">
           <div className="register_container">
+            <h3 className="signin-title">Sign In</h3>
             <div className="register_input">
               <Form.Floating className="mb-3">
                 <input

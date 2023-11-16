@@ -3,8 +3,10 @@ import { Container } from "react-bootstrap";
 import "../../src/style/pages.styles.css";
 import "../style/ErrorPgae.styles.css";
 import logo from "../assets/404-error.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const ErrorPage = () => {
+  const navigate = useNavigate();
   return (
     <Container>
       <div className="error-container">
@@ -18,7 +20,9 @@ const ErrorPage = () => {
           Despite sleeping on the couch most of the day, our junior web
           developer still finds time to do some coding...
         </h3>
-        <button className="error_button">back to homepage</button>
+        <button className="error_button" onClick={() => navigate("/")}>
+          back to homepage
+        </button>
       </div>
     </Container>
   );

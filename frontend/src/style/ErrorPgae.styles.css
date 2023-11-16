@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@1,300&display=swap");
 
 .error-container {
   display: flex;
@@ -18,14 +18,14 @@
 }
 
 .error__massage--title {
-  font-family: "Kdam+Thmor+Pro", sans-serif;
-  color: lightgreen;
+  font-family: "Noto Serif", serif;
   margin: 1rem 0;
   font-size: 3rem;
+  color: lightgreen;
 }
 
 .error__massage--content {
-  font-family: "Kdam+Thmor+Pro", sans-serif;
+  font-family: "Noto Serif", serif;
   color: lightgreen;
 }
 

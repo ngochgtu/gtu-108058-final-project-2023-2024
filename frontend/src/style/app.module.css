@@ -1,21 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Agbalumo&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Agbalumo&family=Slabo+27px&display=swap");
 
+:root {
+  --main-black: #272727;
+  --light-green: #14a76c;
+  --dark-grey: #747474;
+}
+
 .container {
   display: flex;
   flex-direction: row;
   align-content: space-between;
   align-items: center;
-  /* box-shadow: 1px 1px 3px 3px grey; */
-  border: 2px solid lightgreen;
+  border: 3px solid lightgreen;
   border-radius: 0.5rem;
-  background-color: #0d1117;
-  color: lightgreen;
+  background-color: var(--main-black);
+  color: var(--dark-grey);
   height: 3.5rem;
 }
 
 .title {
   font-family: "Agbalumo", sans-serif;
+  -webkit-text-stroke: 1px lightgreen;
 }
 
 .img_container {
@@ -40,12 +46,11 @@
   border-radius: 0.3rem;
   border: none;
   outline-width: 1px;
-  background: #0d1117;
-  color: lightgreen;
+  background-color: rgb(37, 37, 37);
 }
 
 .button:hover {
-  background-color: rgb(37, 37, 37);
+  background: var(--dark-grey);
   color: #0d1117;
 }
 
