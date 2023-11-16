@@ -2,7 +2,7 @@ import { Form, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
 
@@ -13,13 +13,22 @@ const AuthPage = () => {
 	const handleLogin = async (e) => {
 		e.preventDefault();
 		try {
-			const response = await axios.post(`http://localhost:3001/auth/login`, {
-				Email,
-				password,
+			const response = await fetch("http://localhost:3001/auth/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ Email, password }),
 			});
-			console.log(response);
+
+			if (response.ok) {
+				const data = await response.json();
+				console.log("Login successful:", data);
+			} else {
+				console.error("Login failed");
+			}
 		} catch (error) {
-			console.error("Login failed:", error.message);
+			console.error("Error during login:", error);
 		}
 	};
 

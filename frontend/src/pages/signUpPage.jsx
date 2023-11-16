@@ -2,7 +2,7 @@ import "../../src/style/pages.styles.css";
 import "../style/signUp.styles.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 const SignUpPage = () => {
 	const [username, setUsername] = useState("");
@@ -13,20 +13,22 @@ const SignUpPage = () => {
 
 	const handleRegister = async () => {
 		try {
-			const response = await axios.post("http://localhost:3001/users/user", {
-				username,
-				Email,
-				password,
+			const response = await fetch("http://localhost:3001/users/user", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ username, Email, password }),
 			});
 
-			if (!response.ok) {
-				throw new Error("Something went wrong!");
+			if (response.ok) {
+				const data = await response.json();
+				console.log("Registration successful:", data);
+			} else {
+				console.error("Registration failed");
 			}
-
-			const data = await response.json();
-			console.log(data);
 		} catch (error) {
-			console.error("Registration failed:", error.message);
+			console.error("Error during registration:", error);
 		}
 	};
 
