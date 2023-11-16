@@ -1,7 +1,7 @@
 import { Form, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
@@ -10,8 +10,9 @@ const AuthPage = () => {
 	const [Email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
+	const navigate = useNavigate();
+
 	const handleLogin = async (e) => {
-		e.preventDefault();
 		try {
 			const response = await fetch("http://localhost:3001/auth/login", {
 				method: "POST",
@@ -30,6 +31,15 @@ const AuthPage = () => {
 		} catch (error) {
 			console.error("Error during login:", error);
 		}
+	};
+
+	const navigationMethod = () => {
+		navigate("/home");
+	};
+
+	const handleButtonClick = () => {
+		handleLogin();
+		navigationMethod();
 	};
 
 	return (
@@ -66,7 +76,7 @@ const AuthPage = () => {
 										className="login_button"
 										variant="primary"
 										type="submit"
-										onClick={handleLogin}
+										onClick={handleButtonClick}
 									>
 										Login
 									</button>
