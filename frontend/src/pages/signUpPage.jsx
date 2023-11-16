@@ -1,10 +1,6 @@
-import { Form, Col } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-// import { useNavigate } from "react-router-dom";
-// import React,{ useRef } from "react";
+
 import "../../src/style/pages.styles.css";
 import "../style/signUp.styles.css";
-// import { BASE_PATH } from "../api/ServerApi";
 import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {

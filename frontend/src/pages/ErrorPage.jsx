@@ -8,9 +8,8 @@ const ErrorPage = () => {
   return (
     <Container>
       <div className="error-container">
-        {/* <h1 className="error_text">404</h1> */}
         <div className="error__logo--container">
-          <img className="error__logo" src={logo}></img>
+          <img className="error__logo" src={logo} alt="error"></img>
         </div>
         <h2 className="error__massage--title">
           Oh no,you've found our junior developer's homepage!

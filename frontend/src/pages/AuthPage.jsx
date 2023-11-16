@@ -1,5 +1,4 @@
 import { Form, Col } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import React, { useRef } from "react";
 import "../style/auth.styles.css";
@@ -14,7 +13,7 @@ const AuthPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if(usernameRef.current.value && emailRef.current.value && passwordRef.current.value){
+    if(emailRef.current.value && passwordRef.current.value){
         const data = await fetch(`${BASE_PATH}/auth/login`, {
           headers: {
             "Content-Type": "application/json",
@@ -30,7 +29,6 @@ const AuthPage = () => {
         console.log(json)
         localStorage.setItem("user_id", json._id);
         localStorage.setItem("email", json.email);
-        localStorage.setItem("username", json.username);
         navigate("/home");
     }else{
         alert("Please fill out all fields")
