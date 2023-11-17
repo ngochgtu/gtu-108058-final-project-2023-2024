@@ -7,7 +7,7 @@ import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
 
 const AuthPage = () => {
-	const [Email, setEmail] = useState("");
+	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	const navigate = useNavigate();
@@ -19,7 +19,7 @@ const AuthPage = () => {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ Email, password }),
+				body: JSON.stringify({ email, password }),
 			});
 
 			if (response.ok) {
@@ -53,7 +53,7 @@ const AuthPage = () => {
 									className="signin_input"
 									type="email"
 									placeholder="name@example.com"
-									value={Email}
+									value={email}
 									onChange={(e) => setEmail(e.target.value)}
 								></input>
 							</Form.Floating>

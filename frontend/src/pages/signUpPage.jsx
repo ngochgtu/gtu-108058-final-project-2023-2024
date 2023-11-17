@@ -2,24 +2,25 @@ import "../../src/style/pages.styles.css";
 import "../style/signUp.styles.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { BASE_PATH } from "../api/ServerApi";
 // import axios from "axios";
 
 const SignUpPage = () => {
 	const [username, setUsername] = useState("");
-	const [Email, setEmail] = useState("");
+	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	const navigate = useNavigate();
 
 	const handleRegister = async () => {
 		try {
-			const response = await fetch("http://localhost:3001/users/user", {
+			const response = await fetch(`${BASE_PATH}/users/user`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ username, Email, password }),
-			});
+				body: JSON.stringify({ username ,email, password, }),
+			})
 
 			if (response.ok) {
 				const data = await response.json();
@@ -62,7 +63,7 @@ const SignUpPage = () => {
 							type="email"
 							className="signUp-input"
 							placeholder="Enter email"
-							value={Email}
+							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 						/>
 					</div>
