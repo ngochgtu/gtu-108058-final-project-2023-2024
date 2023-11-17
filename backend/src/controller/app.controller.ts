@@ -100,6 +100,6 @@ export class AppController {
     }    
     @Get('/result')
     async getNextQuestion(){
-        return this.appService.openai_question_to_dto(this.appService.array)
+        return this.appService.openai_question_to_dto(this.appService.GptArray)
     }
 }

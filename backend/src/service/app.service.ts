@@ -12,6 +12,14 @@ import { UpdateSkillTypeDto } from '../dto/UpdateSkillType.dto';
 
 @Injectable()
 export class AppService {
+
+
+  public GptArray:Array<{}> = []
+  private counter: number = 0
+  private skill: string[] = []
+  private difficulty: string = ''
+
+
   constructor(
     @InjectModel(Skill.name) private skillModel: Model<Skill>,
     @InjectModel(SkillType.name) private skillTypeModel: Model<SkillType>,
@@ -77,10 +85,6 @@ export class AppService {
     return skillTypes;
   }
 
-    array:Array<{}> = []
-    counter: number = 0
-    skill: string[] = []
-    difficulty: string = ''
 
     async getQuestionsBySkills(skills: string[], difficulty: string) {
         const skillNames = []
@@ -94,12 +98,18 @@ export class AppService {
             }
             skillNames.push(dbSkill.name)
         }
-        const openaiQuestion = await this.openaiService.getCompletion(`Generate Question, fake 4 answer and true one answer for skill ${skillNames} 
-        10 times, as array of objects, return as JSON , first should be questions and be named ("question"), then should be the options named ("options"), 
-        then should be then correct answer named ("correctAnswer") , difficulty: ${difficulty}`)
+        const openaiQuestion = await this.openaiService.getCompletion(`Generate an array of 10 skill verification questions for ${skillNames} with the following format:
+        {
+          "question": "Generate Question for skill ${skillNames}",
+          "options": ["fake answer 1", "fake answer 2", "fake answer 3", "fake answer 4", "true answer for skill ${skillNames}"],
+          "correctAnswer": "true answer for skill ${skillNames}",
+          "difficulty": ${difficulty}
+        }
         
-        this.array = JSON.parse(openaiQuestion)
-        const createQuestionDto = this.openai_question_to_dto(this.array)
+        Ensure that the correct answer is randomly placed within the 'options' array for each question.`)
+        
+        this.GptArray = JSON.parse(openaiQuestion)
+        const createQuestionDto = this.openai_question_to_dto(this.GptArray)
         createQuestionDto.skill_names = skillNames
         createQuestionDto.openai_question = openaiQuestion
 
@@ -126,6 +136,7 @@ export class AppService {
             return createQuestionDto
         }else{
             this.counter = 0
+            this.GptArray.length = 0
             this.getQuestionsBySkills(this.skill, this.difficulty)
         }
     }

@@ -5,6 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
+
+  const onSignIn = () => {
+    navigate("/sign-in");
+  }
+
+
   return (
     <div>
       <form
@@ -48,7 +54,7 @@ const SignUpPage = () => {
             <button
               type="submit"
               className="signUp-button"
-              onClick={()=>navigate("/sign-in")}
+              onClick={onSignIn}
             >
               Sign Up
             </button>

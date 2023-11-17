@@ -72,7 +72,7 @@ const SkillsCheckPage = () => {
                     <SkillCheck key={question._id} question={question} selectAnswer={changeAnswer}/>
                     <div style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
                         <Button variant="primary" onClick={handleNextClick}>Next</Button>
-                        {counter >= 10 ? <Button variant="primary" onClick={navigate('/result',{state: question._id})} >Finish</Button> : ''}
+                        {counter >= 12 ? <Button variant="primary" onClick={navigate('/result',{state: question._id})} >Finish</Button> : ''}
                     </div>
                 </Col>
             </Row> :
