@@ -18,6 +18,9 @@ export class AppService {
   private counter: number = 0
   private skill: string[] = []
   private difficulty: string = ''
+  private openaiQuestionSaved
+  private skillNames = []
+  private initialGptArray: Array<{}> = [];
 
 
   constructor(
@@ -25,7 +28,8 @@ export class AppService {
     @InjectModel(SkillType.name) private skillTypeModel: Model<SkillType>,
     @InjectModel(Question.name) private questionModel: Model<Question>,
     private readonly openaiService: OpenaiService,
-  ) {}
+    
+  ) { this.initialGptArray = this.GptArray;}
 
   getHello(): string {
     return 'Hello World!';
@@ -87,7 +91,8 @@ export class AppService {
 
 
     async getQuestionsBySkills(skills: string[], difficulty: string) {
-        const skillNames = []
+      if (this.counter <= 10) {
+        if (this.counter == 0 || this.counter == 10) {
         this.skill = skills
         this.difficulty = difficulty
         for (const skillId of skills) {
@@ -96,23 +101,23 @@ export class AppService {
             if (!dbSkill) {
                 throw new NotFoundException(`Skill #${skillId} not found`);
             }
-            skillNames.push(dbSkill.name)
+            this.skillNames.push(dbSkill.name)
         }
-        const openaiQuestion = await this.openaiService.getCompletion(`Generate an array of 10 skill verification questions for ${skillNames} with the following format:
+        const openaiQuestion = await this.openaiService.getCompletion(`Generate an array of 10 skill verification questions for ${this.skillNames} with the following format:
         {
-          "question": "Generate Question for skill ${skillNames}",
-          "options": ["fake answer 1", "fake answer 2", "fake answer 3", "fake answer 4", "true answer for skill ${skillNames}"],
-          "correctAnswer": "true answer for skill ${skillNames}",
+          "question": "Generate Question for skill ${this.skillNames}",
+          "options": ["fake answer 1", "fake answer 2", "fake answer 3", "fake answer 4", "true answer for skill ${this.skillNames}"],
+          "correctAnswer": "true answer for skill ${this.skillNames}",
           "difficulty": ${difficulty}
         }
         
-        Ensure that the correct answer is randomly placed within the 'options' array for each question.`)
-        
-        this.GptArray = JSON.parse(openaiQuestion)
+        Ensure that the correct answer is randomly placed within the 'options' array for each question.`) 
+        this.openaiQuestionSaved = openaiQuestion
+        this.GptArray = JSON.parse(this.openaiQuestionSaved)
+      }
         const createQuestionDto = this.openai_question_to_dto(this.GptArray)
-        createQuestionDto.skill_names = skillNames
-        createQuestionDto.openai_question = openaiQuestion
-
+        createQuestionDto.skill_names = this.skillNames
+        createQuestionDto.openai_question = this.openaiQuestionSaved
         const dbQuestion = await this.createQuestion(createQuestionDto)
 
     return {
@@ -120,25 +125,24 @@ export class AppService {
       question: dbQuestion.question,
       fake_answers: dbQuestion.fake_answers,
     };
+    }else{
+      this.counter = 0;
+      this.skillNames.length = 0;
+      this.GptArray = this.initialGptArray;
+      return this.getQuestionsBySkills(this.skill, this.difficulty);
+    }
   }
 
    
 
     openai_question_to_dto = (array): CreateQuestionDto => {
         const createQuestionDto = new CreateQuestionDto();
-        
-        if(this.counter <= 10){
-            createQuestionDto.question = array[this.counter].question
-            createQuestionDto.fake_answers = array[this.counter].options
-            createQuestionDto.answer = array[this.counter].correctAnswer
-            createQuestionDto.session_id = "NoUser"
-            this.counter++
-            return createQuestionDto
-        }else{
-            this.counter = 0
-            this.GptArray.length = 0
-            this.getQuestionsBySkills(this.skill, this.difficulty)
-        }
+        createQuestionDto.question = array[this.counter].question
+        createQuestionDto.fake_answers = array[this.counter].options
+        createQuestionDto.answer = array[this.counter].correctAnswer
+        createQuestionDto.session_id = "NoUser"
+        this.counter++
+        return createQuestionDto
     }
     
 

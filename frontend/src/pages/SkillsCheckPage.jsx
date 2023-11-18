@@ -39,7 +39,7 @@ const SkillsCheckPage = () => {
         }, []);
 
     const handleNextClick = async () => {
-        setCounter((i)=> i+1)
+        setCounter((i)=> i++)
         sendRequest({
             email: localStorage.getItem("email"),
             question_id: question._id,
@@ -47,14 +47,18 @@ const SkillsCheckPage = () => {
         }).then(data => console.log(data))
         .catch(err => console.log(err))
 
-        fetch('http://localhost:3001/api/result', {
-            method: 'GET',
-            headers:{
-                "Content-Type": "application/json",
-            },
-        }).then(res => res.json())
-        .then(data => {setQuestion(data); console.log(question)})
-        .catch(err => console.log(err))
+        fetch_data()
+        if(counter % 10 == 0){
+            setQuestion(null)
+        }
+        // fetch('http://localhost:3001/api/result', {
+        //     method: 'GET',
+        //     headers:{
+        //         "Content-Type": "application/json",
+        //     },
+        // }).then(res => res.json())
+        // .then(data => {setQuestion(data); console.log(question)})
+        // .catch(err => console.log(err))
     }
 
     return <Container className="p-3">
