@@ -1,11 +1,13 @@
 import { Form, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
 import { BASE_PATH } from "../api/ServerApi";
+import Backdrop from "../components/backdrop";
 
 const AuthPage = () => {
+  const [error, setError] = useState(false);
   const emailRef = useRef("");
   const passwordRef = useRef("");
 
@@ -31,7 +33,8 @@ const AuthPage = () => {
       localStorage.setItem("email", json.email);
       navigate("/home");
     } else {
-      alert("Please fill out all fields");
+      // alert("Please fill out all fields");
+      setError(true);
     }
   };
 

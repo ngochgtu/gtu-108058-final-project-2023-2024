@@ -5,7 +5,7 @@ import SkillsCheckPage from "../pages/SkillsCheckPage";
 import ResultPage from "../pages/ResultPage";
 import ErrorPage from "../pages/ErrorPage";
 import Header from "../components/Header";
-import SignUpPage from "../pages/signUpPage";
+import SignUpPage from "../pages/SignUpPage";
 import AboutPage from "../pages/AboutPage";
 
 export const router = createHashRouter([
