@@ -1,6 +1,7 @@
 import { Form, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
 import { BASE_PATH } from "../api/ServerApi";
@@ -13,44 +14,49 @@ const AuthPage = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    if (emailRef.current.value && passwordRef.current.value) {
-      const data = await fetch(`${BASE_PATH}/auth/login`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
-        }),
-        credentials: "include",
-      });
-      const json = await data.json();
-      console.log(json);
-      localStorage.setItem("user_id", json._id);
-      localStorage.setItem("email", json.email);
-      navigate("/home");
-    } else {
-      // alert("Please fill out all fields");
-      setError(true);
-    }
-  };
+	const handleLogin = async (e) => {
+		try {
+			const response = await fetch("http://localhost:3001/auth/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ email, password }),
+			});
+
+			if (response.ok) {
+				const data = await response.json();
+				console.log("Login successful:", data);
+			} else {
+				console.error("Login failed");
+			}
+		} catch (error) {
+			console.error("Error during login:", error);
+		}
+	};
+
+	const navigationMethod = () => {
+		navigate("/home");
+	};
+
+	const handleButtonClick = () => {
+		handleLogin();
+		navigationMethod();
+	};
 
   return (
     <div>
       <form onSubmit={handleLogin}>
         <div className="auth_container">
           <div className="register_container">
-            <h3 className="signin-title">Sign In</h3>
             <div className="register_input">
               <Form.Floating className="mb-3">
                 <input
                   className="signin_input"
-                  ref={emailRef}
                   type="email"
                   placeholder="name@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 ></input>
               </Form.Floating>
             </div>
@@ -58,9 +64,10 @@ const AuthPage = () => {
               <Form.Floating>
                 <input
                   className="signin_input"
-                  ref={passwordRef}
                   type="password"
                   placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 ></input>
               </Form.Floating>
             </div>
@@ -71,6 +78,7 @@ const AuthPage = () => {
                     className="login_button"
                     variant="primary"
                     type="submit"
+                    onClick={handleButtonClick}
                   >
                     Login
                   </button>
