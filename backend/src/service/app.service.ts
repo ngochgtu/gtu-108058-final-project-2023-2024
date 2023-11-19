@@ -20,16 +20,14 @@ export class AppService {
   private difficulty: string = ''
   private openaiQuestionSaved
   private skillNames = []
-  private initialGptArray: Array<{}> = [];
 
 
   constructor(
     @InjectModel(Skill.name) private skillModel: Model<Skill>,
     @InjectModel(SkillType.name) private skillTypeModel: Model<SkillType>,
     @InjectModel(Question.name) private questionModel: Model<Question>,
-    private readonly openaiService: OpenaiService,
-    
-  ) { this.initialGptArray = this.GptArray;}
+    private readonly openaiService: OpenaiService,  
+  ) {}
 
   getHello(): string {
     return 'Hello World!';
@@ -95,6 +93,9 @@ export class AppService {
         if (this.counter == 0 || this.counter == 10) {
         this.skill = skills
         this.difficulty = difficulty
+        this.GptArray = []
+        this.counter = 0;
+        this.skillNames = []
         for (const skillId of skills) {
 
             const dbSkill = await this.skillModel.findById(new Types.ObjectId(skillId)).exec();
@@ -103,6 +104,7 @@ export class AppService {
             }
             this.skillNames.push(dbSkill.name)
         }
+
         const openaiQuestion = await this.openaiService.getCompletion(`Generate an array of 10 skill verification questions for ${this.skillNames} with the following format:
         {
           "question": "Generate Question for skill ${this.skillNames}",
@@ -125,11 +127,6 @@ export class AppService {
       question: dbQuestion.question,
       fake_answers: dbQuestion.fake_answers,
     };
-    }else{
-      this.counter = 0;
-      this.skillNames.length = 0;
-      this.GptArray = this.initialGptArray;
-      return this.getQuestionsBySkills(this.skill, this.difficulty);
     }
   }
 
