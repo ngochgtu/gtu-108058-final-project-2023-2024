@@ -48,7 +48,7 @@ const SkillsCheckPage = () => {
         .catch(err => console.log(err))
 
         fetch_data()
-        if(counter % 10 == 0){
+        if(counter % 10 === 0){
             setQuestion(null)
         }
         // fetch('http://localhost:3001/api/result', {
