@@ -14,10 +14,8 @@ import { UpdateSkillTypeDto } from '../dto/UpdateSkillType.dto';
 export class AppService {
 
 
-  public GptArray:Array<{}> = []
+  private GptArray:Array<{}> = []
   private counter: number = 0
-  private skill: string[] = []
-  private difficulty: string = ''
   private openaiQuestionSaved
   private skillNames = []
 
@@ -91,8 +89,6 @@ export class AppService {
     async getQuestionsBySkills(skills: string[], difficulty: string) {
       if (this.counter <= 10) {
         if (this.counter == 0 || this.counter == 10) {
-        this.skill = skills
-        this.difficulty = difficulty
         this.GptArray = []
         this.counter = 0;
         this.skillNames = []
@@ -129,8 +125,6 @@ export class AppService {
     };
     }
   }
-
-   
 
     openai_question_to_dto = (array): CreateQuestionDto => {
         const createQuestionDto = new CreateQuestionDto();
