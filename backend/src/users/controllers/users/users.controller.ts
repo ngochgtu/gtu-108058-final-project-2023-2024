@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res,Request } from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/auth/utils/LocalGuard';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { CreateUserQuestionDto } from 'src/dto/CreateUserQuestion.dto';
@@ -30,9 +30,10 @@ export class UsersController {
   }
 
   @Post('/user')
-  async createUser(@Res() response, @Body() createUserDto: CreateUserDto) {
+  async createUser(@Res() response, @Body() createUserDto: CreateUserDto, @Request() req) {
     try {
       const newUser = await this.usersService.createUser(createUserDto);
+      req.login(createUserDto, (err)=> err)
       return response.status(HttpStatus.CREATED).json(newUser);
     } catch (err) {
       return response.status(HttpStatus.BAD_REQUEST).json({

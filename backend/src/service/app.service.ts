@@ -66,6 +66,7 @@ export class AppService {
     const [newQuestion] = await Promise.all([
       new this.questionModel(createQuestionDto),
     ]);
+    console.log(newQuestion)
     return newQuestion.save();
   }
 
@@ -115,7 +116,8 @@ export class AppService {
       }
         const createQuestionDto = this.openai_question_to_dto(this.GptArray)
         createQuestionDto.skill_names = this.skillNames
-        createQuestionDto.openai_question = this.openaiQuestionSaved
+        // createQuestionDto.openai_question = this.openaiQuestionSaved
+        createQuestionDto.difficulty = difficulty
         const dbQuestion = await this.createQuestion(createQuestionDto)
 
     return {

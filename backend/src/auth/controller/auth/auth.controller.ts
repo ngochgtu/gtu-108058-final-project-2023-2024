@@ -10,6 +10,11 @@ export class AuthController {
         return req.user
     }
 
+    @Post('logout')
+    async logout(@Request() req){
+        return req.logout(err => err)
+    }
+
     @Get('')
     async getAuthSession(
         @Session() session:Record<string, any>
