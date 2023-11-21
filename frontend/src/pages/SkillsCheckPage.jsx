@@ -40,7 +40,7 @@ const SkillsCheckPage = () => {
         }, []);
 
     const handleNextClick = async () => {
-        setCounter(counter++)
+        setCounter(counter + 1)
         sendRequest({
             email: localStorage.getItem("email"),
             question_id: question._id,
