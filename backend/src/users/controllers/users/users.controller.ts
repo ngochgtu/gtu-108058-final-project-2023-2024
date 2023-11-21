@@ -3,7 +3,7 @@ import { AuthenticatedGuard } from 'src/auth/utils/LocalGuard';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { CreateUserQuestionDto } from 'src/dto/CreateUserQuestion.dto';
 import { UsersService } from 'src/users/services/users/users.service';
-import { UseGuards } from '@nestjs/common/decorators';
+import { Get, UseGuards } from '@nestjs/common/decorators';
 
 @Controller('users')
 export class UsersController {
@@ -42,5 +42,10 @@ export class UsersController {
         error: 'Bad Request',
       });
     }
+  }
+
+  @Get('/result')
+  async getResult(){
+    return await this.usersService.getResult()
   }
 }

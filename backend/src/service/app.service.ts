@@ -9,16 +9,15 @@ import { Question } from '../schema/Question.schema';
 import { CreateSkillTypeDto } from '../dto/CreateSkillType.dto';
 import { SkillType } from '../schema/SkillType.schema';
 import { UpdateSkillTypeDto } from '../dto/UpdateSkillType.dto';
+import { UserQuestion } from 'src/schema/UserQuestion.schema';
 
 @Injectable()
 export class AppService {
-
 
   private GptArray:Array<{}> = []
   private counter: number = 0
   private openaiQuestionSaved
   private skillNames = []
-
 
   constructor(
     @InjectModel(Skill.name) private skillModel: Model<Skill>,
@@ -60,13 +59,8 @@ export class AppService {
     return newSkill.save();
   }
 
-  async createQuestion(
-    createQuestionDto: CreateQuestionDto,
-  ): Promise<Question> {
-    const [newQuestion] = await Promise.all([
-      new this.questionModel(createQuestionDto),
-    ]);
-    console.log(newQuestion)
+  async createQuestion(createQuestionDto: CreateQuestionDto,): Promise<Question> {
+    const [newQuestion] = await Promise.all([new this.questionModel(createQuestionDto),]);
     return newQuestion.save();
   }
 

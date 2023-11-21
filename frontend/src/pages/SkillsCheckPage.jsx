@@ -13,6 +13,7 @@ const SkillsCheckPage = () => {
     const [question, setQuestion] = useState(null)
     const [answer, setAnswer] = useState("Demo")
     const [counter, setCounter] = useState(0)
+    const [result, setResult] = useState(null)
     const {sendRequest} = useRequest({url: 'http://localhost:3001/users/user_question', method: 'POST'})
         
     const navigate = useNavigate()
@@ -39,7 +40,7 @@ const SkillsCheckPage = () => {
         }, []);
 
     const handleNextClick = async () => {
-        setCounter((i)=> i++)
+        setCounter(counter++)
         sendRequest({
             email: localStorage.getItem("email"),
             question_id: question._id,
@@ -51,14 +52,18 @@ const SkillsCheckPage = () => {
         if(counter % 10 === 0){
             setQuestion(null)
         }
-        // fetch('http://localhost:3001/api/result', {
-        //     method: 'GET',
-        //     headers:{
-        //         "Content-Type": "application/json",
-        //     },
-        // }).then(res => res.json())
-        // .then(data => {setQuestion(data); console.log(question)})
-        // .catch(err => console.log(err))
+    }
+    
+    const onFinish = ()=> {
+        fetch('http://localhost:3001/users/result', {
+            method: 'GET',
+            headers:{
+                "Content-Type": "application/json",
+            },
+        }).then(res => res.json())
+        .then(data => {setResult(data); console.log(question)})
+        .catch(err => console.log(err))  
+        navigate('/result',{state: result})
     }
 
     return <Container className="p-3">
@@ -76,7 +81,7 @@ const SkillsCheckPage = () => {
                     <SkillCheck key={question._id} question={question} selectAnswer={changeAnswer}/>
                     <div style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
                         <Button variant="primary" onClick={handleNextClick}>Next</Button>
-                        {counter >= 12 ? <Button variant="primary" onClick={navigate('/result',{state: question._id})} >Finish</Button> : ''}
+                        {counter >= 10 ? <Button variant="primary" onClick={onFinish} >Finish</Button> : ''}
                     </div>
                 </Col>
             </Row> :
