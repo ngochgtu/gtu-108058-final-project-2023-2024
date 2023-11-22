@@ -1,3 +1,5 @@
+# gtu-108058-final-project-2023-2024
+
 # Project Name: Sills Verifier
 
 # Frontend deploy status:
@@ -19,11 +21,10 @@
     Visual Studio Code
     WebStorm
 
-backend:
-yarn start:dev
-
-frontend:
-yarn start
+# backend:
+    yarn start:dev
+# frontend:
+    yarn start
 
 
 # Milestones:
