@@ -1,25 +1,3 @@
-# gtu-108058-final-project-2023-2024
-
-# Project Name: Sills Verifier
-
-# Frontend deploy status:
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b22f342b-a02c-4ed2-bc61-be5f7263d167/deploy-status)](https://app.netlify.com/sites/gtu-skills-verifier/deploys)
-
-## Frontend url:
-    https://gtu-skills-verifier.netlify.app/
-
-# Installation:
-    Nodejs, yarn
-
-# Technologies: 
-    nestjs, reactjs
-
-# Database: 
-    Mongodb
-
-# Ide:
-    Visual Studio Code
-    WebStorm
 # Project Name: Sills Verifier
 
 # Frontend deploy status:
