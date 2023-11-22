@@ -43,7 +43,6 @@ const HomePage = () => {
 
   return (
     <Container className="p-3">
-      <Row>{/* <h2>User Name {localStorage.getItem("username")}</h2> */}</Row>
       <form onSubmit={handleStartClick}>
         <Row>
           <h2 className="header">Select Skills</h2>

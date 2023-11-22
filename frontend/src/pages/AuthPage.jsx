@@ -2,9 +2,9 @@ import { Form, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
 import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
+import useFetch from "../hooks/useFetch";
 
 const AuthPage = () => {
 	const [email, setEmail] = useState("");

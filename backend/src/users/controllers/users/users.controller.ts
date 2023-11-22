@@ -1,9 +1,9 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res,Request } from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/auth/utils/LocalGuard';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { CreateUserQuestionDto } from 'src/dto/CreateUserQuestion.dto';
 import { UsersService } from 'src/users/services/users/users.service';
-import { UseGuards } from '@nestjs/common/decorators';
+import { Get, UseGuards } from '@nestjs/common/decorators';
 
 @Controller('users')
 export class UsersController {
@@ -30,9 +30,10 @@ export class UsersController {
   }
 
   @Post('/user')
-  async createUser(@Res() response, @Body() createUserDto: CreateUserDto) {
+  async createUser(@Res() response, @Body() createUserDto: CreateUserDto, @Request() req) {
     try {
       const newUser = await this.usersService.createUser(createUserDto);
+      req.login(createUserDto, (err)=> err)
       return response.status(HttpStatus.CREATED).json(newUser);
     } catch (err) {
       return response.status(HttpStatus.BAD_REQUEST).json({
@@ -41,5 +42,10 @@ export class UsersController {
         error: 'Bad Request',
       });
     }
+  }
+
+  @Get('/result')
+  async getResult(){
+    return await this.usersService.getResult()
   }
 }

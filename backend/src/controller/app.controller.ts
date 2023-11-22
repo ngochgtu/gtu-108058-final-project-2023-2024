@@ -116,8 +116,4 @@ export class AppController {
     async getQuestionsBySkills(@Query('skills') skills: string , @Query('difficulty') difficulty: string ) {
         return this.appService.getQuestionsBySkills(skills.split(","), difficulty);
     }    
-    @Get('/result')
-    async getNextQuestion(){
-        return this.appService.openai_question_to_dto(this.appService.GptArray)
-    }
 }

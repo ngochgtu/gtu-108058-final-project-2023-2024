@@ -13,6 +13,7 @@ import { UserQuestion, UserQuestionSchema } from 'src/schema/UserQuestion.schema
 import { OpenaiService } from 'src/service/openai.service';
 import { SessionSerializer } from './utils/SessionSerializer';
 import { UsersService } from 'src/users/services/users/users.service';
+import { UsersPoints, UsersPointsSchema } from 'src/schema/UsersPoints.schema';
 
 @Module({
   imports: [MongooseModule.forFeature([
@@ -20,7 +21,8 @@ import { UsersService } from 'src/users/services/users/users.service';
     {name: SkillType.name, schema: SkillTypeSchema},
     {name: Question.name, schema: QuestionSchema},
     {name: User.name, schema: UserSchema},
-    {name: UserQuestion.name, schema: UserQuestionSchema}
+    {name: UserQuestion.name, schema: UserQuestionSchema}, 
+    {name: UsersPoints.name, schema: UsersPointsSchema},
 ]),],
   controllers: [AuthController],
   providers: [{

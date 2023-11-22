@@ -15,8 +15,8 @@ export class Question {
     answer: string;
     @Prop()
     difficulty: string;
-    @Prop()
-    openai_question: string;
+    // @Prop()
+    // openai_question: string;
     @Prop()
     session_id: string;
 }
