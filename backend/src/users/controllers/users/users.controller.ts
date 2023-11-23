@@ -1,9 +1,8 @@
-import { Body, Controller, HttpStatus, Post, Res,Request } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res,Request ,Get} from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/auth/utils/LocalGuard';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { CreateUserQuestionDto } from 'src/dto/CreateUserQuestion.dto';
 import { UsersService } from 'src/users/services/users/users.service';
-import { Get, UseGuards } from '@nestjs/common/decorators';
 
 @Controller('users')
 export class UsersController {
