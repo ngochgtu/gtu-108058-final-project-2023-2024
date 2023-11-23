@@ -1,8 +1,8 @@
-import "../../src/style/pages.styles.css";
-import "../style/signUp.styles.css";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { BASE_PATH } from "../api/ServerApi";
+import "../style/signUp.styles.css";
+import "../../src/style/pages.styles.css";
 
 const SignUpPage = () => {
 	const [formData, setFormData] = useState({
@@ -12,9 +12,9 @@ const SignUpPage = () => {
 		confirmPassword: "",
 	});
 
-	const navigate = useNavigate();
-
 	const [passwordError, setPasswordError] = useState("");
+
+	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -59,6 +59,7 @@ const SignUpPage = () => {
 			<form onSubmit={handleRegister}>
 				<div className="signUp-container">
 					<h3 className="signUp-title">Sign Up</h3>
+
 					<div className="signUp--input__container">
 						<label className="signUp-label">User name</label>
 						<input
@@ -70,6 +71,7 @@ const SignUpPage = () => {
 							onChange={handleChange}
 						/>
 					</div>
+
 					<div className="signUp--input__container">
 						<label className="signUp-label">Email address</label>
 						<input
@@ -81,6 +83,7 @@ const SignUpPage = () => {
 							onChange={handleChange}
 						/>
 					</div>
+
 					<div className="signUp--input__container">
 						<label className="signUp-label">Password</label>
 						<input
@@ -92,6 +95,7 @@ const SignUpPage = () => {
 							onChange={handleChange}
 						/>
 					</div>
+
 					<div className="signUp--input__container">
 						<label className="signUp-label">Confirm Password</label>
 						<input
@@ -103,13 +107,15 @@ const SignUpPage = () => {
 							onChange={handleChange}
 						/>
 					</div>
+
 					<div className="signUp--button_container">
 						<button type="submit" className="signUp-button">
 							Sign Up
 						</button>
 					</div>
+
 					<p className="forgot-password text-right">
-						Already registered? <Link to="/sign-in">sign in</Link>
+						Already registered? <Link to="/sign-in">Sign in</Link>
 					</p>
 				</div>
 			</form>

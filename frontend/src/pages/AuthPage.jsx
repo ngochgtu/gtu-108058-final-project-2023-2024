@@ -1,7 +1,6 @@
-import { Form, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Form, Col } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import { BASE_PATH } from "../api/ServerApi";
 import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
@@ -16,6 +15,7 @@ const AuthPage = () => {
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
+
 		try {
 			const response = await fetch(`${BASE_PATH}/auth/login`, {
 				method: "POST",
@@ -31,10 +31,12 @@ const AuthPage = () => {
 				setError(null);
 				navigate("/home");
 			} else {
-				setError("Invalid email or password");
+				const errorMessage = await response.text();
+				setError(errorMessage);
+				setUserData(null);
 			}
 		} catch (error) {
-			setError("Invalid email or password");
+			setError("Invalid email or password", error);
 		}
 	};
 
@@ -46,23 +48,23 @@ const AuthPage = () => {
 						<div className="register_input">
 							<Form.Floating className="mb-3">
 								<input
-									className="signin_input"
+									className="signIn_input"
 									type="email"
 									placeholder="name@example.com"
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
-								></input>
+								/>
 							</Form.Floating>
 						</div>
 						<div className="register_input">
 							<Form.Floating>
 								<input
-									className="signin_input"
+									className="signIn_input"
 									type="password"
 									placeholder="Password"
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
-								></input>
+								/>
 							</Form.Floating>
 						</div>
 						<div className="username_container">
@@ -79,7 +81,7 @@ const AuthPage = () => {
 							</Col>
 							<Col>
 								<p className="forgot-password text-right">
-									Not registered? <Link to="/sign-up">sign up?</Link>
+									Not registered? <Link to="/sign-up">Sign up</Link>
 								</p>
 							</Col>
 						</div>
