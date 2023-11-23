@@ -5,15 +5,18 @@ import SkillsCheckPage from "../pages/SkillsCheckPage";
 import ResultPage from "../pages/ResultPage";
 import ErrorPage from "../pages/ErrorPage";
 import Header from "../components/Header";
-import SignUpPage from "../pages/SignUpPage";
+import SignUpPage from "../pages/signUpPage";
 import AboutPage from "../pages/AboutPage";
+import HeaderContextProvider from "../contexts/headerContexts";
 
 export const router = createHashRouter([
   {
     element: (
       <div>
-        <Header />
-        <Outlet />
+        <HeaderContextProvider>
+          <Header />
+          <Outlet />
+        </HeaderContextProvider>
       </div>
     ),
     path: "/",

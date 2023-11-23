@@ -14,10 +14,8 @@ export class AuthService {
         if (UserDb){
             const matched = comparePasswords(password, UserDb.password)
             if( matched){
-            console.log('User Validation Success!')
             return UserDb
             }else{
-                console.log('password do not matched')
                 return null
             }
 

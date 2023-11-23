@@ -1,9 +1,10 @@
 import { Form, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
+import useFetch from "../hooks/useFetch";
 import { BASE_PATH } from "../api/ServerApi";
 import Backdrop from "../components/backdrop";
 
@@ -14,35 +15,35 @@ const AuthPage = () => {
 
   const navigate = useNavigate();
 
-	const handleLogin = async (e) => {
-		try {
-			const response = await fetch("http://localhost:3001/auth/login", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ email, password }),
-			});
+  const handleLogin = async (e) => {
+    try {
+      const response = await fetch("http://localhost:3001/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-			if (response.ok) {
-				const data = await response.json();
-				console.log("Login successful:", data);
-			} else {
-				console.error("Login failed");
-			}
-		} catch (error) {
-			console.error("Error during login:", error);
-		}
-	};
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Login successful:", data);
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  };
 
-	const navigationMethod = () => {
-		navigate("/home");
-	};
+  const navigationMethod = () => {
+    navigate("/home");
+  };
 
-	const handleButtonClick = () => {
-		handleLogin();
-		navigationMethod();
-	};
+  const handleButtonClick = () => {
+    handleLogin();
+    navigationMethod();
+  };
 
   return (
     <div>

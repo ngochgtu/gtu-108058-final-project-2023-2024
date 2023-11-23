@@ -1,14 +1,16 @@
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
 import styles from "../style/app.module.css";
 import logo from "../assets/zombie_icon.png";
 import logout from "../assets/logout.png";
 import { useNavigate } from "react-router-dom";
+import { useHeaderContext } from "../contexts/headerContexts";
 
 const Header = () => {
   const navigate = useNavigate();
+  const {isOpen, toggle} = useHeaderContext()
 
   const onLogoClick = () =>{
-    if(localStorage.getItem('username')) navigate('/home')
+    if(localStorage.getItem('username')) navigate('/')
   }
 
   return (
@@ -34,6 +36,16 @@ const Header = () => {
           </div>
           : ''
           }
+          <div>
+            <Form>
+              <Form.Check // prettier-ignore
+                type="switch"
+                id="custom-switch"
+                label={isOpen ? 'dark' : 'light'}
+                onChange={() => toggle((prev)=>!prev)} value={isOpen} checked={isOpen}
+              />
+            </Form>
+          </div>
         </div>
       </Row>
     </Container>

@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Skill, SkillSchema } from 'src/schema/Skill.schema';
 import { SkillType, SkillTypeSchema } from 'src/schema/SkillType.schema';
 import { Question, QuestionSchema } from 'src/schema/Question.schema';
+import { UsersPointsSchema, UsersPoints } from 'src/schema/UsersPoints.schema';
 
 @Module({
   imports: [MongooseModule.forFeature([
@@ -14,7 +15,8 @@ import { Question, QuestionSchema } from 'src/schema/Question.schema';
     {name: SkillType.name, schema: SkillTypeSchema},
     {name: Question.name, schema: QuestionSchema},
     {name: User.name, schema: UserSchema},
-    {name: UserQuestion.name, schema: UserQuestionSchema}
+    {name: UserQuestion.name, schema: UserQuestionSchema},
+    {name: UsersPoints.name, schema: UsersPointsSchema},
 ]),],
   controllers: [UsersController],
   providers: [UsersService]
