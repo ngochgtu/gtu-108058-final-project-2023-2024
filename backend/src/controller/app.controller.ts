@@ -8,7 +8,7 @@ import {
     Put,
     Query, Req,
     Res,
-    UseGuards,
+    UseGuards,Request,
 } from '@nestjs/common';
 import {AppService} from '../service/app.service';
 import {OpenaiService} from '../service/openai.service';

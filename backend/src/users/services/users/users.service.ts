@@ -58,17 +58,16 @@ export class UsersService {
 
   calculateScore(usersAnswer, correctAnswer){
     if(usersAnswer == correctAnswer){
-      this.score++
+      this.score += 1
       console.log(this.score)
     }
   }
   async getResult(){
-    let result = {
+    const savedResult = await this.saveResult({
       email: this.email,
       points: this.score,
       skill: this.skill
-    }
-    const savedResult = await this.saveResult(result)
+    })
     this.score = 0
     return savedResult
   }
