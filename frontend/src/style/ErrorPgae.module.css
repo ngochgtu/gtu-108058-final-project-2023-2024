@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@1,300&display=swap");
 
-.error-container {
+.error_container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,7 +8,7 @@
   height: 80vh;
 }
 
-.error__logo--container {
+.error__logo_container {
   margin-top: 10rem;
 }
 
@@ -17,14 +17,14 @@
   width: 20rem;
 }
 
-.error__massage--title {
+.error__massage_title {
   font-family: "Noto Serif", serif;
   margin: 1rem 0;
   font-size: 3rem;
   color: lightgreen;
 }
 
-.error__massage--content {
+.error__massage_content {
   font-family: "Noto Serif", serif;
   color: lightgreen;
 }

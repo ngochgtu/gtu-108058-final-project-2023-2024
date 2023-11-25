@@ -21,6 +21,8 @@ const SkillsCheckPage = () => {
         fetch_data();
     }, [location.state]);
 
+    console.log(location.difficulty)
+
     const fetch_data = () => {
         if (location.state) {
             fetch(`http://localhost:3001/api/questions?skills=${location.state.map(e => e.value)}&difficulty=${difficulty}`, {
@@ -82,7 +84,7 @@ const SkillsCheckPage = () => {
                     <SkillCheck key={question._id} question={question} selectAnswer={changeAnswer}/>
                     <div style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
                         <Button variant="primary" onClick={handleNextClick}>Next</Button>
-                        {counter >= 10 ? <Button variant="primary" onClick={onFinish} >Finish</Button> : ''}
+                        {counter > 10 ? <Button variant="primary" onClick={onFinish} >Finish</Button> : ''}
                     </div>
                 </Col>
             </Row> :

@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_PATH } from "../api/ServerApi";
-import "../style/auth.styles.css";
+import styles from "../style/auth.module.css";
+import style from "../style/signUp.module.css";
 import "../../src/style/pages.styles.css";
 
 const AuthPage = () => {
@@ -41,12 +42,12 @@ const AuthPage = () => {
 	return (
 		<div>
 			<form onSubmit={handleLogin}>
-				<div className="auth_container">
-					<div className="register_container">
-						<div className="register_input">
+				<div className={styles.auth_container}>
+					<div className={styles.register_container}>
+						<div className={styles.register_input}>
 							<Form.Floating className="mb-3">
 								<input
-									className="signin_input"
+									className={styles.signin_input}
 									type="email"
 									placeholder="name@example.com"
 									value={email}
@@ -54,10 +55,10 @@ const AuthPage = () => {
 								></input>
 							</Form.Floating>
 						</div>
-						<div className="register_input">
+						<div className={styles.register_input}>
 							<Form.Floating>
 								<input
-									className="signin_input"
+									className={styles.signin_input}
 									type="password"
 									placeholder="Password"
 									value={password}
@@ -65,11 +66,11 @@ const AuthPage = () => {
 								></input>
 							</Form.Floating>
 						</div>
-						<div className="username_container">
+						<div className={styles.username_container}>
 							<Col>
-								<div className="button_container">
+								<div className={styles.button_container}>
 									<button
-										className="login_button"
+										className={styles.login_button}
 										variant="primary"
 										type="submit"
 									>
@@ -78,7 +79,7 @@ const AuthPage = () => {
 								</div>
 							</Col>
 							<Col>
-								<p className="forgot-password text-right">
+								<p className={`${style.forgot_password} ${style.text_right}`}>
 									Not registered? <Link to="/sign-up">sign up?</Link>
 								</p>
 							</Col>

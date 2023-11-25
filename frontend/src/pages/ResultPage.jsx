@@ -1,5 +1,4 @@
 import { Button, Container } from "react-bootstrap";
-import "../../src/style/pages.styles.css";
 import styles from "../../src/style/ResultStyles.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
