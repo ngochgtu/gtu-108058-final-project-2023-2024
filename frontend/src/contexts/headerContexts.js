@@ -3,15 +3,15 @@ import useLocalStorage from "../hooks/useLocalStorage";
 
 const HeaderContexts = createContext(null)
 
-const HeaderContextProvider = ({children}) => {
+const HeaderContextProvider = ({ children }) => {
     const [isOpen = true, toggle] = useLocalStorage("tab", true);
-    
-    const contextValue = useMemo(()=> ({
+
+    const contextValue = useMemo(() => ({
         isOpen,
         toggle
-    }), [isOpen,toggle])
-    
-    return(
+    }), [isOpen, toggle])
+
+    return (
         <HeaderContexts.Provider value={contextValue}>
             {children}
         </HeaderContexts.Provider>
@@ -20,7 +20,7 @@ const HeaderContextProvider = ({children}) => {
 
 export const useHeaderContext = () => {
     const contextValue = useContext(HeaderContexts)
-    if(contextValue === null){
+    if (contextValue === null) {
         throw new Error("useHeaderContext must be used within a HeaderContextProvider")
     }
     return contextValue
