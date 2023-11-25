@@ -13,7 +13,6 @@ const SkillsCheckPage = () => {
     const [question, setQuestion] = useState(null)
     const [answer, setAnswer] = useState("Demo")
     const [counter, setCounter] = useState(0)
-    const [result, setResult] = useState(null)
     const {sendRequest} = useRequest({url: 'http://localhost:3001/users/user_question', method: 'POST'})
         
     const navigate = useNavigate()
@@ -54,16 +53,18 @@ const SkillsCheckPage = () => {
         }
     }
     
-    const onFinish = ()=> {
-        fetch('http://localhost:3001/users/result', {
+    const onFinish = async()=> {
+        await fetch('http://localhost:3001/users/result', {
             method: 'GET',
             headers:{
                 "Content-Type": "application/json",
             },
-        }).then(res => res.json())
-        .then(data => {setResult(data); console.log(question)})
+        })
+        .then(res => res.json())
+        .then(data => {
+            navigate('/result',{state: {...data, counter: counter}})
+        })
         .catch(err => console.log(err))  
-        navigate('/result',{state: result})
     }
 
     return <Container className="p-3">

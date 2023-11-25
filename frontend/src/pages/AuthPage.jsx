@@ -2,19 +2,22 @@ import { Form, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BASE_PATH } from "../api/ServerApi";
 import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
-import useFetch from "../hooks/useFetch";
 
 const AuthPage = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [userData, setUserData] = useState(null);
+	const [error, setError] = useState(null);
 
 	const navigate = useNavigate();
 
 	const handleLogin = async (e) => {
+		e.preventDefault();
 		try {
-			const response = await fetch("http://localhost:3001/auth/login", {
+			const response = await fetch(`${BASE_PATH}/auth/login`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -23,23 +26,16 @@ const AuthPage = () => {
 			});
 
 			if (response.ok) {
-				const data = await response.json();
-				console.log("Login successful:", data);
+				const user = await response.json();
+				setUserData(user);
+				setError(null);
+				navigate("/home");
 			} else {
-				console.error("Login failed");
+				setError("Invalid email or password");
 			}
 		} catch (error) {
-			console.error("Error during login:", error);
+			setError("Invalid email or password");
 		}
-	};
-
-	const navigationMethod = () => {
-		navigate("/home");
-	};
-
-	const handleButtonClick = () => {
-		handleLogin();
-		navigationMethod();
 	};
 
 	return (
@@ -76,7 +72,6 @@ const AuthPage = () => {
 										className="login_button"
 										variant="primary"
 										type="submit"
-										onClick={handleButtonClick}
 									>
 										Login
 									</button>
@@ -84,7 +79,7 @@ const AuthPage = () => {
 							</Col>
 							<Col>
 								<p className="forgot-password text-right">
-									Not registered <Link to="/sign-up">sign up?</Link>
+									Not registered? <Link to="/sign-up">sign up?</Link>
 								</p>
 							</Col>
 						</div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
-import "../style/About.styles.css"
+import  "../style/About.styles.css"
 import { useNavigate } from 'react-router-dom';
 import { useHeaderContext } from '../contexts/headerContexts';
 

@@ -17,7 +17,7 @@ import { encodePassword } from 'src/utils/bcrypt';
 export class UsersService {
 
   private score:number = 0
-  private email:string = ''
+  private email:string = '';
   private skill:Array<string> = []
 
   constructor(

@@ -1,0 +1,25 @@
+.maindiv{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+
+.resultDiv{
+    color: white;
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+.box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid white;
+    border-radius: 20px;
+}
