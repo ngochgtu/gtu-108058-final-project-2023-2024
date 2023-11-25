@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import "../../src/style/pages.styles.css";
-import styles from "../style/ErrorPgae.module.css";
+import styles from "../style/ErrorPage.module.css";
 import logo from "../assets/404-error.png";
 import { useNavigate } from "react-router-dom";
 

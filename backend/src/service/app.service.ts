@@ -85,7 +85,6 @@ export class AppService {
             session_data = this.initLocalCacheSessionData()
             this.localCache[sessionId] = session_data
         }
-
         const counter = session_data.counter;
 
         if (counter <= 10) {
@@ -93,8 +92,9 @@ export class AppService {
 
                 session_data = this.initLocalCacheSessionData()
                 this.localCache[sessionId] = session_data
-
+                console.log(difficulty)
                 for (const skillId of skills) {
+                    
 
                     const dbSkill = await this.skillModel.findById(new Types.ObjectId(skillId)).exec();
                     if (!dbSkill) {

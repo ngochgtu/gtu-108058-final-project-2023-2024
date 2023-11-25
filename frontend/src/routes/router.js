@@ -8,6 +8,7 @@ import Header from "../components/Header";
 import SignUpPage from "../pages/signUpPage";
 import AboutPage from "../pages/AboutPage";
 import HeaderContextProvider from "../contexts/headerContexts";
+import UserContextProvider from "../contexts/userContexts";
 
 export const router = createHashRouter([
   {
@@ -15,7 +16,9 @@ export const router = createHashRouter([
       <div>
         <HeaderContextProvider>
           <Header />
-          <Outlet />
+          <UserContextProvider>
+            <Outlet />
+          </UserContextProvider>
         </HeaderContextProvider>
       </div>
     ),
