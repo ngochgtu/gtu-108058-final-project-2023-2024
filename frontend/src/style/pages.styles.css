@@ -4,6 +4,14 @@
   --dark-grey: #747474;
 }
 
+#light {
+  background-color: #fff;
+}
+
+#dark {
+  background-color: #272727;
+}
+
 html,
 body {
   background-color: #272727 !important;

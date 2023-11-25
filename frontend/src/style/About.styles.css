@@ -13,6 +13,7 @@
   flex-direction: column;
   gap: 2rem;
 }
+
 .header h1 {
   color: var(--dark-grey);
   -webkit-text-stroke: 1px lightgreen;

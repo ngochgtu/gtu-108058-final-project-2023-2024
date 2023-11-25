@@ -1,17 +1,14 @@
 import { Form, Col } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import React, { useRef } from "react";
-// import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../style/auth.styles.css";
 import "../../src/style/pages.styles.css";
 import useFetch from "../hooks/useFetch";
-import { BASE_PATH } from "../api/ServerApi";
-import Backdrop from "../components/backdrop";
 
 const AuthPage = () => {
-  const [error, setError] = useState(false);
-  const emailRef = useRef("");
-  const passwordRef = useRef("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
