@@ -58,14 +58,14 @@ const HomePage = () => {
             styles={{
               control: (base) => ({
                 ...base,
-                width: "300px", // Adjust the width as needed
+                width: "300px",
               }),
             }}
           />
         </h2>
 
         <Row style={{ marginTop: 10, marginBottom: 10 }}>
-          {/* You can choose to keep or remove this Select component outside the header */}
+          { }
         </Row>
 
         <Row>
