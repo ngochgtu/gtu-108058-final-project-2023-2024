@@ -2,19 +2,23 @@ import { Form, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../style/auth.styles.css";
+import { BASE_PATH } from "../api/ServerApi";
+import styles from "../style/auth.module.css";
+import style from "../style/signUp.module.css";
 import "../../src/style/pages.styles.css";
-import useFetch from "../hooks/useFetch";
 
 const AuthPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3001/auth/login", {
+      const response = await fetch(`${BASE_PATH}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,34 +27,27 @@ const AuthPage = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        console.log("Login successful:", data);
+        const user = await response.json();
+        setUserData(user);
+        setError(null);
+        navigate("/home");
       } else {
-        console.error("Login failed");
+        setError("Invalid email or password");
       }
     } catch (error) {
-      console.error("Error during login:", error);
+      setError("Invalid email or password");
     }
-  };
-
-  const navigationMethod = () => {
-    navigate("/home");
-  };
-
-  const handleButtonClick = () => {
-    handleLogin();
-    navigationMethod();
   };
 
   return (
     <div>
       <form onSubmit={handleLogin}>
-        <div className="auth_container">
-          <div className="register_container">
-            <div className="register_input">
+        <div className={styles.auth_container}>
+          <div className={styles.register_container}>
+            <div className={styles.register_input}>
               <Form.Floating className="mb-3">
                 <input
-                  className="signin_input"
+                  className={styles.signin_input}
                   type="email"
                   placeholder="name@example.com"
                   value={email}
@@ -58,10 +55,10 @@ const AuthPage = () => {
                 ></input>
               </Form.Floating>
             </div>
-            <div className="register_input">
+            <div className={styles.register_input}>
               <Form.Floating>
                 <input
-                  className="signin_input"
+                  className={styles.signin_input}
                   type="password"
                   placeholder="Password"
                   value={password}
@@ -69,22 +66,21 @@ const AuthPage = () => {
                 ></input>
               </Form.Floating>
             </div>
-            <div className="username_container">
+            <div className={styles.username_container}>
               <Col>
-                <div className="button_container">
+                <div className={styles.button_container}>
                   <button
-                    className="login_button"
+                    className={styles.login_button}
                     variant="primary"
                     type="submit"
-                    onClick={handleButtonClick}
                   >
                     Login
                   </button>
                 </div>
               </Col>
               <Col>
-                <p className="forgot-password text-right">
-                  Not registered <Link to="/sign-up">sign up?</Link>
+                <p className={`${style.forgot_password} ${style.text_right}`}>
+                  Not registered? <Link to="/sign-up">sign up?</Link>
                 </p>
               </Col>
             </div>
