@@ -4,11 +4,11 @@ import Button from "react-bootstrap/Button";
 import "../../src/style/pages.styles.css";
 import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../contexts/userContexts";
 
 const HomePage = () => {
   const [skills, setSkills] = useState([]);
-  const [selectedSkills, setSelectedSkills] = useState([]);
-  const [difficulty, setDifficulty] = useState([]);
+  const {selectedSkills, setSelectedSkills, difficultyLevel, difficulty, setDifficulty} = useUserContext()
 
   const navigate = useNavigate();
 
@@ -31,11 +31,9 @@ const HomePage = () => {
 
   const handleStartClick = (e) => {
     e.preventDefault();
-    if (selectedSkills.length === 0) {
-      alert("select skill first");
-    } else {
-      navigate("/check", { state: selectedSkills , difficulty: difficulty});
-    }
+    if (selectedSkills.length === 0 )return alert("select skill first");
+    if(difficulty.length === 0)return alert("select difficulty first")
+    navigate("/check");
   };
 
   const handleSkillChange = (e) => {
@@ -45,7 +43,6 @@ const HomePage = () => {
     setDifficulty(e);
   };
 
-  console.log(skills)
   return (
     <Container className="p-3">
       <form onSubmit={handleStartClick}>
@@ -66,7 +63,7 @@ const HomePage = () => {
           </Row>
           <Row style={{ marginTop: 10, marginBottom: 10 }}>
             <Select
-              options={[{label: 'easy'},{label:'medium'}, {label:'hard'}]}
+              options={difficultyLevel}
               isMulti
               name="colors"
               className="basic-multi-select"

@@ -8,6 +8,9 @@ import Header from "../components/Header";
 import SignUpPage from "../pages/signUpPage";
 import AboutPage from "../pages/AboutPage";
 import HeaderContextProvider from "../contexts/headerContexts";
+import UserContextProvider from "../contexts/userContexts";
+import Footer from "../components/Footer";
+import IntroductionPage from "../pages/introductionPage";
 
 export const router = createHashRouter([
   {
@@ -15,7 +18,10 @@ export const router = createHashRouter([
       <div>
         <HeaderContextProvider>
           <Header />
-          <Outlet />
+          <UserContextProvider>
+            <Outlet />
+          </UserContextProvider>
+          <Footer />
         </HeaderContextProvider>
       </div>
     ),
@@ -23,7 +29,7 @@ export const router = createHashRouter([
     children: [
       {
         index: true,
-        element: <AboutPage />,
+        element: <IntroductionPage/>,
       },
       {
         path: "/sign-in",
@@ -44,6 +50,10 @@ export const router = createHashRouter([
       {
         path: "/sign-up",
         element: <SignUpPage />,
+      },
+      {
+        path: "/about",
+        element: <AboutPage />,
       },
     ],
   },

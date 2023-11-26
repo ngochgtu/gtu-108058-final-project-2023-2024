@@ -1,31 +1,30 @@
 import SkillCheck from "../components/SkillCheck";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import React, {useCallback, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import "../../src/style/pages.styles.css";
 import {Col, Container, Row} from "react-bootstrap";
 import {MagnifyingGlass} from 'react-loader-spinner'
 import useRequest from "../hooks/useRequest";
+import { useUserContext } from "../contexts/userContexts";
 
 const SkillsCheckPage = () => {
-    const location = useLocation();
-    const [difficulty, setDifficulty] = useState('easy')
+    const [difficulty] = useState('easy')
     const [question, setQuestion] = useState(null)
     const [answer, setAnswer] = useState("Demo")
     const [counter, setCounter] = useState(0)
     const {sendRequest} = useRequest({url: 'http://localhost:3001/users/user_question', method: 'POST'})
+    const {selectedSkills,difficulty: diff} = useUserContext()
         
     const navigate = useNavigate()
 
     useEffect(() => {
         fetch_data();
-    }, [location.state]);
-
-    console.log(location.difficulty)
-
+    }, [selectedSkills, diff]);
+    
     const fetch_data = () => {
-        if (location.state) {
-            fetch(`http://localhost:3001/api/questions?skills=${location.state.map(e => e.value)}&difficulty=${difficulty}`, {
+        if (selectedSkills) {
+            fetch(`http://localhost:3001/api/questions?skills=${selectedSkills.map(e => e.value)}&difficulty=${diff ? diff[0].label : difficulty}`, {
                 method: "GET"
             })
                 .then((response) => response.json())
@@ -72,7 +71,7 @@ const SkillsCheckPage = () => {
     return <Container className="p-3">
         <Row style={{marginBottom: 10}}>
             <Col>
-                Skills: {location.state ? location.state.map(e => {
+                Skills: {selectedSkills ? selectedSkills.map(e => {
                 return e.label + ", "
             }) : ""}
             </Col>

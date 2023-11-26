@@ -85,7 +85,6 @@ export class AppService {
             session_data = this.initLocalCacheSessionData()
             this.localCache[sessionId] = session_data
         }
-
         const counter = session_data.counter;
 
         if (counter <= 10) {
@@ -93,8 +92,9 @@ export class AppService {
 
                 session_data = this.initLocalCacheSessionData()
                 this.localCache[sessionId] = session_data
-
+                console.log(difficulty)
                 for (const skillId of skills) {
+                    
 
                     const dbSkill = await this.skillModel.findById(new Types.ObjectId(skillId)).exec();
                     if (!dbSkill) {
@@ -103,15 +103,15 @@ export class AppService {
                     this.localCache[sessionId].skillNames.push(dbSkill.name)
                 }
 
-                const openaiQuestion = await this.openaiService.getCompletion(`Generate an array of 10 skill verification questions for ${this.localCache[sessionId].skillNames} with the following format:
-        {
-          "question": "Generate Question for skill ${this.localCache[sessionId].skillNames}",
-          "options": ["fake answer 1", "fake answer 2", "fake answer 3", "fake answer 4", "true answer for skill ${this.localCache[sessionId].skillNames}"],
-          "correctAnswer": "true answer for skill ${this.localCache[sessionId].skillNames}",
-          "difficulty": ${difficulty}
-        }
-        
-        Ensure that the correct answer is randomly placed within the 'options' array for each question.`)
+                const openaiQuestion = await this.openaiService.getCompletion(`
+                Generate an array of 10 skill verification questions for ${this.localCache[sessionId].skillNames} with the following format:
+                {
+                "question": "Generate Question for skill ${this.localCache[sessionId].skillNames}",
+                "options": ["fake answer 1", "fake answer 2", "fake answer 3", "fake answer 4", "true answer for skill ${this.localCache[sessionId].skillNames}"],
+                "correctAnswer": "true answer for skill ${this.localCache[sessionId].skillNames}",
+                "difficulty": ${difficulty}
+                }
+                Ensure that the correct answer is randomly placed within the 'options' array for each question.`)
                 this.localCache[sessionId].openaiQuestionSaved = openaiQuestion
                 this.localCache[sessionId].questions = JSON.parse(this.localCache[sessionId].openaiQuestionSaved)
             }
