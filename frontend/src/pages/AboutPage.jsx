@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
-import styles from '../style/about.module.css'
+import styles from '../style/About.module.css'
 
 const AboutPage = () => {
 
