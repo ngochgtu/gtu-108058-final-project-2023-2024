@@ -44,6 +44,7 @@ const AuthPage = () => {
       <form onSubmit={handleLogin}>
         <div className={styles.auth_container}>
           <div className={styles.register_container}>
+            <h3 className={styles.signin_title}>Sign In</h3>
             <div className={styles.register_input}>
               <Form.Floating className="mb-3">
                 <input
