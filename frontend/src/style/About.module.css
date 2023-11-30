@@ -1,42 +1,30 @@
-.text {
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+
+.aboutPage_container {
+  margin: 2rem 0;
+  padding: 1rem;
   color: white;
 }
-.signUp_button:hover {
-  color: azure;
-  background-color: var(--dark-grey);
-  border: 2px solid azure;
+
+.aboutPage_titles {
+  font-family: "Abril Fatface", serif;
+  font-size: 25px;
 }
-.SginUp,
-.SginUp a {
-  text-align: right;
+
+.aboutPage_subTitles {
   font-size: 20px;
-  padding-top: 10px;
-  color: lightgreen;
-  margin: 0;
-}
-.SginUp a {
-  color: rgba(144, 238, 144, 0.637);
+  margin-top: 1rem;
 }
 
-.fontMed {
-  font-size: 20px;
+.aboutUs_title {
+  font-family: "Abril Fatface", serif;
+  text-align: center;
 }
 
-.justfy {
-  text-align: justify;
+.about_us {
+  margin-bottom: 2rem;
 }
 
-.miniBold {
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.sectionBot {
-  border-bottom: 1px solid #ccc; /* Adjust color and thickness */
-  padding-bottom: 20px; /* Optional padding to create space */
-}
-
-.sectionTop {
-  border-top: 1px solid #ccc; /* Adjust color and thickness */
-  padding-top: 20px; /* Optional padding to create space at the top */
+.offer_info {
+  margin-bottom: 2rem;
 }

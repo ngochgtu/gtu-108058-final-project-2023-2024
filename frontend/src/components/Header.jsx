@@ -54,14 +54,11 @@ const Header = () => {
 										Profile
 									</Link>
 								</Dropdown.Item>
-								<Dropdown.Divider />
 								<Dropdown.Item eventKey="2">
 									<Link className={styles.links} to={"/about"}>
 										About Us
 									</Link>
 								</Dropdown.Item>
-								<Dropdown.Divider />
-								<Dropdown.Item eventKey="3">Theme</Dropdown.Item>
 								<Dropdown.Divider />
 								<Dropdown.Item eventKey="4">
 									<span>log out</span>
@@ -77,7 +74,7 @@ const Header = () => {
 						""
 					)}
 
-					<div>
+					{/* <div>
 						<Form>
 							<Form.Check // prettier-ignore
 								type="switch"
@@ -88,7 +85,7 @@ const Header = () => {
 								checked={isOpen}
 							/>
 						</Form>
-					</div>
+					</div> */}
 				</div>
 			</Row>
 		</Container>

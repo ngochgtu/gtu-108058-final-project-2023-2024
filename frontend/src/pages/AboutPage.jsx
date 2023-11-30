@@ -7,95 +7,87 @@ import { Link } from "react-router-dom";
 const AboutPage = () => {
   const {isOpen} = useHeaderContext()
   return (
-    <Container color={isOpen ? '#272727' : '#e6e6fa'}>
-    <div className={`${styles.text} ${styles.justfy}`}>
-      {/* -------------ABOUT US---------- */}
-      <div className={styles.sectionBot}></div>
-      <h2>About Skills Verifier</h2>
-      <div className={styles.sectionTop}></div>
-
-      <p className={styles.fontMed}>
-        Welcome to Skills Verifier, an innovative platform developed by GTU
-        Group 108058 for our final project.{" "}
-      </p>
-      <div className={styles.sectionBot}></div>
-
-      {/* -------------MISSION---------- */}
-      <h2>Mission</h2>
-      <div className={styles.sectionTop}></div>
-      <p className={`${styles.fontMed} ${styles.justfy}`}>
-        Our mission at Skills Verifier is to revolutionize the skills
-        assessment process using cutting-edge AI technology. We aim to provide
-        users with a seamless and efficient way to evaluate and enhance their
-        skills
-      </p>
-      <p className={`${styles.fontMed} ${styles.justfy}`}>
-        To better understand it,{` `}
-        <Link className={`${styles.SginUp}`} to="/sign-up">
-          sign up
-        </Link>
-        , use the application on your own, and assess your skills using the
-        available options
-      </p>
-
-      {/* -------------WHAT SETS US APART---------- */}
-      <div className={styles.sectionBot}></div>
-      <h2>What Sets Us Apart</h2>
-      <div className={styles.sectionTop}></div>
-      {/* -------------WHAT SETS US APART PART 1---------- */}
-
-      <p className={`${styles.miniBold}`}>AI-Driven Question Generation</p>
-
-      <p className={`${styles.fontMed} ${styles.justfy}`}>
-        Skills Verifier stands out with its AI-powered question generation.
-        Our advanced algorithms analyze various skill sets and curate
-        personalized questions tailored to your proficiency level.
-      </p>
-
-      {/* -------------WHAT SETS US APART PART 2---------- */}
-
-      <p className={`${styles.miniBold}`}>Intelligent Skill Assessment</p>
-
-      <p className={`${styles.fontMed} ${styles.justfy}`}>
-        Not just limited to question generation, our platform utilizes the
-        same AI to evaluate your responses. Receive instant, accurate feedback
-        on your skills, enabling continuous improvement.
-      </p>
-
-      {/* -------------HOW IT WORKS---------- */}
-      <div className={styles.sectionBot}></div>
-      <h2>How It Works</h2>
-      <div className={styles.sectionTop}></div>
-      {/* -------------HOW IT WORKS Part 1---------- */}
-      <p className={`${styles.miniBold}`}>Sgin Up</p>
-
-      <p className={`${styles.fontMed} ${styles.justfy}`}>
-        Get started by creating an account. Your journey to skill verification
-        begins here.
-      </p>
-      {/* -------------HOW IT WORKS Part 2---------- */}
-
-      <p className={`${styles.miniBold}`}>Generate Questions</p>
-
-      <p className={`${styles.fontMed} ${styles.justfy}`}>
-        Utilize our AI-driven system to generate customized questions based on
-        your chosen skill domains.
-      </p>
-      {/* -------------HOW IT WORKS Part 3---------- */}
-      <p className={`${styles.miniBold}`}>Assess Your Skills</p>
-
-      <p className={`${styles.fontMed} ${styles.justfy}`}>
-        Dive into the assessment process. Answer the generated questions and
-        let our AI analyze and grade your performance.
-      </p>
-      {/* -------------HOW IT WORKS Part 4---------- */}
-      <p className={`${styles.miniBold}`}>Receive Feedback</p>
-      <p className={`${styles.fontMed} ${styles.justfy}`}>
-        Receive detailed feedback on your strengths and areas for improvement.
-        Use this valuable insight to enhance your skills.
-      </p>
-    </div>
-  </Container>
+    <Container>
+      <div className={styles.aboutPage_container}>
+        <h1 className={styles.aboutUs_title}>About Us</h1>
+        <div className={styles.about_us}>
+          At Skill Verifier, we believe in the power of skills. Our platform is
+          designed to empower individuals to showcase their talents, validate
+          their expertise and connect with opportunities that align with their
+          abilities. Whether you're a seasoned professional or just starting
+          your journey, Skill Verifier is your partner in skill validation. Our
+          mission at Skills Verifier is to revolutionize the skills assessment
+          process using cutting-edge AI technology. We aim to provide users with
+          a seamless and efficient way to evaluate and enhance their skills.
+        </div>
+        <h1 className={styles.aboutPage_titles}>What We Offer</h1>
+        <div className={styles.offer_info}>
+          <h2 className={styles.aboutPage_subTitles}>
+            Skill Validation Services
+          </h2>
+          <span>
+            Our comprehensive skill validation services ensure that your
+            abilities are accurately assessed and recognized. Showcase your
+            expertise with verified certifications and credentials that boost
+            your credibility in the eyes of employers, clients, and
+            collaborators.
+          </span>
+          <h2 className={styles.aboutPage_subTitles}>
+            Personalized Skill Portfolios
+          </h2>
+          <span>
+            Create a dynamic and visually appealing skill portfolio that
+            highlights your strengths and accomplishments. Showcase your skills
+            in a way that sets you apart in the competitive landscape.
+          </span>
+          <span>
+            Continuous Learning Resources Stay ahead in your field with our
+            curated collection of learning resources.Skill Verifier supports
+            your ongoing learning journey.
+          </span>
+        </div>
+        <h1 className={styles.aboutPage_titles}>How It Works </h1>
+        <div className={styles.instruction}>
+          <span>
+            <p>
+              1.Create Your Profile: Sign up and build a comprehensive profile
+              that showcases your skills and experiences.
+            </p>
+            <p>
+              2.Verify Your Skills: Utilize our skill validation services to
+              ensure your capabilities are accurately represented.
+            </p>
+          </span>
+        </div>
+        <h1 className={styles.aboutPage_titles}>Why Choose Skill Verifier? </h1>
+        <div className={styles.why_us}>
+          <span>
+            <span>
+              <p>
+                1.Accuracy: Our skill validation services ensure that your
+                abilities are accurately assessed and recognized.
+              </p>
+              <p>
+                2.Visibility: Showcase your skills to a global audience and
+                stand out in a competitive job market.
+              </p>
+            </span>
+          </span>
+        </div>
+        <h1 className={styles.aboutPage_titles}>What Sets Us Apart</h1>
+        <div className={styles.aboutPage_differnce}>
+          <span>
+            AI-Driven Question Generation Skills Verifier stands out with its
+            AI-powered question generation. Our advanced algorithms analyze
+            various skill sets and curate personalized questions tailored to
+            your proficiency level. Intelligent Skill Assessment Not just
+            limited to question generation, our platform utilizes the same AI to
+            evaluate your responses. Receive instant, accurate feedback on your
+            skills, enabling continuous improvement.
+          </span>
+        </div>
+      </div>
+    </Container>
   );
 };
 
