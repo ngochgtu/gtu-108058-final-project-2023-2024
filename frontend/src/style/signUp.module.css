@@ -18,9 +18,10 @@
   margin: auto;
   margin-top: 5%;
   background-color: var(--secondary-grey);
-  min-width: 300px;
-  border: solid lightgreen;
-  border-radius: 1rem;
+  min-width: 550px;
+  max-width: 700px;
+  border: 1px solid lightgreen;
+  border-radius: 8px;
 }
 
 .signUp_title {
@@ -44,14 +45,14 @@
 
 .signUp_input {
   border-radius: 8px;
-  height: 40px;
+  height: 60px;
   width: 100%;
   outline: none;
   border: 2px solid rgba(109, 160, 109, 0.637);
 }
 
 .signUp_input:focus {
-  border: 2px solid lightgreen;
+  border: 3px solid lightgreen;
 }
 
 .signUp_button_container {

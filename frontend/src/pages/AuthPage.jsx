@@ -45,6 +45,7 @@ const AuthPage = () => {
         <div className={styles.auth_container}>
           <div className={styles.register_container}>
             <div className={styles.register_input}>
+              <label className={styles.signIn_label}>Email address</label>
               <Form.Floating className="mb-3">
                 <input
                   className={styles.signin_input}
@@ -56,6 +57,7 @@ const AuthPage = () => {
               </Form.Floating>
             </div>
             <div className={styles.register_input}>
+              <label className={styles.signIn_label}>Password</label>
               <Form.Floating>
                 <input
                   className={styles.signin_input}
