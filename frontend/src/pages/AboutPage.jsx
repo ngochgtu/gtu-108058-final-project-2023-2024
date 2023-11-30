@@ -29,7 +29,7 @@ const AboutPage = () => {
           skills
         </p>
         <p className={`${styles.fontMed} ${styles.justfy}`}>
-          To better understand it,
+          To better understand it,{` `}
           <Link className={`${styles.SginUp}`} to="/sign-up">
             sign up
           </Link>
