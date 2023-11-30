@@ -9,7 +9,7 @@ const AboutPage = () => {
     <Container>
       <div style={{ textAlign: "center" }} className={styles.text}>
         About Page
-        <p>This app was made as a final project of GTU group 108058</p>
+        <p>This app was made as a final project by GTU group 108058</p>
         <p>
           he app is a skills verifier that utilizes AI to generate questions and
           subsequently employs the same AI to assess your skills.
