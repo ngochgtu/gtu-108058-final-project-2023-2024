@@ -1,4 +1,5 @@
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import {Container} from '../style/styled'
 import styles from "../style/app.module.css";
 import logout from "../assets/logout.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,7 +12,7 @@ import { useUserContext } from "../contexts/userContexts";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { isOpen, toggle } = useHeaderContext();
+  const { isOpen } = useHeaderContext();
   const {userData} = useUserContext();
 
   const onLogoClick = () => {
@@ -20,7 +21,7 @@ const Header = () => {
 
 
   return (
-    <Container className="p-3">
+    <Container className="p-3" color={isOpen ? '#272727' : '#e6e6fa'}>
       <Row>
         <div className={styles.container}>
           <Col>
@@ -53,9 +54,7 @@ const Header = () => {
                 <Dropdown.Item eventKey="1"><Link className={styles.links} to={'/profile'}>Profile</Link></Dropdown.Item>
                 <Dropdown.Item eventKey="2"><Link className={styles.links} to={'/about'}>About Us</Link></Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item eventKey="3">Theme</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item eventKey="4">
+                <Dropdown.Item eventKey="3">
                   <span>log out</span>
                   <img
                     src={logout}
@@ -68,8 +67,8 @@ const Header = () => {
           ) : (
             ""
           )}
-
-          <div>
+          {/* its here for the future */}
+          {/* <div>
             <Form>
               <Form.Check // prettier-ignore
                 type="switch"
@@ -80,7 +79,7 @@ const Header = () => {
                 checked={isOpen}
               />
             </Form>
-          </div>
+          </div> */}
         </div>
       </Row>
     </Container>

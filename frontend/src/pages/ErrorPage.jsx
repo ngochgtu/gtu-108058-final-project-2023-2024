@@ -1,19 +1,21 @@
 import React from "react";
-import { Container } from "react-bootstrap";
+import { Container } from '../style/styled'
 import "../../src/style/pages.styles.css";
 import styles from "../style/ErrorPage.module.css";
 import logo from "../assets/404-error.png";
 import { useNavigate } from "react-router-dom";
+import { useHeaderContext } from "../contexts/headerContexts";
 
 const ErrorPage = () => {
   const navigate = useNavigate();
+  const {isOpen} = useHeaderContext()
 
   const onBackToHome = ()=> {
     navigate("/")
   }
 
   return (
-    <Container>
+    <Container color={isOpen ? '#272727' : '#e6e6fa'}>
       <div className={styles.error_container}>
         <div className={styles.error__logo_container}>
           <img className={styles.error__logo} src={logo} alt="error"></img>

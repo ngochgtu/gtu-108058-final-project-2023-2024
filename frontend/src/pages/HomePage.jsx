@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import Button from "react-bootstrap/Button";
 import "../../src/style/pages.styles.css";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import { Container } from "../style/styled";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/userContexts";
+import { useHeaderContext } from "../contexts/headerContexts";
 
 const HomePage = () => {
   const [skills, setSkills] = useState([]);
   const {selectedSkills, setSelectedSkills, difficultyLevel, difficulty, setDifficulty} = useUserContext()
-
+  const {isOpen} = useHeaderContext()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,7 +46,7 @@ const HomePage = () => {
   };
 
   return (
-    <Container className="p-3">
+    <Container className="p-3" color={isOpen ? '#272727' : '#e6e6fa'}>
       <form onSubmit={handleStartClick}>
         <Row>
           <h2 className='header' style={{color: 'white', display:"flex", justifyContent:'center'}}>Select Skills</h2>

@@ -92,7 +92,6 @@ export class AppService {
 
                 session_data = this.initLocalCacheSessionData()
                 this.localCache[sessionId] = session_data
-                console.log(difficulty)
                 for (const skillId of skills) {
                     
 
@@ -103,7 +102,7 @@ export class AppService {
                     this.localCache[sessionId].skillNames.push(dbSkill.name)
                 }
 
-                const openaiQuestion = await this.openaiService.getCompletion(`
+                const openaiQuestion = await this.openaiService.getGPT3_5ompletion(`
                 Generate an array of 10 skill verification questions for ${this.localCache[sessionId].skillNames} with the following format:
                 {
                 "question": "Generate Question for skill ${this.localCache[sessionId].skillNames}",
@@ -112,6 +111,7 @@ export class AppService {
                 "difficulty": ${difficulty}
                 }
                 Ensure that the correct answer is randomly placed within the 'options' array for each question.`)
+                console.log(openaiQuestion)
                 this.localCache[sessionId].openaiQuestionSaved = openaiQuestion
                 this.localCache[sessionId].questions = JSON.parse(this.localCache[sessionId].openaiQuestionSaved)
             }
@@ -148,6 +148,10 @@ export class AppService {
             skillNames: [],
             openaiQuestionSaved: false
         }
+    }
+
+    resetlocalCacheSessionData = (sessionId) => {
+        this.localCache[sessionId].counter = 0
     }
 
 }

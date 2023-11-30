@@ -43,7 +43,11 @@ export class OpenaiService {
             messages: [
                 {
                     "role": "system",
-                    "content": prompt + "dont add any comments just return what i asked for and return as a json."
+                    "content": 'you generate quizes for skill verification',
+                },
+                {
+                    "role": "system",
+                    "content": prompt + "Don't add any comments. remove last value from options array and return", 
                 },
             ]
         };

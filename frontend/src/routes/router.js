@@ -21,8 +21,8 @@ export const router = createHashRouter([
           <UserContextProvider>
             <Header />
               <Outlet />
+            <Footer />
           </UserContextProvider>
-          <Footer />
         </HeaderContextProvider>
       </div>
     ),
