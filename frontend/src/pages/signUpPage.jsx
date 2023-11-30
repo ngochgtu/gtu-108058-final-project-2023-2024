@@ -1,8 +1,9 @@
 import "../../src/style/pages.styles.css";
 import styles from "../style/signUp.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { BASE_PATH } from "../api/ServerApi";
+import "../../src/style/pages.styles.css";
+import { useState } from "react";
 
 const SignUpPage = () => {
 	const [formData, setFormData] = useState({
@@ -12,9 +13,12 @@ const SignUpPage = () => {
 		confirmPassword: "",
 	});
 
-	const navigate = useNavigate();
-
+	const [usernameError, setUserNameError] = useState("");
+	const [emailError, setEmailError] = useState("");
 	const [passwordError, setPasswordError] = useState("");
+	const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,6 +32,9 @@ const SignUpPage = () => {
 			setPasswordError("Passwords do not match");
 			return;
 		}
+
+		// if (!email) {
+		// }
 
 		try {
 			const response = await fetch(`${BASE_PATH}/users/user`, {

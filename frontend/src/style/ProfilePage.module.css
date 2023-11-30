@@ -1,25 +1,55 @@
-
-.container{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap");
+.container {
+	display: grid;
+	place-content: center;
+	border-radius: 8px;
+	font-family: "Heebo", sans-serif;
+	/* font-family: 'Oswald', sans-serif; */
 }
 
-.Profile{
-    width: 70%;
-    height: fit-content;
-    color: white;
-    display: flex;
-    justify-content: space-between;
+.profile {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	padding: 1rem;
+	color: black;
 }
 
-.img img{
-    width: 150px;
-    height: 150px;
+.left_side {
+	display: grid;
+	grid-template-rows: auto auto;
+	place-content: center;
+	background-color: ivory;
+	margin: 1rem;
+	padding: 1rem;
+	border-radius: 8px;
+	border: 3px lightgreen solid;
 }
-.achievements{
-    display: flex;
-    flex-direction: column;
+
+.title {
+	font-size: 2rem;
+	color: black;
+	font-weight: bold;
+}
+
+.img img {
+	width: 150px;
+	height: 150px;
+	border-radius: 16px;
+}
+
+.details {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.right_side {
+	display: grid;
+	grid-template-rows: auto auto;
+	gap: 20px;
+	background-color: ivory;
+	margin: 1rem;
+	padding: 1rem;
+	border-radius: 8px;
+	border: 3px lightgreen solid;
 }
