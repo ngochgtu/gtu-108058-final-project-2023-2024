@@ -1,12 +1,23 @@
-import React from 'react'
+import React from "react";
 
-const Skills = ({skill, points}) => {
-  return (
-    <div style={{display:'flex', gap:'2rem'}}>
-        <p>skill : {skill[0]}</p>
-        <p>points : {points}</p>
-    </div>
-  )
-}
+const Skills = ({ skill, points }) => {
+	return (
+		<div
+			style={{
+				display: "grid",
+				gridTemplateRows: "1fr 1fr",
+			}}
+		>
+			<p>
+				<strong>Skill: </strong>
+				{skill[0]}
+			</p>
+			<p>
+				<strong>Points: </strong>
+				{points}
+			</p>
+		</div>
+	);
+};
 
-export default Skills
+export default Skills;
