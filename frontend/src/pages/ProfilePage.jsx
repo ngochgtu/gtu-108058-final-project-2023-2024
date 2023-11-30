@@ -34,7 +34,7 @@ const ProfilePage = () => {
 					</div>
 					<div className={styles.right_side}>
 						<div className={styles.achievements}>
-							<h2 className={styles.title}>History</h2>
+							<h2 className={styles.title}>Stats</h2>
 							<div className={styles.skills}>
 								<Skills
 									key={0}

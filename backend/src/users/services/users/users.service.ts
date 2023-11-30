@@ -63,7 +63,6 @@ export class UsersService {
   calculateScore(usersAnswer, correctAnswer, sessionId){
     if(usersAnswer == correctAnswer){
       this.localCache[sessionId].score += 1
-      console.log(this.localCache[sessionId].score)
     }
   }
   async getResult(sessionId){

@@ -111,7 +111,6 @@ export class AppService {
                 "difficulty": ${difficulty}
                 }
                 Ensure that the correct answer is randomly placed within the 'options' array for each question.`)
-                console.log(openaiQuestion)
                 this.localCache[sessionId].openaiQuestionSaved = openaiQuestion
                 this.localCache[sessionId].questions = JSON.parse(this.localCache[sessionId].openaiQuestionSaved)
             }

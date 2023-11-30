@@ -4,7 +4,6 @@ import styles from "../style/Footer.module.css";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
-  const {isOpen} = useHeaderContext()
   return (
     <Container>
       <div className={styles.footer_container}>
@@ -25,8 +24,8 @@ const Footer = () => {
             <h1 className={styles.quickLinks_title}>QUICK LINKS</h1>
             <ul className={styles.quickLinks_list}>
               <li>
-                <Link className={styles.list_item} to="/sign-up">
-                  Profile
+                <Link className={styles.list_item} to="/Sign-in">
+                  text
                 </Link>
               </li>
               <li>
@@ -36,7 +35,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link className={styles.list_item} to="/sign-up">
-                  sign-up
+                  text
                 </Link>
               </li>
             </ul>
