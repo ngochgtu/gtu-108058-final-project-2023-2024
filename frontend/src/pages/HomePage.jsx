@@ -8,7 +8,13 @@ import { useUserContext } from "../contexts/userContexts";
 
 const HomePage = () => {
   const [skills, setSkills] = useState([]);
-  const {selectedSkills, setSelectedSkills, difficultyLevel, difficulty, setDifficulty} = useUserContext()
+  const {
+    selectedSkills,
+    setSelectedSkills,
+    difficultyLevel,
+    difficulty,
+    setDifficulty,
+  } = useUserContext();
 
   const navigate = useNavigate();
 
@@ -31,8 +37,8 @@ const HomePage = () => {
 
   const handleStartClick = (e) => {
     e.preventDefault();
-    if (selectedSkills.length === 0 )return alert("select skill first");
-    if(difficulty.length === 0)return alert("select difficulty first")
+    if (selectedSkills.length === 0) return alert("select skill first");
+    if (difficulty.length === 0) return alert("select difficulty first");
     navigate("/check");
   };
 
@@ -47,10 +53,26 @@ const HomePage = () => {
     <Container className="p-3">
       <form onSubmit={handleStartClick}>
         <Row>
-          <h2 className='header' style={{color: 'white', display:"flex", justifyContent:'center'}}>Select Skills</h2>
+          <h2
+            className="header"
+            style={{
+              color: "white",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            Select Skills
+          </h2>
         </Row>
-        <div style={{display:'flex',justifyContent:'center' }}>
-          <Row style={{ marginTop: 10, marginBottom: 10 , width: 600}}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Row
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+              width: 600,
+              fontWeight: "bold",
+            }}
+          >
             <Select
               options={skills}
               isMulti
@@ -59,9 +81,9 @@ const HomePage = () => {
               classNamePrefix="select"
               placeholder="Select Skills"
               onChange={handleSkillChange}
-              />
+            />
           </Row>
-          <Row style={{ marginTop: 10, marginBottom: 10 }}>
+          <Row style={{ marginTop: 10, marginBottom: 10, fontWeight: "bold" }}>
             <Select
               options={difficultyLevel}
               isMulti
@@ -70,10 +92,10 @@ const HomePage = () => {
               classNamePrefix="select"
               placeholder="Select Difficulty"
               onChange={handleDifficultyChange}
-              />
+            />
           </Row>
         </div>
-        <div style={{display: 'flex', justifyContent: 'center'}}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <Row>
             <Col>
               <Button variant="primary" type="submit">
