@@ -8,6 +8,7 @@ import Gravatar from "react-gravatar";
 import { gravatarUrl } from "../garavatar/gravater";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -51,7 +52,9 @@ const Header = () => {
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item eventKey="1">Profile</Dropdown.Item>
-                <Dropdown.Item eventKey="2">About Us</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/about" eventKey="2">
+                  About Us
+                </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item eventKey="3">Theme</Dropdown.Item>
                 <Dropdown.Divider />
