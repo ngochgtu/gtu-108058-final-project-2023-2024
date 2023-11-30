@@ -1,3 +1,30 @@
-.text {
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+
+.aboutPage_container {
+  margin: 2rem 0;
+  padding: 1rem;
   color: white;
+}
+
+.aboutPage_titles {
+  font-family: "Abril Fatface", serif;
+  font-size: 25px;
+}
+
+.aboutPage_subTitles {
+  font-size: 20px;
+  margin-top: 1rem;
+}
+
+.aboutUs_title {
+  font-family: "Abril Fatface", serif;
+  text-align: center;
+}
+
+.about_us {
+  margin-bottom: 2rem;
+}
+
+.offer_info {
+  margin-bottom: 2rem;
 }

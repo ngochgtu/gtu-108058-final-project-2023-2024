@@ -38,15 +38,17 @@ const Header = () => {
                 variant="success"
                 className={styles.dropdown_container}
               >
-                <div className={styles.img_container}>
-                  <img
-                    className={styles.img}
-                    src={gravatarUrl(testEmail)}
-                    alt="User Avatar"
-                  ></img>
-                </div>
-                <div className={styles.content}>
-                  <span>{localStorage.getItem("username")}</span>
+                <div className={styles.dropdownbtn_container}>
+                  <div className={styles.img_container}>
+                    <img
+                      className={styles.img}
+                      src={gravatarUrl(testEmail)}
+                      alt="User Avatar"
+                    ></img>
+                  </div>
+                  <div className={styles.content}>
+                    <span>{localStorage.getItem("username")}</span>
+                  </div>
                 </div>
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -68,7 +70,6 @@ const Header = () => {
           ) : (
             ""
           )}
-
           <div>
             <Form>
               <Form.Check // prettier-ignore
