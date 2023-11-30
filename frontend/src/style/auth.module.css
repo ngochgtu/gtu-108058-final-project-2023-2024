@@ -27,7 +27,7 @@
 	max-width: 700px;
 }
 
-.signIn-title {
+.signin_title {
 	-webkit-text-stroke: 1px lightgreen;
 	color: var(--dark-grey);
 	font-family: "Agbalumo", sans-serif;
@@ -44,7 +44,7 @@
 	max-width: 30rem;
 }
 
-.signIn_input {
+.signin_input {
 	border-radius: 8px;
 	height: 60px;
 	width: 100%;
@@ -52,7 +52,7 @@
 	border: 2px solid rgba(109, 160, 109, 0.637);
 }
 
-.signIn_input:focus {
+.signin_input:focus {
 	border: 2px solid lightgreen;
 }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import "../../src/style/pages.styles.css";
-import "../style/ErrorPgae.styles.css";
+import styles from "../style/ErrorPage.module.css";
 import logo from "../assets/404-error.png";
 import { useNavigate } from "react-router-dom";
 
@@ -14,18 +14,18 @@ const ErrorPage = () => {
 
   return (
     <Container>
-      <div className="error-container">
-        <div className="error__logo--container">
-          <img className="error__logo" src={logo} alt="error"></img>
+      <div className={styles.error_container}>
+        <div className={styles.error__logo_container}>
+          <img className={styles.error__logo} src={logo} alt="error"></img>
         </div>
-        <h2 className="error__massage--title">
+        <h2 className={styles.error__massage_title}>
           Oh no,you've found our junior developer's homepage!
         </h2>
-        <h3 className="error__massage--content">
+        <h3 className={styles.error__massage_content}>
           Despite sleeping on the couch most of the day, our junior web
           developer still finds time to do some coding...
         </h3>
-        <button className="error_button" onClick={onBackToHome}>
+        <button className={styles.error_button} onClick={onBackToHome}>
           back to homepage
         </button>
       </div>

@@ -12,12 +12,12 @@ export class UsersController {
   @Post('/user_question')
   async createUserQuestion(
     @Res() response,
+    @Request() request,
     @Body() createUserQuestionDto: CreateUserQuestionDto,
   ) {
     try {
-      const newUser = await this.usersService.createUserQuestion(
-        createUserQuestionDto,
-      );
+      const seasonId = request["session"].id
+      const newUser = await this.usersService.createUserQuestion(createUserQuestionDto, seasonId);
       return response.status(HttpStatus.CREATED).json(newUser);
     } catch (err) {
       return response.status(HttpStatus.BAD_REQUEST).json({
@@ -44,7 +44,8 @@ export class UsersController {
   }
 
   @Get('/result')
-  async getResult(){
-    return await this.usersService.getResult()
+  async getResult(@Request() request){
+    const sessionId = request["session"].id
+    return await this.usersService.getResult(sessionId)
   }
 }

@@ -16,9 +16,7 @@ import { encodePassword } from 'src/utils/bcrypt';
 @Injectable()
 export class UsersService {
 
-  private score:number = 0
-  private email:string = '';
-  private skill:Array<string> = []
+  private localCache = {}
 
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
@@ -39,11 +37,17 @@ export class UsersService {
     return this.userModel.findOne({ email }).exec();
   }
 
-  async createUserQuestion(createUserQuestionDto: CreateUserQuestionDto): Promise<UserQuestion> {
+  async createUserQuestion(createUserQuestionDto: CreateUserQuestionDto, sessionId): Promise<UserQuestion> {
+    let session_data = this.localCache[sessionId];
+
+    if (!session_data) {
+        session_data = this.initlocalCacheSessionData()
+        this.localCache[sessionId] = session_data
+    }
     const trueAnswer = await this.getQuestions(createUserQuestionDto.question_id)
-    this.calculateScore(createUserQuestionDto.answer, trueAnswer[0].answer)
-    this.email = createUserQuestionDto.email
-    this.skill = trueAnswer[0].skill_names
+    this.calculateScore(createUserQuestionDto.answer, trueAnswer[0].answer, sessionId)
+    this.localCache[sessionId].email = createUserQuestionDto.email
+    this.localCache[sessionId].skill = trueAnswer[0].skill_names
     const [newUser] = await Promise.all([new this.userQuestionModel(createUserQuestionDto)]);
     return newUser.save();
   }
@@ -56,20 +60,19 @@ export class UsersService {
     return questions;
   }
 
-  calculateScore(usersAnswer, correctAnswer){
+  calculateScore(usersAnswer, correctAnswer, sessionId){
     if(usersAnswer == correctAnswer){
-      this.score++
-      console.log(this.score)
+      this.localCache[sessionId].score += 1
+      console.log(this.localCache[sessionId].score)
     }
   }
-  async getResult(){
-    let result = {
-      email: this.email,
-      points: this.score,
-      skill: this.skill
-    }
-    const savedResult = await this.saveResult(result)
-    this.score = 0
+  async getResult(sessionId){
+    const savedResult = await this.saveResult({
+      email: this.localCache[sessionId].email,
+      points: this.localCache[sessionId].score,
+      skill: this.localCache[sessionId].skill
+    })
+    this.localCache[sessionId].score = 0
     return savedResult
   }
 
@@ -87,6 +90,14 @@ export class UsersService {
         new this.userModel({ ...createUserDto, password }),
       ]);
       return newUser.save();
+    }
+  }
+
+  initlocalCacheSessionData = () => {
+    return {
+      score: 0,
+      email: '',
+      skill: [],
     }
   }
 }
