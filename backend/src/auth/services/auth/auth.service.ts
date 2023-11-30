@@ -20,7 +20,6 @@ export class AuthService {
             }
 
         }
-        console.log('user validation failed')
         return null
     }
 }

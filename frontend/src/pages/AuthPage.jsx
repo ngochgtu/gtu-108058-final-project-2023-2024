@@ -6,12 +6,13 @@ import { BASE_PATH } from "../api/ServerApi";
 import styles from "../style/auth.module.css";
 import style from "../style/signUp.module.css";
 import "../../src/style/pages.styles.css";
+import { useUserContext } from "../contexts/userContexts";
 
 const AuthPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userData, setUserData] = useState(null);
-  const [error, setError] = useState(null);
+  const {setUserData} = useUserContext();
+  const [error,  setError] = useState(null);
 
   const navigate = useNavigate();
 

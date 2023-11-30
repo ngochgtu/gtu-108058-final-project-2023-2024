@@ -3,10 +3,12 @@ import { useNavigate} from "react-router-dom";
 import React, {useCallback, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import "../../src/style/pages.styles.css";
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
+import { Container } from "../style/styled";
 import {MagnifyingGlass} from 'react-loader-spinner'
 import useRequest from "../hooks/useRequest";
 import { useUserContext } from "../contexts/userContexts";
+import { useHeaderContext } from "../contexts/headerContexts";
 
 const SkillsCheckPage = () => {
     const [difficulty] = useState('easy')
@@ -15,6 +17,7 @@ const SkillsCheckPage = () => {
     const [counter, setCounter] = useState(0)
     const {sendRequest} = useRequest({url: 'http://localhost:3001/users/user_question', method: 'POST'})
     const {selectedSkills,difficulty: diff} = useUserContext()
+    const {isOpen} = useHeaderContext()
         
     const navigate = useNavigate()
 
@@ -68,7 +71,7 @@ const SkillsCheckPage = () => {
         .catch(err => console.log(err))  
     }
 
-    return <Container className="p-3">
+    return <Container color={isOpen ? '#272727' : '#e6e6fa'} className="p-3">
         <Row style={{marginBottom: 10}}>
             <Col>
                 Skills: {selectedSkills ? selectedSkills.map(e => {

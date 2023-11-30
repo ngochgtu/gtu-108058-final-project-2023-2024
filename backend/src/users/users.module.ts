@@ -8,6 +8,8 @@ import { Skill, SkillSchema } from 'src/schema/Skill.schema';
 import { SkillType, SkillTypeSchema } from 'src/schema/SkillType.schema';
 import { Question, QuestionSchema } from 'src/schema/Question.schema';
 import { UsersPointsSchema, UsersPoints } from 'src/schema/UsersPoints.schema';
+import { AppService } from 'src/service/app.service';
+import { OpenaiService } from 'src/service/openai.service';
 
 @Module({
   imports: [MongooseModule.forFeature([
@@ -17,8 +19,8 @@ import { UsersPointsSchema, UsersPoints } from 'src/schema/UsersPoints.schema';
     {name: User.name, schema: UserSchema},
     {name: UserQuestion.name, schema: UserQuestionSchema},
     {name: UsersPoints.name, schema: UsersPointsSchema},
-]),],
+  ]),],
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService, AppService,OpenaiService]
 })
 export class UsersModule {}

@@ -1,27 +1,27 @@
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import {Container} from '../style/styled'
 import styles from "../style/app.module.css";
 import logout from "../assets/logout.png";
-import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import React from "react";
 import { useHeaderContext } from "../contexts/headerContexts";
-import Gravatar from "react-gravatar";
 import { gravatarUrl } from "../garavatar/gravater";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Link } from "react-router-dom";
+import { useUserContext } from "../contexts/userContexts";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { isOpen, toggle } = useHeaderContext();
+  const { isOpen } = useHeaderContext();
+  const {userData} = useUserContext();
 
   const onLogoClick = () => {
     if (localStorage.getItem("username")) navigate("/");
   };
 
-  const testEmail = "e.lnacain@gmail.com";
 
   return (
-    <Container className="p-3">
+    <Container className="p-3" color={isOpen ? '#272727' : '#e6e6fa'}>
       <Row>
         <div className={styles.container}>
           <Col>
@@ -33,7 +33,7 @@ const Header = () => {
               Skills Verifier
             </h1>
           </Col>
-          {localStorage.getItem("username") ? (
+          {userData ? (
             <Dropdown as={ButtonGroup}>
               <Dropdown.Toggle
                 variant="success"
@@ -42,23 +42,19 @@ const Header = () => {
                 <div className={styles.img_container}>
                   <img
                     className={styles.img}
-                    src={gravatarUrl(testEmail)}
+                    src={gravatarUrl(userData.email)}
                     alt="User Avatar"
                   ></img>
                 </div>
                 <div className={styles.content}>
-                  <span>{localStorage.getItem("username")}</span>
+                  <span>{userData.username}</span>
                 </div>
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item eventKey="1">Profile</Dropdown.Item>
-                <Dropdown.Item as={Link} to="/about" eventKey="2">
-                  About Us
-                </Dropdown.Item>
+                <Dropdown.Item eventKey="1"><Link className={styles.links} to={'/profile'}>Profile</Link></Dropdown.Item>
+                <Dropdown.Item eventKey="2"><Link className={styles.links} to={'/about'}>About Us</Link></Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item eventKey="3">Theme</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item eventKey="4">
+                <Dropdown.Item eventKey="3">
                   <span>log out</span>
                   <img
                     src={logout}
@@ -71,8 +67,8 @@ const Header = () => {
           ) : (
             ""
           )}
-
-          <div>
+          {/* its here for the future */}
+          {/* <div>
             <Form>
               <Form.Check // prettier-ignore
                 type="switch"
@@ -83,7 +79,7 @@ const Header = () => {
                 checked={isOpen}
               />
             </Form>
-          </div>
+          </div> */}
         </div>
       </Row>
     </Container>

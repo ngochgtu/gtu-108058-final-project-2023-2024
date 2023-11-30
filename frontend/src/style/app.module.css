@@ -68,3 +68,8 @@
   width: 1.5rem;
   height: 1.7rem;
 }
+
+.links{
+  text-decoration: none;
+  color: black;
+}

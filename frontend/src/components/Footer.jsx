@@ -1,10 +1,12 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import { Container } from '../style/styled'
 import styles from '../style/Footer.module.css'
+import { useHeaderContext } from '../contexts/headerContexts'
 
 const Footer = () => {
+  const {isOpen} = useHeaderContext()
   return (
-    <Container>
+    <Container color={isOpen ? '#272727' : '#e6e6fa'}>
         <div className={styles.border}>
             footer
         </div>
