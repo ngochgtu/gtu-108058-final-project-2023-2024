@@ -17,15 +17,13 @@ const Header = () => {
 		if (cookies.user) navigate("/");
 	};
 	const handleLogout = () => {
-		// Remove each cookie individually
 		Object.keys(cookies).forEach(cookieName => {
 			document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
 		  });
 
 		document.cookie = 'connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
 	
-		// Redirect to the login or home page after logout
-		navigate("/sign-in"); // Replace with the appropriate route
+		navigate("/sign-in");
 	  };
 
 	return (
