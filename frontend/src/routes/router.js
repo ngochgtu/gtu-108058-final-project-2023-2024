@@ -12,6 +12,7 @@ import UserContextProvider from "../contexts/userContexts";
 import Footer from "../components/Footer";
 import IntroductionPage from "../pages/introductionPage";
 import ProfilePage from "../pages/ProfilePage";
+import { CookiesProvider } from "react-cookie";
 
 export const router = createHashRouter([
   {
@@ -19,9 +20,11 @@ export const router = createHashRouter([
       <div>
         <HeaderContextProvider>
           <UserContextProvider>
-            <Header />
-              <Outlet />
-            <Footer />
+            <CookiesProvider>
+              <Header />
+                <Outlet />
+              <Footer />
+            </CookiesProvider>
           </UserContextProvider>
         </HeaderContextProvider>
       </div>

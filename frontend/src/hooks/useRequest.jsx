@@ -6,6 +6,7 @@ const useRequest = ({ url, method }) => {
   const sendRequest = async (body) => {
     const res = await fetch(url, {
       method,
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },

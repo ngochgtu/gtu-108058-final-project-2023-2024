@@ -1,16 +1,17 @@
 import React from "react";
 import Skills from "../components/Skills";
-import { useUserContext } from "../contexts/userContexts";
 import { gravatarUrl } from "../garavatar/gravater";
 import styles from "../style/ProfilePage.module.css";
 import { Container } from "../style/styled";
+import { useCookies } from "react-cookie";
 
 const ProfilePage = () => {
-	const { userData } = useUserContext();
+	
+	const [cookies, setCookie] = useCookies(["user"]);
 
 	return (
 		<Container className={styles.container}>
-			{userData ? (
+			{cookies.user ? 
 				<div className={styles.profile}>
 					<div className={styles.left_side}>
 						<div>
@@ -18,16 +19,16 @@ const ProfilePage = () => {
 						</div>
 						<div className={styles.details}>
 							<div className={styles.img}>
-								<img src={gravatarUrl(userData.email)} alt="" />
+								<img src={gravatarUrl(cookies.user.email)} alt="" />
 							</div>
 							<div className={styles.information}>
 								<p>
 									<strong>Username: </strong>
-									{userData.username}
+									{cookies.user.username}
 								</p>
 								<p>
 									<strong>Email: </strong>
-									{userData.email}
+									{cookies.user.email}
 								</p>
 							</div>
 						</div>
@@ -45,9 +46,9 @@ const ProfilePage = () => {
 						</div>
 					</div>
 				</div>
-			) : (
+			 : 
 				"Error loading user profile"
-			)}
+			}
 		</Container>
 	);
 };

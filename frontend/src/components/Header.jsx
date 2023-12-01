@@ -1,22 +1,32 @@
 import React from "react";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link, useNavigate } from "react-router-dom";
 import logout from "../assets/logout.png";
-import { useHeaderContext } from "../contexts/headerContexts";
-import { useUserContext } from "../contexts/userContexts";
 import { gravatarUrl } from "../garavatar/gravater";
 import styles from "../style/app.module.css";
+import { useCookies } from "react-cookie";
 
 const Header = () => {
 	const navigate = useNavigate();
-	const { isOpen, toggle } = useHeaderContext();
-	const { userData } = useUserContext();
+	const [cookies, removeCookie] = useCookies(["user"]);
+
 
 	const onLogoClick = () => {
-		if (localStorage.getItem("username")) navigate("/");
+		if (cookies.user) navigate("/");
 	};
+	const handleLogout = () => {
+		// Remove each cookie individually
+		Object.keys(cookies).forEach(cookieName => {
+			document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+		  });
+
+		document.cookie = 'connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
+	
+		// Redirect to the login or home page after logout
+		navigate("/sign-in"); // Replace with the appropriate route
+	  };
 
 	return (
 		<Container className="p-3">
@@ -31,7 +41,7 @@ const Header = () => {
 							Skills Verifier
 						</h1>
 					</Col>
-					{userData ? (
+					{cookies.user ? 
 						<Dropdown as={ButtonGroup}>
 							<Dropdown.Toggle
 								variant="success"
@@ -40,12 +50,12 @@ const Header = () => {
 								<div className={styles.img_container}>
 									<img
 										className={styles.img}
-										src={gravatarUrl(userData.email)}
+										src={gravatarUrl(cookies.user.email)}
 										alt="User Avatar"
 									></img>
 								</div>
 								<div className={styles.content}>
-									<span>{userData.username}</span>
+									<span>{cookies.user.username}</span>
 								</div>
 							</Dropdown.Toggle>
 							<Dropdown.Menu>
@@ -60,7 +70,7 @@ const Header = () => {
 									</Link>
 								</Dropdown.Item>
 								<Dropdown.Divider />
-								<Dropdown.Item eventKey="4">
+								<Dropdown.Item eventKey="4" onClick={handleLogout}>
 									<span>log out</span>
 									<img
 										src={logout}
@@ -70,10 +80,7 @@ const Header = () => {
 								</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown>
-					) : (
-						""
-					)}
-
+					 : ''}
 					{/* <div>
 						<Form>
 							<Form.Check // prettier-ignore
@@ -87,6 +94,7 @@ const Header = () => {
 						</Form>
 					</div> */}
 				</div>
+				
 			</Row>
 		</Container>
 	);

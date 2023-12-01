@@ -3,17 +3,18 @@ import { Container } from '../style/styled'
 import styles from "../style/Introduction.module.css"
 import { useNavigate } from 'react-router-dom';
 import { useHeaderContext } from '../contexts/headerContexts';
-import { useUserContext } from '../contexts/userContexts';
+import { useCookies } from 'react-cookie';
 
 const IntroductionPage = () => {
 
     const navigate = useNavigate();
     const {isOpen} = useHeaderContext()
-    const {userData} = useUserContext()
+    const [cookies, setCookie] = useCookies(["user"]);
 
+     
 
     const onStartTest = () => {
-      if(!userData) {
+      if(!cookies.user) {
         navigate("/sign-in")
       }else {
         navigate("home")

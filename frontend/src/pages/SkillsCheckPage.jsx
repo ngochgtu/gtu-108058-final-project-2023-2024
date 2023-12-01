@@ -9,6 +9,7 @@ import {MagnifyingGlass} from 'react-loader-spinner'
 import useRequest from "../hooks/useRequest";
 import { useUserContext } from "../contexts/userContexts";
 import { useHeaderContext } from "../contexts/headerContexts";
+import { useCookies } from "react-cookie";
 
 const SkillsCheckPage = () => {
     const [difficulty] = useState('easy')
@@ -18,6 +19,7 @@ const SkillsCheckPage = () => {
     const {sendRequest} = useRequest({url: 'http://localhost:3001/users/user_question', method: 'POST'})
     const {selectedSkills,difficulty: diff} = useUserContext()
     const {isOpen} = useHeaderContext()
+    const [cookies, setCookie] = useCookies(["user"]);
         
     const navigate = useNavigate()
 
@@ -28,7 +30,8 @@ const SkillsCheckPage = () => {
     const fetch_data = () => {
         if (selectedSkills) {
             fetch(`http://localhost:3001/api/questions?skills=${selectedSkills.map(e => e.value)}&difficulty=${diff ? diff[0].label : difficulty}`, {
-                method: "GET"
+                method: "GET",
+                credentials: "include",
             })
                 .then((response) => response.json())
                 .then((data) => {
@@ -45,7 +48,7 @@ const SkillsCheckPage = () => {
     const handleNextClick = async () => {
         setCounter(counter + 1)
         sendRequest({
-            email: localStorage.getItem("email"),
+            email: cookies.user.email,
             question_id: question._id,
             answer: answer
         }).then(data => console.log(data))
@@ -60,6 +63,7 @@ const SkillsCheckPage = () => {
     const onFinish = async()=> {
         await fetch('http://localhost:3001/users/result', {
             method: 'GET',
+            credentials: "include",
             headers:{
                 "Content-Type": "application/json",
             },

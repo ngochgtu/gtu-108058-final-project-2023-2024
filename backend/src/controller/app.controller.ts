@@ -116,7 +116,7 @@ export class AppController {
     // @UseGuards(AuthenticatedGuard)
     @Get("/questions")
     async getQuestionsBySkills(@Query('skills') skills: string, @Query('difficulty') difficulty: string, @Req() request: Request) {
-        const sessionId = "please_change_me"  //request["session"].id
+        const sessionId = request["session"].id
         return this.appService.getQuestionsBySkills(skills.split(","), difficulty, sessionId);
     }
 }

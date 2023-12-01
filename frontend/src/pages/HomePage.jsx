@@ -7,12 +7,14 @@ import { Container } from "../style/styled";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/userContexts";
 import { useHeaderContext } from "../contexts/headerContexts";
+import { useCookies } from "react-cookie";
 
 const HomePage = () => {
   const [skills, setSkills] = useState([]);
   const {selectedSkills, setSelectedSkills, difficultyLevel, difficulty, setDifficulty} = useUserContext()
   const {isOpen} = useHeaderContext()
   const navigate = useNavigate();
+	const {cookies} = useCookies(["user"])
 
   useEffect(() => {
     const fetchData = async () => {

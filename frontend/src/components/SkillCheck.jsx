@@ -1,4 +1,5 @@
 import {Card, Form} from "react-bootstrap";
+import React from "react";
 
 const SkillCheck = ({question, selectAnswer}) => {
 

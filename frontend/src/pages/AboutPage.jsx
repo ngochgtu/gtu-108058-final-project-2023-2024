@@ -2,7 +2,6 @@ import React from 'react'
 import { Container } from '../style/styled'
 import styles from '../style/About.module.css'
 import { useHeaderContext } from '../contexts/headerContexts';
-import { Link } from "react-router-dom";
 
 const AboutPage = () => {
   const {isOpen} = useHeaderContext()

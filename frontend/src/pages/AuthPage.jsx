@@ -4,11 +4,13 @@ import "../../src/style/pages.styles.css";
 import { BASE_PATH } from "../api/ServerApi";
 import { useUserContext } from "../contexts/userContexts";
 import styles from "../style/Verification.module.css";
+import { useCookies } from "react-cookie";
 
 const AuthPage = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { setUserData } = useUserContext();
+	const [cookies, setCookie] = useCookies(["user"]);
 
 	const navigate = useNavigate();
 
@@ -23,6 +25,7 @@ const AuthPage = () => {
 		try {
 			const response = await fetch(`${BASE_PATH}/auth/login`, {
 				method: "POST",
+				credentials: 'include',
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -31,6 +34,7 @@ const AuthPage = () => {
 
 			if (response.ok) {
 				const user = await response.json();
+				setCookie("user", user, { path: "/" });
 				setUserData(user);
 				navigate("/home");
 			}

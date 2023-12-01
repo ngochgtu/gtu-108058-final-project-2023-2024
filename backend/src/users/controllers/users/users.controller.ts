@@ -47,7 +47,8 @@ export class UsersController {
   @Get('/result')
   async getResult(@Request() request){
     const sessionId = request["session"].id
-    this.appService.resetlocalCacheSessionData(sessionId);
+    // this.appService.resetlocalCacheSessionData(sessionId);
+    console.log(sessionId)
     return await this.usersService.getResult(sessionId)
   }
 }
