@@ -14,7 +14,7 @@ const Header = () => {
 
 
 	const onLogoClick = () => {
-		if (cookies.user) navigate("/");
+		navigate("/");
 	};
 	const handleLogout = () => {
 		Object.keys(cookies).forEach(cookieName => {

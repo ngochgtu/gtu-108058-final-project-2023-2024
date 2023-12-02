@@ -92,6 +92,28 @@ export class UsersService {
     }
   }
 
+  async getUsersStatsByEmail(email:string | Record<string, any>) {
+     const emailValue = typeof email === 'object' ? email.email : email;
+
+      const result = await this.usersPointsModel.find({ email: emailValue }).exec();
+      const skillPointsArray: { skill: string; points: number; id: string }[] = [];
+
+      result.forEach((entry) => {
+        const skills = entry.skill.map((s: string) => s.toLowerCase()); 
+        skills.forEach((skill) => {
+          const existingSkillIndex = skillPointsArray.findIndex((item) => item.skill === skill);
+    
+          if (existingSkillIndex !== -1) {
+            skillPointsArray[existingSkillIndex].points += entry.points;
+          } else {
+            skillPointsArray.push({ skill: skill, points: entry.points, id: entry._id.toString() });
+          }
+        });
+      });
+      return skillPointsArray;
+  }
+  
+
   initlocalCacheSessionData = () => {
     return {
       score: 0,

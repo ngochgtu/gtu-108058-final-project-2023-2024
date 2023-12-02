@@ -51,4 +51,18 @@ export class UsersController {
     console.log(sessionId)
     return await this.usersService.getResult(sessionId)
   }
+
+  @Post('/UsersInfo')
+  async getUsersInfo(@Res() response, @Body() email: string) {
+    try{
+      const usersInfo = await this.usersService.getUsersStatsByEmail(email)
+      return response.status(HttpStatus.CREATED).json(usersInfo);
+    }catch (err) {
+      return response.status(HttpStatus.BAD_REQUEST).json({
+        statusCode: 400,
+        message: `${err}!`,
+        error: 'Bad Request',
+      });
+    }
+  }
 }

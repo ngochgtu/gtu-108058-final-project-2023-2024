@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Skills from "../components/Skills";
 import { gravatarUrl } from "../garavatar/gravater";
 import styles from "../style/ProfilePage.module.css";
 import { Container } from "../style/styled";
 import { useCookies } from "react-cookie";
+import { BASE_PATH } from "../api/ServerApi";
+import { MagnifyingGlass } from "react-loader-spinner";
 
 const ProfilePage = () => {
-	
-	const [cookies, setCookie] = useCookies(["user"]);
 
+	const [cookies, setCookie] = useCookies(["user"]);
+	const [stats, setStats] = useState(null)
+
+	useEffect(() => {
+		fetch(`${BASE_PATH}/users/UsersInfo`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				email: cookies.user.email,
+			})
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data)
+				setStats(data)
+			})
+			.catch((error) => console.log(error));
+	},[])
+
+	
 	return (
 		<Container className={styles.container}>
 			{cookies.user ? 
@@ -37,11 +59,26 @@ const ProfilePage = () => {
 						<div className={styles.achievements}>
 							<h2 className={styles.title}>Stats</h2>
 							<div className={styles.skills}>
-								<Skills
-									key={0}
-									skill={["javascript" /*Replace this*/]}
-									points={20}
-								/>
+								{ stats ? stats.map((stat) => (
+									<Skills
+										key={stat.id}
+										skill={stat.skill}
+										points={stat.points}
+									/>
+								)) : 
+								<div style={{display: 'flex', justifyContent:"center", alignItems:'center'}}>
+								<MagnifyingGlass
+								visible={true}
+								height="80"
+								width="80"
+								ariaLabel="MagnifyingGlass-loading"
+								wrapperStyle={{}}
+								wrapperClass="MagnifyingGlass-wrapper"
+								glassColor = '#c0efff'
+								color = '#e15b64'
+								  />
+								</div>
+							}
 							</div>
 						</div>
 					</div>

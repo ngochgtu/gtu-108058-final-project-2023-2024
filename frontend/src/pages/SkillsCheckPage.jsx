@@ -10,6 +10,7 @@ import useRequest from "../hooks/useRequest";
 import { useUserContext } from "../contexts/userContexts";
 import { useHeaderContext } from "../contexts/headerContexts";
 import { useCookies } from "react-cookie";
+import { BASE_PATH } from "../api/ServerApi";
 
 const SkillsCheckPage = () => {
     const [difficulty] = useState('easy')
@@ -29,7 +30,7 @@ const SkillsCheckPage = () => {
     
     const fetch_data = () => {
         if (selectedSkills) {
-            fetch(`http://localhost:3001/api/questions?skills=${selectedSkills.map(e => e.value)}&difficulty=${diff ? diff[0].label : difficulty}`, {
+            fetch(`${BASE_PATH}/api/questions?skills=${selectedSkills.map(e => e.value)}&difficulty=${diff ? diff[0].label : difficulty}`, {
                 method: "GET",
                 credentials: "include",
             })
@@ -61,7 +62,7 @@ const SkillsCheckPage = () => {
     }
     
     const onFinish = async()=> {
-        await fetch('http://localhost:3001/users/result', {
+        await fetch(`${BASE_PATH}/users/result`, {
             method: 'GET',
             credentials: "include",
             headers:{

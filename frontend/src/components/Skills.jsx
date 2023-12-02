@@ -4,13 +4,12 @@ const Skills = ({ skill, points }) => {
 	return (
 		<div
 			style={{
-				display: "grid",
-				gridTemplateRows: "1fr 1fr",
+				display: "flex", gap: '2rem',
 			}}
 		>
 			<p>
 				<strong>Skill: </strong>
-				{skill[0]}
+				{skill}
 			</p>
 			<p>
 				<strong>Points: </strong>
