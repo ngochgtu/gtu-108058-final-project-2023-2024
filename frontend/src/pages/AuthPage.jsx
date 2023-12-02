@@ -11,6 +11,7 @@ const AuthPage = () => {
 	const [password, setPassword] = useState("");
 	const { setUserData } = useUserContext();
 	const [cookies, setCookie] = useCookies(["user"]);
+	const expirationTime = 3600000
 
 	const navigate = useNavigate();
 
@@ -34,8 +35,9 @@ const AuthPage = () => {
 
 			if (response.ok) {
 				const user = await response.json();
-				setCookie("user", user, { path: "/" });
-				setUserData(user);
+				const result = { email: user.email, username: user.username, id: user._id}
+				setCookie("user", result, { expires: new Date(Date.now() + expirationTime), path: "/" });
+				setUserData(result);
 				navigate("/home");
 			}
 		} catch (error) {}

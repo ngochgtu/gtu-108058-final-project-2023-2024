@@ -24,7 +24,6 @@ const ProfilePage = () => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data)
 				setStats(data)
 			})
 			.catch((error) => console.log(error));

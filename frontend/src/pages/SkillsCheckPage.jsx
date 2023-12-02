@@ -52,7 +52,7 @@ const SkillsCheckPage = () => {
             email: cookies.user.email,
             question_id: question._id,
             answer: answer
-        }).then(data => console.log(data))
+        })
         .catch(err => console.log(err))
 
         fetch_data()
