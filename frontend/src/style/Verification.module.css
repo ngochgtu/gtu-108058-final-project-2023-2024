@@ -14,7 +14,9 @@
 	align-items: center;
 	flex-direction: column;
 	gap: 35px;
-	width: 60%;
+	width: 550px;
+	min-width: 450px;
+	max-width: 650px;
 	margin: auto;
 	margin-top: 5%;
 	background-color: var(--secondary-grey);
@@ -94,6 +96,6 @@ h3 {
 	margin: 0;
 }
 
-.error{
-	border: 1px solid red;
+.error {
+	border: 2px solid red;
 }

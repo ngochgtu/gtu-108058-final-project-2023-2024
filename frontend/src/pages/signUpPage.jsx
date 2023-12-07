@@ -13,16 +13,31 @@ const SignUpPage = () => {
 		confirmPassword: "",
 	});
 
+	const [missingField, setMissingField] = useState({
+		username: true,
+		email: true,
+		password: true,
+		confirmPassword: true,
+	});
+
 	const navigate = useNavigate();
 
 	const handleChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
+		const { name, value } = e.target;
+		setFormData({ ...formData, [name]: value });
+		setMissingField({ ...missingField, [name]: !!value });
 	};
 
 	const handleRegister = async (e) => {
 		e.preventDefault();
 
-		if (formData.password !== formData.confirmPassword) {
+		const fixedField = { ...missingField };
+		Object.keys(formData).forEach((field) => {
+			fixedField[field] = !!formData[field];
+		});
+		setMissingField(fixedField);
+
+		if (Object.values(fixedField).some((valid) => !valid)) {
 			return;
 		}
 
@@ -40,7 +55,6 @@ const SignUpPage = () => {
 			});
 
 			if (response.ok) {
-				// const data = await response.json();
 				navigate("/sign-in");
 			} else {
 			}
@@ -58,7 +72,9 @@ const SignUpPage = () => {
 						<label className={styles.label}>Username</label>
 						<input
 							type="text"
-							className={styles.input}
+							className={`${styles.input} ${
+								missingField.username ? "" : styles.error
+							}`}
 							placeholder=" Username"
 							name="username"
 							value={formData.username}
@@ -69,7 +85,9 @@ const SignUpPage = () => {
 						<label className={styles.label}>Email address</label>
 						<input
 							type="email"
-							className={styles.input}
+							className={`${styles.input} ${
+								missingField.email ? "" : styles.error
+							}`}
 							placeholder=" Name@example.com"
 							name="email"
 							value={formData.email}
@@ -80,7 +98,9 @@ const SignUpPage = () => {
 						<label className={styles.label}>Password</label>
 						<input
 							type="password"
-							className={styles.input}
+							className={`${styles.input} ${
+								missingField.password ? "" : styles.error
+							}`}
 							placeholder=" ********"
 							name="password"
 							value={formData.password}
@@ -91,7 +111,9 @@ const SignUpPage = () => {
 						<label className={styles.label}>Confirm Password</label>
 						<input
 							type="password"
-							className={styles.input}
+							className={`${styles.input} ${
+								missingField.confirmPassword ? "" : styles.error
+							}`}
 							placeholder=" ********"
 							name="confirmPassword"
 							value={formData.confirmPassword}
