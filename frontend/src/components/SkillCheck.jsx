@@ -3,7 +3,7 @@ import React from "react";
 
 const SkillCheck = ({question, selectAnswer}) => {
 
-    return <Card style={{marginBottom: 10, display:'flex', justifyContent: 'center', alignItems:'center', }}>
+    return <Card style={{marginBottom: 10, width: '75%'}}>
         <Card.Body>
             <Card.Text>
                 <b>{question.question}</b>
