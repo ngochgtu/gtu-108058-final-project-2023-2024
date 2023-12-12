@@ -150,7 +150,7 @@ export class AppService {
     }
 
     resetlocalCacheSessionData = (sessionId) => {
-        this.localCache[sessionId].counter = 0
+        this.localCache[sessionId] = this.initLocalCacheSessionData()
     }
 
 }
