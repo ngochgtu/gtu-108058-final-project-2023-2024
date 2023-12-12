@@ -47,6 +47,7 @@ const SkillsCheckPage = () => {
         }, []);
 
     const handleNextClick = async () => {
+        if(!question.fake_answers.includes(answer)) return
         setCounter(counter + 1)
         sendRequest({
             email: cookies.user.email,
@@ -87,10 +88,10 @@ const SkillsCheckPage = () => {
        
         {question  ?
             <Row>
-                <Col>
-                    <SkillCheck key={question._id} question={question} selectAnswer={changeAnswer}/>
-                    <div style={{display:'flex', justifyContent:'space-between', width:'100%'}}>
-                        <Button variant="primary" onClick={handleNextClick}>Next</Button>
+                <Col style={{display:'flex', justifyContent:'center', flexDirection:'column', alignItems: 'center'}}>
+                    <SkillCheck key={question._id} question={question} selectAnswer={changeAnswer} />
+                    <div style={{display:'flex', justifyContent:'space-between', width:'100%', maxWidth:'50%'}}>
+                        <Button disabled={!question.fake_answers.includes(answer)} variant="primary" onClick={handleNextClick}>Next</Button>
                         {counter > 10 ? <Button variant="primary" onClick={onFinish} >Finish</Button> : ''}
                     </div>
                 </Col>
