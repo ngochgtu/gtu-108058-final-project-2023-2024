@@ -132,10 +132,15 @@ export class AppService {
 
     openai_question_to_dto = (array, sessionId: string): CreateQuestionDto => {
         const createQuestionDto = new CreateQuestionDto();
+        //save question
         createQuestionDto.question = array[this.localCache[sessionId].counter].question
+        //save options
         createQuestionDto.fake_answers = array[this.localCache[sessionId].counter].options
+        //save correct answers
         createQuestionDto.answer = array[this.localCache[sessionId].counter].correctAnswer
+        //save session id
         createQuestionDto.session_id = sessionId
+        //increment counter
         this.localCache[sessionId].counter = this.localCache[sessionId].counter + 1;
         return createQuestionDto
     }

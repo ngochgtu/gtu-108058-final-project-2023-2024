@@ -55,8 +55,9 @@ const SkillsCheckPage = () => {
             answer: answer
         })
         .catch(err => console.log(err))
-
+        setQuestion(null)
         fetch_data()
+
         if(counter % 10 === 0){
             setQuestion(null)
         }
