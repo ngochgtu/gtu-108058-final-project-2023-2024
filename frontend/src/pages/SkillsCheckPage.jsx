@@ -26,6 +26,17 @@ const SkillsCheckPage = () => {
 
     useEffect(() => {
         fetch_data();
+
+        window.addEventListener('beforeunload', (e) => {
+            e.preventDefault();
+            return e.returnValue = '';
+        }, {capture: true});
+        return () => {
+            window.removeEventListener('beforeunload', (e) => {
+                e.preventDefault();
+                return e.returnValue = '';
+            }, {capture: true});
+        }
     }, [selectedSkills, diff]);
     
     const fetch_data = () => {
