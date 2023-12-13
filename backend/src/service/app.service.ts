@@ -102,7 +102,7 @@ export class AppService {
                     this.localCache[sessionId].skillNames.push(dbSkill.name)
                 }
 
-                const openaiQuestion = await this.openaiService.getGPT3_5ompletion(`
+                const openaiQuestion = await this.openaiService.getGPT3_5Completion(`
                 Generate an array of 10 skill verification questions for ${this.localCache[sessionId].skillNames} with the following format:
                 {
                 "question": "Generate Question for skill ${this.localCache[sessionId].skillNames}",
@@ -150,7 +150,7 @@ export class AppService {
     }
 
     resetlocalCacheSessionData = (sessionId) => {
-        this.localCache[sessionId].counter = 0
+        this.localCache[sessionId] = this.initLocalCacheSessionData()
     }
 
 }

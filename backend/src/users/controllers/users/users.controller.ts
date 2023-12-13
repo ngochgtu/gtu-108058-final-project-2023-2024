@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res,Request ,Get} from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res,Request ,Get, UseGuards} from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/auth/utils/LocalGuard';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { CreateUserQuestionDto } from 'src/dto/CreateUserQuestion.dto';
@@ -47,8 +47,7 @@ export class UsersController {
   @Get('/result')
   async getResult(@Request() request){
     const sessionId = request["session"].id
-    // this.appService.resetlocalCacheSessionData(sessionId);
-    console.log(sessionId)
+    this.appService.resetlocalCacheSessionData(sessionId);
     return await this.usersService.getResult(sessionId)
   }
 

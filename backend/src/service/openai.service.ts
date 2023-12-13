@@ -32,7 +32,7 @@ export class OpenaiService {
         }
     }
 
-    async getGPT3_5ompletion(prompt: string): Promise<string> {
+    async getGPT3_5Completion(prompt: string): Promise<string> {
         const headers = {
             'Authorization': `Bearer ${this.API_KEY}`,
             'Content-Type': 'application/json',

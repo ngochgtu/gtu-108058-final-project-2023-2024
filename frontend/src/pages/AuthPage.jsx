@@ -11,22 +11,42 @@ const AuthPage = () => {
 	const [password, setPassword] = useState("");
 	const { setUserData } = useUserContext();
 	const [cookies, setCookie] = useCookies(["user"]);
-	const expirationTime = 3600000
+	const expirationTime = 3600000;
+
+	const [missingField, setMissingField] = useState({
+		email: true,
+		password: true,
+	});
 
 	const navigate = useNavigate();
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		if (name === "email") {
+			setEmail(value);
+		} else if (name === "password") {
+			setPassword(value);
+		}
+		setMissingField({ ...missingField, [name]: !!value });
+	};
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
 
-		// if (!email || !password) {
-		// 	document.querySelector(".input").classList.add("error");
-		// 	return false;
-		// }
+		const fixedField = { ...missingField };
+		Object.keys({ email, password }).forEach((field) => {
+			fixedField[field] = !!{ email, password }[field];
+		});
+		setMissingField(fixedField);
+
+		if (Object.values(fixedField).some((valid) => !valid)) {
+			return;
+		}
 
 		try {
 			const response = await fetch(`${BASE_PATH}/auth/login`, {
 				method: "POST",
-				credentials: 'include',
+				credentials: "include",
 				headers: {
 					"Content-Type": "application/json",
 				},
@@ -35,8 +55,15 @@ const AuthPage = () => {
 
 			if (response.ok) {
 				const user = await response.json();
-				const result = { email: user.email, username: user.username, id: user._id}
-				setCookie("user", result, { expires: new Date(Date.now() + expirationTime), path: "/" });
+				const result = {
+					email: user.email,
+					username: user.username,
+					id: user._id,
+				};
+				setCookie("user", result, {
+					expires: new Date(Date.now() + expirationTime),
+					path: "/",
+				});
 				setUserData(result);
 				navigate("/home");
 			}
@@ -54,21 +81,27 @@ const AuthPage = () => {
 						<div className={styles.input_container}>
 							<label className={styles.label}>Email</label>
 							<input
-								className={styles.input}
+								className={`${styles.input} ${
+									missingField.email ? "" : styles.error
+								}`}
+								name="email"
 								type="email"
 								placeholder=" Name@example.com"
 								value={email}
-								onChange={(e) => setEmail(e.target.value)}
+								onChange={handleChange}
 							></input>
 						</div>
 						<div className={styles.input_container}>
 							<label className={styles.label}>Password</label>
 							<input
-								className={styles.input}
+								className={`${styles.input} ${
+									missingField.password ? "" : styles.error
+								}`}
+								name="password"
 								type="password"
 								placeholder=" ********"
 								value={password}
-								onChange={(e) => setPassword(e.target.value)}
+								onChange={handleChange}
 							></input>
 						</div>
 					</div>
