@@ -1,10 +1,10 @@
-import React from 'react'
-import { Container } from '../style/styled'
-import styles from '../style/About.module.css'
-import { useHeaderContext } from '../contexts/headerContexts';
+import React from "react";
+import { Container } from "../style/styled";
+import styles from "../style/About.module.css";
+import { useHeaderContext } from "../contexts/headerContexts";
 
 const AboutPage = () => {
-  const {isOpen} = useHeaderContext()
+  const { isOpen } = useHeaderContext();
   return (
     <Container>
       <div className={styles.aboutPage_container}>
