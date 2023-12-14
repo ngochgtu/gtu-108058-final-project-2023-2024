@@ -1,8 +1,9 @@
 import {Card, Form} from "react-bootstrap";
+import React from "react";
 
 const SkillCheck = ({question, selectAnswer}) => {
 
-    return <Card style={{marginBottom: 10}}>
+    return <Card style={{marginBottom: 10, width: '75%'}}>
         <Card.Body>
             <Card.Text>
                 <b>{question.question}</b>

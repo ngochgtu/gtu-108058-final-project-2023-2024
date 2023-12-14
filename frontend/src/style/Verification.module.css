@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+@import url("https://fonts.googleapis.com/css2?family=Agbalumo&display=swap");
+
+:root {
+	--main-black: #272727;
+	--light-green: #14a76c;
+	--dark-grey: #747474;
+	--secondary-grey: rgb(53, 51, 51);
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 35px;
+	min-width: 375px;
+	max-width: 650px;
+	margin: auto;
+	margin-top: 5%;
+	background-color: var(--secondary-grey);
+	min-height: 600px;
+	max-width: 650px;
+	border: solid lightgreen 1px;
+	border-radius: 8px;
+}
+
+.title {
+	color: var(--dark-grey);
+	font-family: "Agbalumo", sans-serif;
+}
+
+.label {
+	color: lightgreen;
+	text-align: start;
+	font-family: "Fira Sans", sans-serif;
+}
+
+.input_container {
+	display: grid;
+}
+
+.input {
+	border-radius: 8px;
+	height: 60px;
+	width: 350px;
+	outline: none;
+	border: 2px solid rgba(109, 160, 109, 0.637);
+}
+
+.input:focus {
+	border: 2px solid lightgreen;
+}
+
+.button_container {
+	display: grid;
+	place-content: center;
+}
+
+.button {
+	font-family: "Fira Sans", sans-serif;
+	color: lightgreen;
+	background-color: var(--secondary-grey);
+	border: 2px solid lightgreen;
+	border-radius: 5px;
+	width: 8rem;
+	height: 2rem;
+}
+
+.button:hover {
+	color: azure;
+	background-color: var(--dark-grey);
+	border: 2px solid azure;
+}
+
+.link,
+.link a {
+	text-align: right;
+	font-size: 13px;
+	padding-top: 10px;
+	color: lightgreen;
+	margin: 0;
+}
+.link a {
+	color: rgba(144, 238, 144, 0.637);
+}
+
+.obj2 {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+h3 {
+	margin: 0;
+}
+
+.error {
+	border: 2px solid red;
+}

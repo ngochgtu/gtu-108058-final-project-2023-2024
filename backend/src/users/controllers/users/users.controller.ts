@@ -1,12 +1,13 @@
-import { Body, Controller, HttpStatus, Post, Res,Request ,Get} from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res,Request ,Get, UseGuards} from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/auth/utils/LocalGuard';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { CreateUserQuestionDto } from 'src/dto/CreateUserQuestion.dto';
+import { AppService } from 'src/service/app.service';
 import { UsersService } from 'src/users/services/users/users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService, private readonly appService: AppService) {}
 
   // @UseGuards(AuthenticatedGuard)
   @Post('/user_question')
@@ -46,6 +47,21 @@ export class UsersController {
   @Get('/result')
   async getResult(@Request() request){
     const sessionId = request["session"].id
+    this.appService.resetlocalCacheSessionData(sessionId);
     return await this.usersService.getResult(sessionId)
+  }
+
+  @Post('/UsersInfo')
+  async getUsersInfo(@Res() response, @Body() email: string) {
+    try{
+      const usersInfo = await this.usersService.getUsersStatsByEmail(email)
+      return response.status(HttpStatus.CREATED).json(usersInfo);
+    }catch (err) {
+      return response.status(HttpStatus.BAD_REQUEST).json({
+        statusCode: 400,
+        message: `${err}!`,
+        error: 'Bad Request',
+      });
+    }
   }
 }

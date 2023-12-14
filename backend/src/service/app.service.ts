@@ -92,7 +92,6 @@ export class AppService {
 
                 session_data = this.initLocalCacheSessionData()
                 this.localCache[sessionId] = session_data
-                console.log(difficulty)
                 for (const skillId of skills) {
                     
 
@@ -103,7 +102,7 @@ export class AppService {
                     this.localCache[sessionId].skillNames.push(dbSkill.name)
                 }
 
-                const openaiQuestion = await this.openaiService.getCompletion(`
+                const openaiQuestion = await this.openaiService.getGPT3_5Completion(`
                 Generate an array of 10 skill verification questions for ${this.localCache[sessionId].skillNames} with the following format:
                 {
                 "question": "Generate Question for skill ${this.localCache[sessionId].skillNames}",
@@ -148,6 +147,10 @@ export class AppService {
             skillNames: [],
             openaiQuestionSaved: false
         }
+    }
+
+    resetlocalCacheSessionData = (sessionId) => {
+        this.localCache[sessionId] = this.initLocalCacheSessionData()
     }
 
 }

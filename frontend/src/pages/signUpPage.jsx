@@ -1,8 +1,9 @@
 import "../../src/style/pages.styles.css";
-import styles from "../style/signUp.module.css";
+import styles from "../style/Verification.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { BASE_PATH } from "../api/ServerApi";
+import "../../src/style/pages.styles.css";
+import { useState } from "react";
 
 const SignUpPage = () => {
 	const [formData, setFormData] = useState({
@@ -12,20 +13,31 @@ const SignUpPage = () => {
 		confirmPassword: "",
 	});
 
+	const [missingField, setMissingField] = useState({
+		username: true,
+		email: true,
+		password: true,
+		confirmPassword: true,
+	});
+
 	const navigate = useNavigate();
 
-	const [passwordError, setPasswordError] = useState("");
-
 	const handleChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
-		setPasswordError("");
+		const { name, value } = e.target;
+		setFormData({ ...formData, [name]: value });
+		setMissingField({ ...missingField, [name]: !!value });
 	};
 
 	const handleRegister = async (e) => {
 		e.preventDefault();
 
-		if (formData.password !== formData.confirmPassword) {
-			setPasswordError("Passwords do not match");
+		const fixedField = { ...missingField };
+		Object.keys(formData).forEach((field) => {
+			fixedField[field] = !!formData[field];
+		});
+		setMissingField(fixedField);
+
+		if (Object.values(fixedField).some((valid) => !valid)) {
 			return;
 		}
 
@@ -43,77 +55,84 @@ const SignUpPage = () => {
 			});
 
 			if (response.ok) {
-				const data = await response.json();
-				console.log("Registration successful:", data);
 				navigate("/sign-in");
 			} else {
-				console.error("Registration failed");
 			}
-		} catch (error) {
-			console.error("Error during registration:", error);
-		}
+		} catch (error) {}
 	};
 
 	return (
-		<div>
-			<form onSubmit={handleRegister}>
-				<div className={styles.signUp_container}>
-					<h3 className={styles.signUp_title}>Sign Up</h3>
-					<div className={styles.signUp_input__container}>
-						<label className={styles.signUp_label}>User name</label>
+		<form onSubmit={handleRegister}>
+			<div className={styles.container}>
+				<div className={styles.obj1}>
+					<h3 className={styles.title}>Sign Up</h3>
+				</div>
+				<div className={styles.obj2}>
+					<div className={styles.input_container}>
+						<label className={styles.label}>Username</label>
 						<input
 							type="text"
-							className={styles.signUp_input}
-							placeholder="Username"
+							className={`${styles.input} ${
+								missingField.username ? "" : styles.error
+							}`}
+							placeholder=" Username"
 							name="username"
 							value={formData.username}
 							onChange={handleChange}
 						/>
 					</div>
-					<div className={styles.signUp_input__container}>
-						<label className={styles.signUp_label}>Email address</label>
+					<div className={styles.input_container}>
+						<label className={styles.label}>Email address</label>
 						<input
 							type="email"
-							className={styles.signUp_input}
-							placeholder="Enter email"
+							className={`${styles.input} ${
+								missingField.email ? "" : styles.error
+							}`}
+							placeholder=" Name@example.com"
 							name="email"
 							value={formData.email}
 							onChange={handleChange}
 						/>
 					</div>
-					<div className={styles.signUp_input__container}>
-						<label className={styles.signUp_label}>Password</label>
+					<div className={styles.input_container}>
+						<label className={styles.label}>Password</label>
 						<input
 							type="password"
-							className={styles.signUp_input}
-							placeholder="Password"
+							className={`${styles.input} ${
+								missingField.password ? "" : styles.error
+							}`}
+							placeholder=" ********"
 							name="password"
 							value={formData.password}
 							onChange={handleChange}
 						/>
 					</div>
-					<div className={styles.signUp_input__container}>
-						<label className={styles.signUp_label}>Confirm Password</label>
+					<div className={styles.input_container}>
+						<label className={styles.label}>Confirm Password</label>
 						<input
 							type="password"
-							className={styles.signUp_input}
-							placeholder="Password"
+							className={`${styles.input} ${
+								missingField.confirmPassword ? "" : styles.error
+							}`}
+							placeholder=" ********"
 							name="confirmPassword"
 							value={formData.confirmPassword}
 							onChange={handleChange}
 						/>
 					</div>
-					<div className={styles.signUp_button__container}>
-						<button type="submit" className={styles.signUp_button}>
+				</div>
+				<div className={styles.obj3}>
+					<div className={styles.button_container}>
+						<button type="submit" className={styles.button}>
 							Sign Up
 						</button>
 					</div>
-					<p className={`${styles.forgot_password} ${styles.text_right}`}>
-						Already registered? <Link to="/sign-in">sign in</Link>
+					<p className={styles.link}>
+						Already have an account ? <Link to="/sign-in">sign in</Link>
 					</p>
 				</div>
-			</form>
-		</div>
+			</div>
+		</form>
 	);
 };
 

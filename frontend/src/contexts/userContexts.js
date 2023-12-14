@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useMemo, useState } from "react";
 
 const UserContexts = createContext(null)
@@ -6,6 +7,8 @@ const UserContextProvider = ({children}) => {
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [difficulty, setDifficulty] = useState([{label: 'easy'}]);
     const [difficultyLevel] = useState([{label: 'easy'},{label:'medium'}, {label:'hard'}])
+    const [userData, setUserData] = useState(null);
+
     
     const contextValue = useMemo(()=> ({
         selectedSkills, 
@@ -13,7 +16,9 @@ const UserContextProvider = ({children}) => {
         difficulty, 
         setDifficulty,
         difficultyLevel,
-    }), [selectedSkills, difficultyLevel, difficulty])
+        setUserData,
+        userData
+    }), [selectedSkills, difficultyLevel, difficulty, userData])
     
     return(
         <UserContexts.Provider value={contextValue}>

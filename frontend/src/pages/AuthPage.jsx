@@ -1,25 +1,52 @@
-import { Form, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { BASE_PATH } from "../api/ServerApi";
-import styles from "../style/auth.module.css";
-import style from "../style/signUp.module.css";
+import { Link, useNavigate } from "react-router-dom";
 import "../../src/style/pages.styles.css";
+import { BASE_PATH } from "../api/ServerApi";
+import { useUserContext } from "../contexts/userContexts";
+import styles from "../style/Verification.module.css";
+import { useCookies } from "react-cookie";
 
 const AuthPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userData, setUserData] = useState(null);
-  const [error, setError] = useState(null);
+  const { setUserData } = useUserContext();
+  const [cookies, setCookie] = useCookies(["user"]);
+  const expirationTime = 3600000;
+
+  const [missingField, setMissingField] = useState({
+    email: true,
+    password: true,
+  });
 
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "email") {
+      setEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+    setMissingField({ ...missingField, [name]: !!value });
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    const fixedField = { ...missingField };
+    Object.keys({ email, password }).forEach((field) => {
+      fixedField[field] = !!{ email, password }[field];
+    });
+    setMissingField(fixedField);
+
+    if (Object.values(fixedField).some((valid) => !valid)) {
+      return;
+    }
+
     try {
       const response = await fetch(`${BASE_PATH}/auth/login`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -28,63 +55,65 @@ const AuthPage = () => {
 
       if (response.ok) {
         const user = await response.json();
-        setUserData(user);
-        setError(null);
+        const result = {
+          email: user.email,
+          username: user.username,
+          id: user._id,
+        };
+        setCookie("user", result, {
+          expires: new Date(Date.now() + expirationTime),
+          path: "/",
+        });
+        setUserData(result);
         navigate("/home");
-      } else {
-        setError("Invalid email or password");
       }
-    } catch (error) {
-      setError("Invalid email or password");
-    }
+    } catch (error) {}
   };
 
   return (
     <div>
       <form onSubmit={handleLogin}>
-        <div className={styles.auth_container}>
-          <div className={styles.register_container}>
-            <h3 className={styles.signin_title}>Sign In</h3>
-            <div className={styles.register_input}>
-              <Form.Floating className="mb-3">
-                <input
-                  className={styles.signin_input}
-                  type="email"
-                  placeholder="name@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                ></input>
-              </Form.Floating>
+        <div className={styles.container}>
+          <div className={styles.obj1}>
+            <h3 className={styles.title}>Sign In</h3>
+          </div>
+          <div className={styles.obj2}>
+            <div className={styles.input_container}>
+              <label className={styles.label}>Email</label>
+              <input
+                className={`${styles.input} ${
+                  missingField.email ? "" : styles.error
+                }`}
+                name="email"
+                type="email"
+                placeholder=" Name@example.com"
+                value={email}
+                onChange={handleChange}
+              ></input>
             </div>
-            <div className={styles.register_input}>
-              <Form.Floating>
-                <input
-                  className={styles.signin_input}
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                ></input>
-              </Form.Floating>
+            <div className={styles.input_container}>
+              <label className={styles.label}>Password</label>
+              <input
+                className={`${styles.input} ${
+                  missingField.password ? "" : styles.error
+                }`}
+                name="password"
+                type="password"
+                placeholder=" ********"
+                value={password}
+                onChange={handleChange}
+              ></input>
             </div>
-            <div className={styles.username_container}>
-              <Col>
-                <div className={styles.button_container}>
-                  <button
-                    className={styles.login_button}
-                    variant="primary"
-                    type="submit"
-                  >
-                    Login
-                  </button>
-                </div>
-              </Col>
-              <Col>
-                <p className={`${style.forgot_password} ${style.text_right}`}>
-                  Not registered? <Link to="/sign-up">sign up?</Link>
-                </p>
-              </Col>
+          </div>
+          <div className={styles.obj3}>
+            <div className={styles.button_container}>
+              <button className={styles.button} variant="primary" type="submit">
+                Login
+              </button>
             </div>
+            <p className={styles.link}>
+              Don't have an account ? <Link to="/sign-up">sign up here</Link>
+            </p>
           </div>
         </div>
       </form>
