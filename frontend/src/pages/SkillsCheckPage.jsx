@@ -1,5 +1,5 @@
 import SkillCheck from "../components/SkillCheck";
-import { useNavigate} from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import React, {useCallback, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import "../../src/style/pages.styles.css";
@@ -23,6 +23,10 @@ const SkillsCheckPage = () => {
     const [cookies, setCookie] = useCookies(["user"]);
         
     const navigate = useNavigate()
+    
+    const {Id} = useParams()
+
+    console.log(Id)
 
     useEffect(() => {
         fetch_data();
@@ -41,7 +45,7 @@ const SkillsCheckPage = () => {
     
     const fetch_data = () => {
         if (selectedSkills) {
-            fetch(`${BASE_PATH}/api/questions?skills=${selectedSkills.map(e => e.value)}&difficulty=${diff ? diff[0].label : difficulty}`, {
+            fetch(`${BASE_PATH}/api/questions?skills=${selectedSkills.map(e => e.value)}&difficulty=${diff ? diff[0].label : difficulty}&id=${}`, {
                 method: "GET",
                 credentials: "include",
             })

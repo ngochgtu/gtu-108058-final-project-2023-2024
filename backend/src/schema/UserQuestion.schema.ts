@@ -13,6 +13,9 @@ export class UserQuestion {
 
     @Prop()
     answer: string;
+
+    @Prop()
+    sessionId: string;
 }
 
 export const UserQuestionSchema = SchemaFactory.createForClass(UserQuestion);

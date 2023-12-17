@@ -48,8 +48,8 @@ export class UsersService {
     this.calculateScore(createUserQuestionDto.answer, trueAnswer[0].answer, sessionId)
     this.localCache[sessionId].email = createUserQuestionDto.email
     this.localCache[sessionId].skill = trueAnswer[0].skill_names
-    const [newUser] = await Promise.all([new this.userQuestionModel(createUserQuestionDto)]);
-    return newUser.save();
+    const [userAnswer] = await Promise.all([new this.userQuestionModel({...createUserQuestionDto, sessionId})]);
+    return userAnswer.save();
   }
 
   async getQuestions(question_id: string): Promise<Question[]> {
