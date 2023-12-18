@@ -44,7 +44,7 @@ export const router = createHashRouter([
         element: <HomePage />,
       },
       {
-        path: "/check/",
+        path: "/check/:id",
         element: <SkillsCheckPage />,
       },
       {

@@ -118,5 +118,5 @@ export class AppController {
     async getQuestionsBySkills(@Query('skills') skills: string, @Query('difficulty') difficulty: string, @Query('id') id: number,@Req() request: Request) {
         const sessionId = request["session"].id 
         return this.appService.getQuestionsBySkills(skills.split(","), difficulty, sessionId, id);
-    }
+    } 
 }

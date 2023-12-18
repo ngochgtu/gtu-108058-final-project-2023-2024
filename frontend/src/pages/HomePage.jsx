@@ -11,7 +11,6 @@ import {useHeaderContext} from "../contexts/headerContexts";
 import styles from "../../src/style/Home.module.css";
 import {useQuery} from "@tanstack/react-query";
 
-
 const HomePage = () => {
     // const [skills, setSkills] = useState([]);
     const {
@@ -20,6 +19,7 @@ const HomePage = () => {
         difficultyLevel,
         difficulty,
         setDifficulty,
+        id,
     } = useUserContext();
 
     const {isOpen} = useHeaderContext();
@@ -33,7 +33,7 @@ const HomePage = () => {
         e.preventDefault();
         if (selectedSkills.length === 0) return alert("select skill first");
         if (difficulty.length === 0) return alert("select difficulty first");
-        navigate("/check");
+        navigate(`/check/${id}`);
     };
 
     const handleSkillChange = (e) => {

@@ -91,6 +91,33 @@ export class UsersService {
       return newUser.save();
     }
   }
+  async getResultHistory(sessionId){
+    const result = await this.questionModel.find({ session_id: sessionId }).exec();
+    const userAnswers = await this.userQuestionModel.find({ sessionId: sessionId }).exec();
+  
+    // Create an array to store separated data
+    const separatedData = [];
+    
+    // Iterate through the input array
+    result.forEach(item => {
+      const skillName = item.skill_names[0]; // Assuming each item has only one skill name
+    
+      // If the skill name doesn't exist in the separatedData object, create an empty array
+      if (!separatedData[skillName]) {
+        separatedData[skillName] = [];
+      }
+    
+      // Push the item to the corresponding skill name array
+      separatedData[skillName].push(item);
+    });
+    const separatedArray = Object.values(separatedData);
+
+    // Retrieve the last array
+    const lastSeparatedArray = separatedArray[separatedArray.length - 1];
+    
+    return [result, userAnswers]
+
+  }
 
   async getUsersStatsByEmail(email:string | Record<string, any>) {
      const emailValue = typeof email === 'object' ? email.email : email;
