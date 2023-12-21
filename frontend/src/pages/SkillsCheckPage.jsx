@@ -91,6 +91,7 @@ const SkillsCheckPage = () => {
         })
         .then(res => res.json())
         .then(data => {
+            setId(0)
             navigate('/result',{state: {...data, counter: counter}})
         })
         .catch(err => console.log(err))  
