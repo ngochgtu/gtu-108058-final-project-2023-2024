@@ -34,7 +34,7 @@ export class AppController {
         return this.appService.getHello();
     }
 
-    // @UseGuards(AuthenticatedGuard)
+    @UseGuards(AuthenticatedGuard)
     @Post('/skill')
     async createSkill(@Res() response, @Body() createSkillDto: CreateSkillDto) {
         try {
@@ -115,8 +115,8 @@ export class AppController {
 
     // @UseGuards(AuthenticatedGuard)
     @Get("/questions")
-    async getQuestionsBySkills(@Query('skills') skills: string, @Query('difficulty') difficulty: string, @Req() request: Request) {
+    async getQuestionsBySkills(@Query('skills') skills: string, @Query('difficulty') difficulty: string, @Query('id') id: number,@Req() request: Request) {
         const sessionId = request["session"].id 
-        return this.appService.getQuestionsBySkills(skills.split(","), difficulty, sessionId);
-    }
+        return this.appService.getQuestionsBySkills(skills.split(","), difficulty, sessionId, id);
+    } 
 }

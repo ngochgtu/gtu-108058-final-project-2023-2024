@@ -51,6 +51,12 @@ export class UsersController {
     return await this.usersService.getResult(sessionId)
   }
 
+  @Get('/resultHistory')
+  async getResultHistory(@Request() request){
+    const sessionId = 'nZqdYsMp-UJWyubkYroqZHr9PMXvP61e'
+    return await this.usersService.getResultHistory(sessionId)
+  }
+
   @Post('/UsersInfo')
   async getUsersInfo(@Res() response, @Body() email: string) {
     try{

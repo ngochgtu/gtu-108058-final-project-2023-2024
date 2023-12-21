@@ -1,5 +1,6 @@
 
 import { createContext, useContext, useMemo, useState } from "react";
+import useSessionStorage from "../hooks/useSessionStorage";
 
 const UserContexts = createContext(null)
 
@@ -8,6 +9,7 @@ const UserContextProvider = ({children}) => {
     const [difficulty, setDifficulty] = useState([{label: 'easy'}]);
     const [difficultyLevel] = useState([{label: 'easy'},{label:'medium'}, {label:'hard'}])
     const [userData, setUserData] = useState(null);
+    const [id, setId]= useSessionStorage('counter', '0')
 
     
     const contextValue = useMemo(()=> ({
@@ -17,8 +19,10 @@ const UserContextProvider = ({children}) => {
         setDifficulty,
         difficultyLevel,
         setUserData,
-        userData
-    }), [selectedSkills, difficultyLevel, difficulty, userData])
+        userData,
+        id,
+        setId
+    }), [selectedSkills, difficultyLevel, difficulty, userData, id, setId])
     
     return(
         <UserContexts.Provider value={contextValue}>

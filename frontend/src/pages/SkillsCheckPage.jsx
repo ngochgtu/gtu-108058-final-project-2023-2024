@@ -1,5 +1,5 @@
 import SkillCheck from "../components/SkillCheck";
-import { useNavigate} from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import React, {useCallback, useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import "../../src/style/pages.styles.css";
@@ -18,11 +18,15 @@ const SkillsCheckPage = () => {
     const [answer, setAnswer] = useState("Demo")
     const [counter, setCounter] = useState(0)
     const {sendRequest} = useRequest({url: 'http://localhost:3001/users/user_question', method: 'POST'})
-    const {selectedSkills,difficulty: diff} = useUserContext()
+    const {selectedSkills,difficulty: diff,setId, id:Id } = useUserContext()
     const {isOpen} = useHeaderContext()
     const [cookies, setCookie] = useCookies(["user"]);
-        
+
     const navigate = useNavigate()
+    
+    const {id} = useParams()
+
+    console.log(id)
 
     useEffect(() => {
         fetch_data();
@@ -37,11 +41,11 @@ const SkillsCheckPage = () => {
                 return e.returnValue = '';
             }, {capture: true});
         }
-    }, [selectedSkills, diff]);
+    }, [selectedSkills, diff, Id]);
     
     const fetch_data = () => {
         if (selectedSkills) {
-            fetch(`${BASE_PATH}/api/questions?skills=${selectedSkills.map(e => e.value)}&difficulty=${diff ? diff[0].label : difficulty}`, {
+            fetch(`${BASE_PATH}/api/questions?skills=${selectedSkills.map(e => e.value)}&difficulty=${diff ? diff[0].label : difficulty}&id=${id}`, {
                 method: "GET",
                 credentials: "include",
             })
@@ -60,6 +64,8 @@ const SkillsCheckPage = () => {
     const handleNextClick = async () => {
         if(!question.fake_answers.includes(answer)) return
         setCounter(counter + 1)
+        setId((id)=> +id + 1)
+        console.log(Id)
         sendRequest({
             email: cookies.user.email,
             question_id: question._id,
@@ -67,7 +73,8 @@ const SkillsCheckPage = () => {
         })
         .catch(err => console.log(err))
         setQuestion(null)
-        fetch_data()
+        navigate(`/check/${+Id +1}`)
+        // fetch_data()
 
         if(counter % 10 === 0){
             setQuestion(null)

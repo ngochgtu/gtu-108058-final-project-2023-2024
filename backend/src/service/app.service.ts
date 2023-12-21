@@ -78,14 +78,15 @@ export class AppService {
     }
 
 
-    async getQuestionsBySkills(skills: string[], difficulty: string, sessionId: string) {
+    async getQuestionsBySkills(skills: string[], difficulty: string, sessionId: string, id: number){
         let session_data = this.localCache[sessionId];
-
         if (!session_data) {
             session_data = this.initLocalCacheSessionData()
             this.localCache[sessionId] = session_data
         }
-        const counter = session_data.counter;
+        this.localCache[sessionId].counter = id
+        console.log(this.localCache[sessionId].counter)
+        let counter = session_data.counter;
 
         if (counter <= 10) {
             if (counter == 0 || counter == 10) {
@@ -125,23 +126,25 @@ export class AppService {
                 _id: dbQuestion['_id'],
                 question: dbQuestion.question,
                 fake_answers: dbQuestion.fake_answers,
+                counterId: session_data.counter,
             };
         }
     }
 
 
     openai_question_to_dto = (array, sessionId: string): CreateQuestionDto => {
+        let counter = this.localCache[sessionId].counter
         const createQuestionDto = new CreateQuestionDto();
         //save question
-        createQuestionDto.question = array[this.localCache[sessionId].counter].question
+        createQuestionDto.question = array[counter].question
         //save options
-        createQuestionDto.fake_answers = array[this.localCache[sessionId].counter].options
+        createQuestionDto.fake_answers = array[counter].options
         //save correct answers
-        createQuestionDto.answer = array[this.localCache[sessionId].counter].correctAnswer
+        createQuestionDto.answer = array[counter].correctAnswer
         //save session id
         createQuestionDto.session_id = sessionId
         //increment counter
-        this.localCache[sessionId].counter = this.localCache[sessionId].counter + 1;
+        // this.localCache[sessionId].counter = this.localCache[sessionId].counter + 1;
         return createQuestionDto
     }
 
