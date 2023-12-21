@@ -85,7 +85,6 @@ export class AppService {
             this.localCache[sessionId] = session_data
         }
         this.localCache[sessionId].counter = id
-        console.log(this.localCache[sessionId].counter)
         let counter = session_data.counter;
 
         if (counter <= 10) {
@@ -103,7 +102,7 @@ export class AppService {
                     this.localCache[sessionId].skillNames.push(dbSkill.name)
                 }
 
-                const openaiQuestion = await this.openaiService.getGPT3_5Completion(`
+                const openaiQuestion = await this.openaiService.getCompletion(`
                 Generate an array of 10 skill verification questions for ${this.localCache[sessionId].skillNames} with the following format:
                 {
                 "question": "Generate Question for skill ${this.localCache[sessionId].skillNames}",
@@ -143,8 +142,6 @@ export class AppService {
         createQuestionDto.answer = array[counter].correctAnswer
         //save session id
         createQuestionDto.session_id = sessionId
-        //increment counter
-        // this.localCache[sessionId].counter = this.localCache[sessionId].counter + 1;
         return createQuestionDto
     }
 
