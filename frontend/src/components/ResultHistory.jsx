@@ -16,7 +16,7 @@ const ResultHistory = ({ question, fake_answers, answer, usersAnswer }) => {
         <p>user answered:</p>
       )}
       <h1 style={{ color: "white", fontSize: 15 }}>correct answer: {answer}</h1>
-      <h1 style={{ color: "white", fontSize: 15 }}>{usersAnswer}</h1>
+      <h1 style={{ color: "white", fontSize: 15 }}> you answered: {usersAnswer}</h1>
     </div>
   );
 };
