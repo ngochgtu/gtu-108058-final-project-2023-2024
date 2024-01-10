@@ -54,6 +54,7 @@ export class UsersController {
   @Get('/resultHistory')
   async getResultHistory(@Request() request){
     const sessionId = request["session"].id
+    // const sessionId = 'NvVajFuq6cY5Jm8ilAPQ07AyzMea4nod'
     return await this.usersService.getResultHistory(sessionId)
   }
 

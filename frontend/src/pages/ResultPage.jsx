@@ -29,15 +29,7 @@ const ResultPage = () => {
         }
 
         const data = await response.json();
-    const answerMap = new Map(data[1].map(answer => [answer.question_id, answer.answer]));
-
-    const combinedArray = data[0].map(question => {
-    const answerObject = data[1].find(answer => answer.question_id === question._id);
-    const mergedObject = { ...question, usersAnswers: answerObject ? answerObject.answer : null };
-    return mergedObject;
-});
-
-        setResultHistory(combinedArray);
+        setResultHistory(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -49,7 +41,6 @@ const ResultPage = () => {
   const [resultHistory, setResultHistory] = useState([]);
   
 
-  console.log(resultHistory);
 
   return (
     <Container color={isOpen ? "#272727" : "#e6e6fa"}>
@@ -59,7 +50,7 @@ const ResultPage = () => {
             <h1>Here is your result</h1>
             <h2>{userData.skill}</h2>
             <h3>
-              {userData.points}/{userData.counter}
+              {userData.points}/{userData.counter - 1}
             </h3>
             <Button onClick={onClick}>Try Again</Button>
           </div>
