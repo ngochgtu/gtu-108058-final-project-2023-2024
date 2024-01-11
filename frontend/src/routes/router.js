@@ -13,6 +13,7 @@ import Footer from "../components/Footer";
 import IntroductionPage from "../pages/introductionPage";
 import ProfilePage from "../pages/ProfilePage";
 import { CookiesProvider } from "react-cookie";
+import SharedPage from "../pages/SharedPage";
 
   export const router = createHashRouter([
     {
@@ -62,6 +63,10 @@ import { CookiesProvider } from "react-cookie";
         {
           path: "/profile",
           element: <ProfilePage />,
+        },
+        {
+          path: "/shared/:id",
+          element: <SharedPage />,
         },
         {
           element: <ErrorPage />,

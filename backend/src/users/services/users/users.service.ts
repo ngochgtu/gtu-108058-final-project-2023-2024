@@ -7,7 +7,9 @@ import { Model } from 'mongoose';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { CreateUserQuestionDto } from 'src/dto/CreateUserQuestion.dto';
 import { CreateUsersPoints } from 'src/dto/CreateUsersPoints.dto';
+import { CreateSavedResult } from 'src/dto/SavedResults.dto';
 import { Question } from 'src/schema/Question.schema';
+import { SavedResult } from 'src/schema/SavedResults.schema';
 import { User } from 'src/schema/User.schema';
 import { UserQuestion } from 'src/schema/UserQuestion.schema';
 import { UsersPoints } from 'src/schema/UsersPoints.schema';
@@ -23,6 +25,7 @@ export class UsersService {
     @InjectModel(UserQuestion.name) private userQuestionModel: Model<UserQuestion>,
     @InjectModel(Question.name) private questionModel: Model<Question>,
     @InjectModel(UsersPoints.name) private usersPointsModel: Model<UsersPoints>,
+    @InjectModel(SavedResult.name) private SavedResultModel: Model<SavedResult>,
   ) {}
 
   async checkUsersExistence(ComingEmail) {
@@ -76,7 +79,7 @@ export class UsersService {
   }
 
   async saveResult(CreateUsersPoints: CreateUsersPoints): Promise<UsersPoints>{
-    const [savedResult] = await Promise.all([new this.usersPointsModel(CreateUsersPoints),]);
+    const [savedResult] = await Promise.all([new this.usersPointsModel({saved_result: CreateUsersPoints}),]);
     return savedResult.save();
   }
 
@@ -91,6 +94,25 @@ export class UsersService {
       return newUser.save();
     }
   }
+
+  async createResultHistory(createSavedResult: CreateSavedResult): Promise<string> {
+    const newSavedResult = new this.SavedResultModel({...createSavedResult});
+    
+    try {
+      const savedDocument = await newSavedResult.save();
+      const savedDocumentId = savedDocument._id.toString();
+      return savedDocumentId;
+    } catch (error) {
+      console.error("Error saving document:", error);
+      throw error; 
+    }
+  }
+
+  async getShared(id: string){
+    const result = await this.SavedResultModel.findById(id).lean().exec();
+    return result
+  }
+
   async getResultHistory(sessionId) {
     const result = await this.questionModel.find({ session_id: sessionId }).lean().exec();
   const userAnswers = await this.userQuestionModel.find({ sessionId: sessionId }).lean().exec();
@@ -123,8 +145,15 @@ export class UsersService {
       const mergedObject = { ...question, usersAnswers: answerObject ? answerObject.answer : null };
       return mergedObject;
     });
-  
-    return combinedArray;
+
+    const createSavedResult = {
+      saved_result: combinedArray,
+      sessionId: sessionId
+    };
+    
+    const savedResultId = await this.createResultHistory(createSavedResult);
+    
+    return [combinedArray, savedResultId];
   }
   async getUsersStatsByEmail(email:string | Record<string, any>) {
      const emailValue = typeof email === 'object' ? email.email : email;

@@ -6,15 +6,25 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useHeaderContext } from "../contexts/headerContexts";
 import ResultHistory from "../components/ResultHistory";
 import { BASE_PATH } from "../api/ServerApi";
+import Modal from "../components/Modal";
 
 const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userData] = useState(location.state)
   const { isOpen } = useHeaderContext();
+  const [resultHistory, setResultHistory] = useState([]);
+  const [resultId, setResultId] = useState('');
+  const [open, setOpen] = useState(false);
+
   const onClick = () => {
     navigate("/home");
   };
+  
+  const onShare = () => {
+    setOpen(true);
+  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +39,8 @@ const ResultPage = () => {
         }
 
         const data = await response.json();
-        setResultHistory(data);
+        setResultHistory(data[0]);
+        setResultId(data[1]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -38,7 +49,6 @@ const ResultPage = () => {
     fetchData();
   }, []);
 
-  const [resultHistory, setResultHistory] = useState([]);
   
 
 
@@ -52,7 +62,10 @@ const ResultPage = () => {
             <h3>
               {userData.points}/{userData.counter - 1}
             </h3>
-            <Button onClick={onClick}>Try Again</Button>
+            <div style={{display: "flex", justifyContent: "space-between", width: "100%"}}>
+              <Button onClick={onClick}>Try Again</Button>
+              <Button onClick={onShare}>Share</Button>
+            </div>
           </div>
         </div>
       </div>
@@ -69,6 +82,7 @@ const ResultPage = () => {
           ))}
         </div>
       </div>
+      {open ? <Modal value={resultId} setOpen={setOpen} /> : " "}
     </Container>
   );
 };
