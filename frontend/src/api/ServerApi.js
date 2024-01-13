@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+export const FRONT_PATH = "http://localhost:3000"
 export const BASE_PATH = "http://localhost:3001"
 
 

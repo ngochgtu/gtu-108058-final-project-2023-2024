@@ -85,7 +85,6 @@ export class AppService {
             this.localCache[sessionId] = session_data
         }
         this.localCache[sessionId].counter = id
-        console.log(this.localCache[sessionId].counter)
         let counter = session_data.counter;
 
         if (counter <= 10) {
@@ -143,8 +142,6 @@ export class AppService {
         createQuestionDto.answer = array[counter].correctAnswer
         //save session id
         createQuestionDto.session_id = sessionId
-        //increment counter
-        // this.localCache[sessionId].counter = this.localCache[sessionId].counter + 1;
         return createQuestionDto
     }
 

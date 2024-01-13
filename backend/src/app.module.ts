@@ -14,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
 import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from './users/users.module';
 import { UsersPoints, UsersPointsSchema } from './schema/UsersPoints.schema';
+import { SavedResult, SavedResultSchema } from './schema/SavedResults.schema';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { UsersPoints, UsersPointsSchema } from './schema/UsersPoints.schema';
       { name: User.name, schema: UserSchema },
       { name: UserQuestion.name, schema: UserQuestionSchema },
       {name: UsersPoints.name, schema: UsersPointsSchema},
+      {name: SavedResult.name, schema: SavedResultSchema},
     ]),
     PassportModule.register({ session: true }),
     ScheduleModule.forRoot(),

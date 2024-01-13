@@ -10,6 +10,7 @@ import { Question, QuestionSchema } from 'src/schema/Question.schema';
 import { UsersPointsSchema, UsersPoints } from 'src/schema/UsersPoints.schema';
 import { AppService } from 'src/service/app.service';
 import { OpenaiService } from 'src/service/openai.service';
+import { SavedResult, SavedResultSchema } from 'src/schema/SavedResults.schema';
 
 @Module({
   imports: [MongooseModule.forFeature([
@@ -19,6 +20,7 @@ import { OpenaiService } from 'src/service/openai.service';
     {name: User.name, schema: UserSchema},
     {name: UserQuestion.name, schema: UserQuestionSchema},
     {name: UsersPoints.name, schema: UsersPointsSchema},
+    {name: SavedResult.name, schema: SavedResultSchema},
   ]),],
   controllers: [UsersController],
   providers: [UsersService, AppService,OpenaiService]

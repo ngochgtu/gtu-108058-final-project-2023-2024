@@ -73,12 +73,12 @@ const SkillsCheckPage = () => {
         })
         .catch(err => console.log(err))
         setQuestion(null)
+        if(Id === 9){
+            setId(0)
+            navigate(`/check/${+Id +1}`)
+        }
         navigate(`/check/${+Id +1}`)
         // fetch_data()
-
-        if(counter % 10 === 0){
-            setQuestion(null)
-        }
     }
     
     const onFinish = async()=> {
@@ -91,6 +91,7 @@ const SkillsCheckPage = () => {
         })
         .then(res => res.json())
         .then(data => {
+            setId(0)
             navigate('/result',{state: {...data, counter: counter}})
         })
         .catch(err => console.log(err))  
