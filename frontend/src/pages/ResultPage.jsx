@@ -11,20 +11,19 @@ import Modal from "../components/Modal";
 const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [userData] = useState(location.state)
+  const [userData] = useState(location.state);
   const { isOpen } = useHeaderContext();
   const [resultHistory, setResultHistory] = useState([]);
-  const [resultId, setResultId] = useState('');
+  const [resultId, setResultId] = useState("");
   const [open, setOpen] = useState(false);
 
   const onClick = () => {
     navigate("/home");
   };
-  
+
   const onShare = () => {
     setOpen(true);
   };
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +31,7 @@ const ResultPage = () => {
         const response = await fetch(`${BASE_PATH}/users/resultHistory`, {
           method: "GET",
           credentials: "include",
-      });
+        });
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -49,28 +48,28 @@ const ResultPage = () => {
     fetchData();
   }, []);
 
-  
-
-
   return (
     <Container color={isOpen ? "#272727" : "#e6e6fa"}>
-      <div className={styles.maindiv}>
-        <div className={styles.box}>
+      <div className={styles.result_history_container}>
+        <div>
           <div className={styles.resultDiv}>
-            <h1>Here is your result</h1>
+            <h1>RESULT</h1>
             <h2>{userData.skill}</h2>
             <h3>
               {userData.points}/{userData.counter - 1}
             </h3>
-            <div style={{display: "flex", justifyContent: "space-between", width: "100%"}}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                marginTop: 15,
+              }}
+            >
               <Button onClick={onClick}>Try Again</Button>
               <Button onClick={onShare}>Share</Button>
             </div>
           </div>
-        </div>
-      </div>
-      <div className={styles.result_history_container}>
-        <div>
           {resultHistory.map((result) => (
             <ResultHistory
               key={result.id}
