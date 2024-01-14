@@ -24,11 +24,12 @@ const ResultPage = () => {
   const onShare = () => {
     setOpen(true);
   };
-
+console.log(userData)
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_PATH}/users/resultHistory`, {
+        const skillParam = userData.skill.join(',');
+        const response = await fetch(`${BASE_PATH}/users/resultHistory?email=${userData.email}&skill=${skillParam}&points=${userData.points}&counter=${userData.counter}`, {
           method: "GET",
           credentials: "include",
         });
@@ -38,7 +39,8 @@ const ResultPage = () => {
         }
 
         const data = await response.json();
-        setResultHistory(data[0]);
+        const modifiedResultHistory = data[0].slice(0, -1);
+        setResultHistory(modifiedResultHistory);
         setResultId(data[1]);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -56,7 +58,7 @@ const ResultPage = () => {
             <h1>RESULT</h1>
             <h2>{userData.skill}</h2>
             <h3>
-              {userData.points}/{userData.counter - 1}
+              {userData.points}/{userData.counter }
             </h3>
             <div
               style={{
@@ -70,9 +72,10 @@ const ResultPage = () => {
               <Button onClick={onShare}>Share</Button>
             </div>
           </div>
-          {resultHistory.map((result) => (
+          {resultHistory.map((result, index) => (
             <ResultHistory
               key={result.id}
+              index={index}
               question={result.question}
               fake_answers={result.fake_answers}
               answer={result.answer}

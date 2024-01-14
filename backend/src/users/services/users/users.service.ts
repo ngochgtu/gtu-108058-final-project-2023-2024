@@ -51,6 +51,9 @@ export class UsersService {
     this.calculateScore(createUserQuestionDto.answer, trueAnswer[0].answer, sessionId)
     this.localCache[sessionId].email = createUserQuestionDto.email
     this.localCache[sessionId].skill = trueAnswer[0].skill_names
+    console.log(`email: ${this.localCache[sessionId].email},
+      points: ${this.localCache[sessionId].score},
+      skill: ${this.localCache[sessionId].skill}`)
     const [userAnswer] = await Promise.all([new this.userQuestionModel({...createUserQuestionDto, sessionId})]);
     return userAnswer.save();
   }
@@ -68,7 +71,7 @@ export class UsersService {
       this.localCache[sessionId].score += 1
     }
   }
-  async getResult(sessionId){
+  async getResult(sessionId: string){
     const savedResult = await this.saveResult({
       email: this.localCache[sessionId].email,
       points: this.localCache[sessionId].score,
@@ -79,8 +82,13 @@ export class UsersService {
   }
 
   async saveResult(CreateUsersPoints: CreateUsersPoints): Promise<UsersPoints>{
-    const [savedResult] = await Promise.all([new this.usersPointsModel({saved_result: CreateUsersPoints}),]);
-    return savedResult.save();
+    console.log('inside of saveResult', CreateUsersPoints);
+    const newResult = new this.usersPointsModel();
+    newResult.email = CreateUsersPoints.email;
+    newResult.points = CreateUsersPoints.points;
+    newResult.skill = CreateUsersPoints.skill;
+    const savedResult = await newResult.save();
+    return savedResult;
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -113,9 +121,9 @@ export class UsersService {
     return result
   }
 
-  async getResultHistory(sessionId) {
+  async getResultHistory(sessionId,email, skill,points,counter) {
     const result = await this.questionModel.find({ session_id: sessionId }).lean().exec();
-  const userAnswers = await this.userQuestionModel.find({ sessionId: sessionId }).lean().exec();
+    const userAnswers = await this.userQuestionModel.find({ sessionId: sessionId }).lean().exec();
   
     // Create an array to store separated data
     const separatedData = [];
@@ -148,7 +156,11 @@ export class UsersService {
 
     const createSavedResult = {
       saved_result: combinedArray,
-      sessionId: sessionId
+      sessionId: sessionId,
+      email: email, 
+      skill: skill,
+      points: points,
+      counter:counter,
     };
     
     const savedResultId = await this.createResultHistory(createSavedResult);

@@ -26,7 +26,6 @@ const SkillsCheckPage = () => {
     
     const {id} = useParams()
 
-    console.log(id)
 
     useEffect(() => {
         fetch_data();

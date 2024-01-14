@@ -1,9 +1,13 @@
 import React from "react";
+import styles from '../style/ResultComponent.module.css'
 
-const ResultHistory = ({ question, fake_answers, answer, usersAnswer }) => {
+const ResultHistory = ({index, question, fake_answers, answer, usersAnswer }) => {
+
+  const itemNumber = index + 1;
+
   return (
-    <div>
-      <h1 style={{ color: "white", fontSize: 20 }}>{question}</h1>
+    <div className={styles.component}>
+      <h1 style={{ color: "white", fontSize: 20 }}>{itemNumber}. {question}</h1>
       {fake_answers ? (
         <ul>
           {fake_answers.map((fakeAnswer, index) => (

@@ -14,6 +14,14 @@ export class SavedResult{
       }>;
     @Prop()
     sessionId: string;  
-}
+    @Prop()
+    email: string;  
+    @Prop()
+    skill: Array<string>;  
+    @Prop()
+    points: number;  
+    @Prop()
+    counter: number;  
 
+};
 export const SavedResultSchema = SchemaFactory.createForClass(SavedResult);
