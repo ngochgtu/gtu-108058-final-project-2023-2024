@@ -6,7 +6,7 @@ const ResultHistory = ({index, question, fake_answers, answer, usersAnswer }) =>
   const itemNumber = index + 1;
 
   return (
-    <div className={styles.component}>
+    <div className={styles.component} style={{ border: answer === usersAnswer ? '1px solid lightgreen': '1px solid red' }}>
       <h1 style={{ color: "white", fontSize: 20 }}>{itemNumber}. {question}</h1>
       {fake_answers ? (
         <ul>
