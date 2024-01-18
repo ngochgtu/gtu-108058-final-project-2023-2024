@@ -51,9 +51,6 @@ export class UsersService {
     this.calculateScore(createUserQuestionDto.answer, trueAnswer[0].answer, sessionId)
     this.localCache[sessionId].email = createUserQuestionDto.email
     this.localCache[sessionId].skill = trueAnswer[0].skill_names
-    console.log(`email: ${this.localCache[sessionId].email},
-      points: ${this.localCache[sessionId].score},
-      skill: ${this.localCache[sessionId].skill}`)
     const [userAnswer] = await Promise.all([new this.userQuestionModel({...createUserQuestionDto, sessionId})]);
     return userAnswer.save();
   }
