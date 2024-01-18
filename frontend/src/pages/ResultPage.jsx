@@ -11,35 +11,36 @@ import Modal from "../components/Modal";
 const ResultPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [userData] = useState(location.state)
+  const [userData] = useState(location.state);
   const { isOpen } = useHeaderContext();
   const [resultHistory, setResultHistory] = useState([]);
-  const [resultId, setResultId] = useState('');
+  const [resultId, setResultId] = useState("");
   const [open, setOpen] = useState(false);
 
   const onClick = () => {
     navigate("/home");
   };
-  
+
   const onShare = () => {
     setOpen(true);
   };
-
-
+console.log(userData)
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_PATH}/users/resultHistory`, {
+        const skillParam = userData.skill.join(',');
+        const response = await fetch(`${BASE_PATH}/users/resultHistory?email=${userData.email}&skill=${skillParam}&points=${userData.points}&counter=${userData.counter}`, {
           method: "GET",
           credentials: "include",
-      });
+        });
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
 
         const data = await response.json();
-        setResultHistory(data[0]);
+        const modifiedResultHistory = data[0].slice(0, -1);
+        setResultHistory(modifiedResultHistory);
         setResultId(data[1]);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -49,31 +50,32 @@ const ResultPage = () => {
     fetchData();
   }, []);
 
-  
-
-
   return (
     <Container color={isOpen ? "#272727" : "#e6e6fa"}>
-      <div className={styles.maindiv}>
-        <div className={styles.box}>
+      <div className={styles.result_history_container}>
+        <div>
           <div className={styles.resultDiv}>
-            <h1>Here is your result</h1>
+            <h1>RESULT</h1>
             <h2>{userData.skill}</h2>
             <h3>
-              {userData.points}/{userData.counter - 1}
+              {userData.points}/{userData.counter }
             </h3>
-            <div style={{display: "flex", justifyContent: "space-between", width: "100%"}}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                marginTop: 15,
+              }}
+            >
               <Button onClick={onClick}>Try Again</Button>
               <Button onClick={onShare}>Share</Button>
             </div>
           </div>
-        </div>
-      </div>
-      <div className={styles.result_history_container}>
-        <div>
-          {resultHistory.map((result) => (
+          {resultHistory.map((result, index) => (
             <ResultHistory
               key={result.id}
+              index={index}
               question={result.question}
               fake_answers={result.fake_answers}
               answer={result.answer}

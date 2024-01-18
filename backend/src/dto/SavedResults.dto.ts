@@ -1,4 +1,4 @@
-import { IsNotEmpty, isNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateSavedResult{
     @IsNotEmpty()
@@ -13,4 +13,17 @@ export class CreateSavedResult{
     }>;
     @IsNotEmpty()
     sessionId: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @IsEmail()
+    email: string; 
+    @IsNotEmpty() 
+    skill: Array<string>;
+    @IsNotEmpty()
+    @IsNumber()  
+    points: number;
+    @IsNotEmpty()
+    @IsNumber()  
+    counter: number;  
 }

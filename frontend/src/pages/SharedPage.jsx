@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from '../style/Shared.module.css'
+import styles from '../style/ResultStyles.module.css'
 import ResultHistory from '../components/ResultHistory'
 import { BASE_PATH } from '../api/ServerApi'
 import { useParams } from 'react-router-dom'
@@ -8,6 +8,7 @@ const SharedPage = () => {
 
     
   const [resultHistory, setResultHistory] = useState([]);
+  const [userData, setUserData] = useState([]);
 
   const {id} = useParams()
 
@@ -24,8 +25,9 @@ const SharedPage = () => {
         }
 
         const data = await response.json();
-        setResultHistory(data.data.saved_result);
-        console.log(data.data.saved_result)
+        const modifiedResultHistory = data.data.saved_result.slice(0, -1);
+        setResultHistory(modifiedResultHistory);
+        setUserData({email: data.data.email, skill: data.data.skill, points: data.data.points, counter: data.data.counter});
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -37,16 +39,37 @@ const SharedPage = () => {
   return (
     <div>
         <div className={styles.result_history_container}>
-        <div>
-          {resultHistory.map((result) => (
-            <ResultHistory
+          <div>
+
+        <div className={styles.resultDiv}>
+            {/* <h1>RESULT</h1> */}
+            <h1>{userData.email}</h1>
+            <h2>{userData.skill}</h2>
+            <h3>
+              {userData.points}/{userData.counter}
+            </h3>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                marginTop: 15,
+              }}
+              >
+            </div>
+          </div>
+          <div>
+            {resultHistory.map((result, index) => (
+              <ResultHistory
               key={result.id}
+              index={index}
               question={result.question}
               fake_answers={result.fake_answers}
               answer={result.answer}
               usersAnswer={result.usersAnswers}
-            />
-          ))}
+              />
+              ))}
+          </div>
         </div>
       </div>
     </div>
