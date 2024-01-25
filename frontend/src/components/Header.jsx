@@ -7,21 +7,33 @@ import logout from "../assets/logout.png";
 import { gravatarUrl } from "../garavatar/gravater";
 import styles from "../style/app.module.css";
 import { useCookies } from "react-cookie";
+import { BASE_PATH } from "../api/ServerApi";
 
 const Header = () => {
 	const navigate = useNavigate();
 	const [cookies, removeCookie] = useCookies(["user"]);
-
-
+	
+	
 	const onLogoClick = () => {
 		navigate("/");
 	};
-	const handleLogout = () => {
+	const handleLogout = async() => {
 		Object.keys(cookies).forEach(cookieName => {
 			document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-		  });
-
-		document.cookie = 'connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
+		});
+		
+		try {
+			await fetch(`${BASE_PATH}/auth/logout`, {
+			  method: 'POST',
+			  credentials: 'include',
+			  headers: {
+				'Content-Type': 'application/json', 
+			  },
+			});
+	  
+		  } catch (error) {
+			console.error('Error during logout:', error);
+		  }
 	
 		navigate("/sign-in");
 	  };

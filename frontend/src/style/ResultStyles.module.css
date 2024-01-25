@@ -1,25 +1,57 @@
-.maindiv{
-    height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    color: white;
+@import url("https://fonts.googleapis.com/css2?family=Agbalumo&display=swap");
+
+.maindiv {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
 }
 
-.resultDiv{
-    color: white;
-    display: flex;
-    justify-content: center ;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px;
+.resultDiv {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
 }
-.box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border: 1px solid white;
-    border-radius: 20px;
+
+.resultDiv h1 {
+  font-family: "Agbalumo", sans-serif;
+  -webkit-text-stroke: 1px lightgreen;
+}
+
+.result_history_container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid lightgreen;
+  border-radius: 8px;
+}
+
+.result_history_container h3 {
+  color: white;
+}
+
+.result_history_container p {
+  margin-top: 10px;
+  color: white;
+}
+
+.result-item {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.result-item h3 {
+  color: white;
+}
+
+.result-item p {
+  margin-top: 5px;
+  color: white;
 }

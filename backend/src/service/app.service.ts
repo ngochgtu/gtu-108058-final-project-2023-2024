@@ -78,14 +78,14 @@ export class AppService {
     }
 
 
-    async getQuestionsBySkills(skills: string[], difficulty: string, sessionId: string) {
+    async getQuestionsBySkills(skills: string[], difficulty: string, sessionId: string, id: number){
         let session_data = this.localCache[sessionId];
-
         if (!session_data) {
             session_data = this.initLocalCacheSessionData()
             this.localCache[sessionId] = session_data
         }
-        const counter = session_data.counter;
+        this.localCache[sessionId].counter = id
+        let counter = session_data.counter;
 
         if (counter <= 10) {
             if (counter == 0 || counter == 10) {
@@ -102,7 +102,7 @@ export class AppService {
                     this.localCache[sessionId].skillNames.push(dbSkill.name)
                 }
 
-                const openaiQuestion = await this.openaiService.getGPT3_5Completion(`
+                const openaiQuestion = await this.openaiService.getCompletion(`
                 Generate an array of 10 skill verification questions for ${this.localCache[sessionId].skillNames} with the following format:
                 {
                 "question": "Generate Question for skill ${this.localCache[sessionId].skillNames}",
@@ -125,23 +125,23 @@ export class AppService {
                 _id: dbQuestion['_id'],
                 question: dbQuestion.question,
                 fake_answers: dbQuestion.fake_answers,
+                counterId: session_data.counter,
             };
         }
     }
 
 
     openai_question_to_dto = (array, sessionId: string): CreateQuestionDto => {
+        let counter = this.localCache[sessionId].counter
         const createQuestionDto = new CreateQuestionDto();
         //save question
-        createQuestionDto.question = array[this.localCache[sessionId].counter].question
+        createQuestionDto.question = array[counter].question
         //save options
-        createQuestionDto.fake_answers = array[this.localCache[sessionId].counter].options
+        createQuestionDto.fake_answers = array[counter].options
         //save correct answers
-        createQuestionDto.answer = array[this.localCache[sessionId].counter].correctAnswer
+        createQuestionDto.answer = array[counter].correctAnswer
         //save session id
         createQuestionDto.session_id = sessionId
-        //increment counter
-        this.localCache[sessionId].counter = this.localCache[sessionId].counter + 1;
         return createQuestionDto
     }
 

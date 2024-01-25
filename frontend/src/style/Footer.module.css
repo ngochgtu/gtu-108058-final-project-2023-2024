@@ -28,20 +28,8 @@
   font-size: 1rem;
 }
 
-.quickLinks_title {
-  font-size: 1rem;
-  padding-left: 2rem;
-}
-
-.quickLinks_list {
+.social_list {
   list-style: none;
-}
-
-.footer_quickLinks {
-  text-align: center;
-  margin: 2rem 0;
-  padding: 1rem;
-  width: 25%;
 }
 
 .list_item {
@@ -55,12 +43,25 @@
 }
 
 .footer_social {
-  width: 25%;
+  width: 50%;
   text-align: center;
 }
 
 .social_title {
   margin: 2rem 0;
+  margin-bottom: 0;
   padding: 1rem;
   font-size: 1rem;
+}
+
+@media (min-width: 40rem) {
+  .contact_us_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .social_container ul {
+    margin-bottom: 2rem;
+    padding: 1rem;
+  }
 }

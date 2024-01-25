@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res,Request ,Get, UseGuards} from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res,Request ,Get, UseGuards, Query} from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/auth/utils/LocalGuard';
 import { CreateUserDto } from 'src/dto/CreateUser.dto';
 import { CreateUserQuestionDto } from 'src/dto/CreateUserQuestion.dto';
@@ -44,11 +44,31 @@ export class UsersController {
     }
   }
 
+  @Get('/shared')
+  async getShared(@Res() response, @Query('info') info: string) {
+    try {
+      const data = await this.usersService.getShared(info);
+      return response.status(HttpStatus.CREATED).json({ data });
+    } catch (err) {
+      return response.status(HttpStatus.BAD_REQUEST).json({
+        statusCode: HttpStatus.BAD_REQUEST,
+        message: `${err}!`,
+        error: 'Bad Request',
+      });
+    }
+  }
   @Get('/result')
   async getResult(@Request() request){
     const sessionId = request["session"].id
     this.appService.resetlocalCacheSessionData(sessionId);
     return await this.usersService.getResult(sessionId)
+  }
+
+  @Get('/resultHistory')
+  async getResultHistory(@Request() request, @Query('email') email: string,@Query('skill') skill: string[], @Query('points') points: number,@Query('counter') counter: number,){
+    const sessionId = request["session"].id
+    // const sessionId = 'NvVajFuq6cY5Jm8ilAPQ07AyzMea4nod'
+    return await this.usersService.getResultHistory(sessionId,email, skill,points,counter)
   }
 
   @Post('/UsersInfo')

@@ -1,5 +1,5 @@
-import { Controller ,Post,UseGuards,Session,Get, Request} from '@nestjs/common';
-import { LocalAuthGuard } from '../../utils/LocalGuard';
+import { Controller ,Post,UseGuards,Session,Get, Request, Req, Res} from '@nestjs/common';
+import { AuthenticatedGuard, LocalAuthGuard } from '../../utils/LocalGuard';
 
 @Controller('auth')
 export class AuthController {
@@ -9,10 +9,19 @@ export class AuthController {
     async login(@Request() req){
         return req.user
     }
-
+    
+    @UseGuards(AuthenticatedGuard)
     @Post('logout')
-    async logout(@Request() req){
-        return req.logout(err => err)
+    async logout(@Req() req, @Res() res) {
+            req.logout((err) => {
+              if (err) {
+                return (err + 'logout unsuccessful' + (res.status(500).send()));
+              }else {
+                res.clearCookie('connect.sid');
+                res.redirect('/');
+                return 'logout successful';
+              }
+            });
     }
 
     @Get('')

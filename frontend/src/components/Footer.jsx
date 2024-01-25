@@ -20,28 +20,66 @@ const Footer = () => {
               Sign up now and let your skills speak for themselves!
             </span>
           </div>
-          <div className={styles.footer_quickLinks}>
-            <h1 className={styles.quickLinks_title}>QUICK LINKS</h1>
-            <ul className={styles.quickLinks_list}>
-              <li>
-                <Link className={styles.list_item} to="/Sign-in">
-                  text
-                </Link>
-              </li>
-              <li>
-                <Link className={styles.list_item} to="/about">
-                  about us
-                </Link>
-              </li>
-              <li>
-                <Link className={styles.list_item} to="/sign-up">
-                  text
-                </Link>
-              </li>
-            </ul>
-          </div>
           <div className={styles.footer_social}>
             <h1 className={styles.social_title}>contact us</h1>
+            <div className={styles.contact_us_container}>
+              <div className={styles.social_container}>
+                <ul>
+                  <li className={styles.social_list}>
+                    <a
+                      className={styles.list_item}
+                      href="https://github.com/ereklemanjavidze"
+                      target="_blank"
+                    >
+                      Erekle Manjavidze
+                    </a>
+                  </li>
+                  <li className={styles.social_list}>
+                    <a
+                      className={styles.list_item}
+                      href="https://www.linkedin.com/in/lukatskhomelidze/"
+                      target="_blank"
+                    >
+                      luka tskhomelidze
+                    </a>
+                  </li>
+                  <li className={styles.social_list}>
+                    <a className={styles.list_item} href="" target="_blank">
+                      Luka Kerdzevadze
+                    </a>
+                  </li>
+                  <li className={styles.social_list}>
+                    <a className={styles.list_item} href="" target="_blank">
+                      Giorgi Mestvirishvili
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div className={styles.social_container}>
+                <ul>
+                  <li className={styles.social_list}>
+                    <a className={styles.list_item} href="" target="_blank">
+                      Tornike Davitadze
+                    </a>
+                  </li>
+                  <li className={styles.social_list}>
+                    <a className={styles.list_item} href="" target="_blank">
+                      Zezva Mebagishvili
+                    </a>
+                  </li>
+                  <li className={styles.social_list}>
+                    <a className={styles.list_item} href="" target="_blank">
+                      Lasha Beruashvili
+                    </a>
+                  </li>
+                  <li className={styles.social_list}>
+                    <a className={styles.list_item} href="" target="_blank">
+                      Giorgi Bosikashvili
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
