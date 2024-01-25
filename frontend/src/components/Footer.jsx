@@ -49,7 +49,11 @@ const Footer = () => {
                     </a>
                   </li>
                   <li className={styles.social_list}>
-                    <a className={styles.list_item} href="" target="_blank">
+                    <a
+                      className={styles.list_item}
+                      href="https://github.com/Takasheesh"
+                      target="_blank"
+                    >
                       Giorgi Mestvirishvili
                     </a>
                   </li>
